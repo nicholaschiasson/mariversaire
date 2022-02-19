@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>mariversaire</title>
+	<link href="/rsrc/images/birthday-cake.png" rel="icon" type="image/png">
+	<link href='https://fonts.googleapis.com/css?family=Alfa Slab One' rel='stylesheet'>
+	<link href="/rsrc/styles/default.css" rel="stylesheet">
+	<script src="/src/lib.js"></script>
+</head>
+
+<body>
+	<h1 id="motivation" class="page-title fade-in-out">WIN UP TO 3 MAGNIFICENT PRIZES</h1>
+	<script>
+		const motivation = document.getElementById("motivation");
+	</script>
+	<div id="slot-machine">
+		<div id="slot-machine-left">
+			<div id="slot-machine-light"></div>
+			<div id="slot-machine-top">
+				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
+			</div>
+			<div id="slot-machine-body">
+				<div id="slot-1" class="slot"></div>
+				<div id="slot-2" class="slot"></div>
+				<div id="slot-3" class="slot"></div>
+				<script>
+					const slot1 = document.getElementById("slot-1");
+					const slot2 = document.getElementById("slot-2");
+					const slot3 = document.getElementById("slot-3");
+					slot1.innerText = SLOT_VALUES.random();
+					slot2.innerText = SLOT_VALUES.random();
+					slot3.innerText = SLOT_VALUES.random();
+				</script>
+			</div>
+			<div id="slot-machine-bottom">
+				<h1 class="slot-machine-title">BONNE MARIVERSAIRE</h1>
+			</div>
+		</div>
+		<div id="slot-machine-right">
+			<div style="background-color: blue;"></div>
+			<div id="slot-machine-lever" onclick="spin()">
+				hi
+			</div>
+			<div style="background-color: blue;"></div>
+		</div>
+	</div>
+</body>
+
+</html>

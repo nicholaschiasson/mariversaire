@@ -1,0 +1,170 @@
+* {
+	user-select: none;
+}
+
+:root {
+	/* background-color: blanchedalmond; */
+	background-image: url('/rsrc/images/painted-shed.jpeg');
+	background-position: center bottom;
+	background-size: cover;
+	display: flex;
+	align-content: space-around;
+	justify-content: space-evenly;
+	height: 100%;
+}
+
+:not(:root, body) {
+	padding: 1em;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	margin: 0;
+}
+
+.page-title {
+	color: lightpink;
+	font: bold 2em 'Alfa Slab One';
+	opacity: 0;
+	padding: 0;
+	text-shadow:
+		-0.125em 0 0 black,
+		0.125em 0 0 black,
+		0 -0.125em 0 black,
+		0 0.125em 0 black,
+		-0.125em -0.125em 0 black,
+		0.125em -0.125em 0 black,
+		-0.125em 0.125em 0 black,
+		0.125em 0.125em 0 black;
+}
+
+.fade-in-out {
+	animation-name: fade-in-out;
+	animation-duration: 4s;
+}
+
+@keyframes fade-in-out {
+	0% {
+		opacity: 0;
+	}
+	25% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#slot-machine {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	padding: 0;
+}
+
+#slot-machine-left {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	justify-content: space-evenly;
+	padding: 0;
+}
+
+#slot-machine-light {
+	background-image: linear-gradient(to bottom right, rgb(117, 0, 0), darkred);
+	border: 0.5em solid black;
+	border-top-left-radius: 100%;
+	border-top-right-radius: 100%;
+	bottom: 0;
+	margin: auto;
+	width: 1%;
+}
+
+#slot-machine-top {
+	background-image: url('/rsrc/images/flowery-card.jpg');
+	background-size: 100% 200%;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-top: 0.5em solid black;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+	display: flex;
+	justify-content: right;
+	padding-top: 4em;
+	text-align: right;
+}
+
+.slot-machine-title {
+	color: gold;
+	font: bold 2em 'Alfa Slab One';
+	padding: 0;
+	text-shadow:
+		-0.125em 0 0 black,
+		0.125em 0 0 black,
+		0 -0.125em 0 black,
+		0 0.125em 0 black,
+		-0.125em -0.125em 0 black,
+		0.125em -0.125em 0 black,
+		-0.125em 0.125em 0 black,
+		0.125em 0.125em 0 black;
+	width: 90%;
+	word-wrap: break-word;
+}
+
+#slot-machine-body {
+	background-image: url('/rsrc/images/metal-abstract.jpg');
+	background-position: center;
+	background-size: cover;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-bottom: 0.5em groove black;
+	border-top: 0.5em groove black;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	padding: 0.5em;
+}
+
+.slot {
+	background-color: white;
+	border: 0.125em ridge black;
+	border-radius: 0.75em;
+	font: 3em 'Courier New', monospace;
+	min-height: 1.5em;
+	min-width: 1.5em;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	text-align: center;
+}
+
+#slot-machine-bottom {
+	background-image: url('/rsrc/images/flowery-card.jpg');
+	background-position-y: -100%;
+	background-size: 100% 200%;
+	border-bottom: 0.5em solid black;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+#slot-machine-right {
+	background-color: darkorange;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	align-content: center;
+}
+
+#slot-machine-lever {
+	background-color: yellow;
+	cursor: pointer;
+}
