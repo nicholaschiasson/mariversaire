@@ -4,7 +4,7 @@
 
 :root {
 	/* background-color: blanchedalmond; */
-	background-image: url('rsrc/images/painted-shed.jpeg');
+	background-image: url('/rsrc/images/painted-shed.jpeg');
 	background-position: center bottom;
 	background-size: cover;
 	display: flex;
@@ -87,7 +87,7 @@ body {
 }
 
 #slot-machine-top {
-	background-image: url('rsrc/images/flowery-card.jpg');
+	background-image: url('/rsrc/images/flowery-card.jpg');
 	background-size: 100% 200%;
 	border-left: 0.5em solid black;
 	border-right: 0.5em solid black;
@@ -118,7 +118,7 @@ body {
 }
 
 #slot-machine-body {
-	background-image: url('rsrc/images/metal-abstract.jpg');
+	background-image: url('/rsrc/images/metal-abstract.jpg');
 	background-position: center;
 	background-size: cover;
 	border-left: 0.5em solid black;
@@ -146,7 +146,7 @@ body {
 }
 
 #slot-machine-bottom {
-	background-image: url('rsrc/images/flowery-card.jpg');
+	background-image: url('/rsrc/images/flowery-card.jpg');
 	background-position-y: -100%;
 	background-size: 100% 200%;
 	border-bottom: 0.5em solid black;
