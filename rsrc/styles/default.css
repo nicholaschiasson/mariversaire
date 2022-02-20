@@ -78,7 +78,7 @@ body {
 
 #slot-machine-light {
 	background-image: linear-gradient(to bottom right, rgb(117, 0, 0), darkred);
-	border: 0.5em solid black;
+	border: 0.35em solid black;
 	border-top-left-radius: 100%;
 	border-top-right-radius: 100%;
 	bottom: 0;
