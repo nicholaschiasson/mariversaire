@@ -19,12 +19,12 @@ const MOTIVATIONAL_PHRASES = [
 	"Alright, you can stop spinning now.",
 	"Seriously, there were only 3 prizes.",
 	"Honestly, it's coded to only let you win 3 times.",
-	"Do you think I would add some easter egg or something like that?",
+	"Do you think I would add an easter egg or something like that?",
 	"Don't you know how lazy I am? Why would I make a fourth prize?",
 	"This is beginning to get exessive, don't you think?",
-	"Alright, fine. Due to your persistance, I will grant you a fourth prize...",
+	"Alright, fine. Due to your persistence, I shall grant you a fourth prize...",
 	"Psyche! Haha totally fooled you didn't I?",
-	"Okay, now I feel bad, here, you can have your prize.",
+	"Okay, now I feel bad. Here, you can have your prize.",
 ]
 
 const SPINNING_SOUND = new Audio("/rsrc/audio/spinning.mp3");
