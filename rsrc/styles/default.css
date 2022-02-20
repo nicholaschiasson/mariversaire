@@ -176,8 +176,8 @@ body {
 	background-size: cover;
 	border-left: 0.5em solid black;
 	border-right: 0.5em solid black;
-	border-bottom: 0.5em groove black;
-	border-top: 0.5em groove black;
+	border-bottom: 0.5em groove gray;
+	border-top: 0.5em groove gray;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
@@ -186,7 +186,7 @@ body {
 
 .slot {
 	background-color: white;
-	border: 0.125em ridge black;
+	border: 0.125em ridge silver;
 	border-radius: 0.75em;
 	font: 3em 'Courier New', monospace;
 	min-height: 1.5em;
@@ -282,17 +282,17 @@ body {
 
 #slot-machine-lever-handle-stick {
 	background-image: linear-gradient(to right, silver, gray);
-	border-left: 0.25em groove black;
-	border-right: 0.25em ridge black;
+	border-left: 0.25em groove silver;
+	border-right: 0.25em ridge silver;
 	flex-grow: 5;
 	transform: scaleX(0.5);
 }
 
 #slot-machine-lever-notch {
 	background-image: linear-gradient(silver, gray);
-	border-right: 0.5em ridge black;
-	border-bottom: 0.5em groove black;
-	border-top: 0.5em groove black;
+	border-right: 0.5em ridge silver;
+	border-bottom: 0.5em groove silver;
+	border-top: 0.5em groove silver;
 	border-top-right-radius: 0.5em;
 	border-bottom-right-radius: 0.5em;
 	flex-grow: 1;
