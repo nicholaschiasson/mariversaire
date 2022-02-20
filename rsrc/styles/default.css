@@ -68,6 +68,30 @@ body {
 	padding: 0;
 }
 
+.slot-machine-spinning {
+	animation-name: slot-machine-spinning;
+	animation-duration: 0.125s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes slot-machine-spinning {
+	0% {
+		transform: rotate(0deg) translateY(-0.25em);
+	}
+	25% {
+		transform: rotate(1deg) translateY(0);
+	}
+	50% {
+		transform: rotate(0deg) translateY(-0.25em);
+	}
+	75% {
+		transform: rotate(-1deg) translateY(0);
+	}
+	100% {
+		transform: rotate(0deg) translateY(-0.25em);
+	}
+}
+
 #slot-machine-left {
 	display: flex;
 	flex-direction: column;

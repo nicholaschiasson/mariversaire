@@ -14,15 +14,9 @@
 
 <body>
 	<h1 id="motivation" class="page-title fade-in-out">WIN UP TO 3 MAGNIFICENT PRIZES</h1>
-	<script>
-		const motivation = document.getElementById("motivation");
-	</script>
 	<div id="slot-machine">
 		<div id="slot-machine-left">
 			<div id="slot-machine-light"></div>
-			<script>
-				const light = document.getElementById("slot-machine-light");
-			</script>
 			<div id="slot-machine-top">
 				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
 			</div>
@@ -30,14 +24,6 @@
 				<div id="slot-1" class="slot"></div>
 				<div id="slot-2" class="slot"></div>
 				<div id="slot-3" class="slot"></div>
-				<script>
-					const slot1 = document.getElementById("slot-1");
-					const slot2 = document.getElementById("slot-2");
-					const slot3 = document.getElementById("slot-3");
-					slot1.innerText = SLOT_VALUES.random();
-					slot2.innerText = SLOT_VALUES.random();
-					slot3.innerText = SLOT_VALUES.random();
-				</script>
 			</div>
 			<div id="slot-machine-bottom">
 				<h1 class="slot-machine-title">BONNE MARIVERSAIRE</h1>
@@ -55,6 +41,17 @@
 			<div class="slot-machine-buffer"></div>
 		</div>
 	</div>
+	<script>
+		const motivation = document.getElementById("motivation");
+		const machine = document.getElementById("slot-machine");
+		const light = document.getElementById("slot-machine-light");
+		const slot1 = document.getElementById("slot-1");
+		const slot2 = document.getElementById("slot-2");
+		const slot3 = document.getElementById("slot-3");
+		slot1.innerText = SLOT_VALUES.random();
+		slot2.innerText = SLOT_VALUES.random();
+		slot3.innerText = SLOT_VALUES.random();
+	</script>
 </body>
 
 </html>

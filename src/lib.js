@@ -57,6 +57,7 @@ function endSpin(slot, last) {
 
 	if (last) {
 		SPINNING_SOUND.pause();
+		machine.classList.remove("slot-machine-spinning");
 		if (won()) {
 			WINNER_SOUND.play();
 			light.classList.add("slot-machine-light-alarm");
@@ -80,6 +81,7 @@ function spin() {
 	const spins = Number.parseInt(localStorage.getItem(LSKEY_SPINS) || 0) + 1;
 	SPINNING_SOUND.play();
 	localStorage.setItem(LSKEY_SPINS, spins);
+	machine.classList.add("slot-machine-spinning");
 	slot1.classList.add("spinning");
 	slot2.classList.add("spinning");
 	slot3.classList.add("spinning");
