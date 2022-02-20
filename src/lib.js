@@ -33,6 +33,7 @@ const BINGBONG_SOUND = new Audio("/rsrc/audio/bingbong.mp3");
 const WINNER_SOUND = new Audio("/rsrc/audio/winner.mp3");
 WINNER_SOUND.addEventListener("ended", () => {
 	localStorage.removeItem(LSKEY_SPINNING);
+	light.classList.remove("slot-machine-light-alarm");
 });
 
 localStorage.removeItem(LSKEY_SPINNING);
@@ -46,21 +47,19 @@ function animateSpin(slot, i, t) {
 
 function endSpin(slot, last) {
 	slot.classList.remove("spinning");
-	const s1 = slot1 || document.getElementById("slot-1");
-	const s2 = slot2 || document.getElementById("slot-2");
-	const s3 = slot3 || document.getElementById("slot-3");
 
 	const spins = Number.parseInt(localStorage.getItem(LSKEY_SPINS)) - 2;
 	slot.innerText = PRIZES.includes(spins)
 		? SLOT_VALUES[Math.sqrt(spins) - 1]
-		: ((last && s1.innerText === s2.innerText)
-			? SLOT_VALUES.filter(v => v !== s1.innerText)
+		: ((last && slot1.innerText === slot2.innerText)
+			? SLOT_VALUES.filter(v => v !== slot1.innerText)
 			: SLOT_VALUES).random();
 
 	if (last) {
 		SPINNING_SOUND.pause();
 		if (won()) {
 			WINNER_SOUND.play();
+			light.classList.add("slot-machine-light-alarm");
 		} else {
 			BINGBONG_SOUND.play();
 			localStorage.removeItem(LSKEY_SPINNING);
@@ -69,11 +68,7 @@ function endSpin(slot, last) {
 }
 
 function won() {
-	const s1 = slot1 || document.getElementById("slot-1");
-	const s2 = slot2 || document.getElementById("slot-2");
-	const s3 = slot3 || document.getElementById("slot-3");
-
-	return s1.innerText === s2.innerText && s1.innerText === s3.innerText;
+	return slot1.innerText === slot2.innerText && slot1.innerText === slot3.innerText;
 }
 
 function spin() {
@@ -81,30 +76,30 @@ function spin() {
 		console.warn("Wait for current spin to finish.");
 		return;
 	}
-	const s1 = slot1 || document.getElementById("slot-1");
-	const s2 = slot2 || document.getElementById("slot-2");
-	const s3 = slot3 || document.getElementById("slot-3");
-	const m = motivation || document.getElementById("motivation");
+	localStorage.setItem(LSKEY_SPINNING, true);
 	const spins = Number.parseInt(localStorage.getItem(LSKEY_SPINS) || 0) + 1;
 	SPINNING_SOUND.play();
 	localStorage.setItem(LSKEY_SPINS, spins);
-	localStorage.setItem(LSKEY_SPINNING, true);
-	s1.classList.add("spinning");
-	s2.classList.add("spinning");
-	s3.classList.add("spinning");
-	if (spins > 35 && !SLOT_VALUES.includes("💆")) {
+	slot1.classList.add("spinning");
+	slot2.classList.add("spinning");
+	slot3.classList.add("spinning");
+	if ((spins - 2) > 35 && !SLOT_VALUES.includes("💆")) {
 		SLOT_VALUES.push("💆");
 	}
-	setTimeout(animateSpin, 130, s1, 0, 130);
-	setTimeout(animateSpin, 115, s2, 1, 115);
-	setTimeout(animateSpin, 100, s3, 2, 100);
-	setTimeout(endSpin, 1000, s1);
-	setTimeout(endSpin, 2000, s2);
-	setTimeout(endSpin, 3000, s3, true);
+	setTimeout(animateSpin, 130, slot1, 0, 130);
+	setTimeout(animateSpin, 115, slot2, 1, 115);
+	setTimeout(animateSpin, 100, slot3, 2, 100);
+	setTimeout(endSpin, 1666, slot1);
+	setTimeout(endSpin, 3333, slot2);
+	setTimeout(endSpin, 5000, slot3, true);
 	const phrase = MOTIVATION.indexOf(spins - 2);
 	if (phrase > -1) {
-		m.innerText = MOTIVATIONAL_PHRASES[phrase];
-		m.style.animation = 'none';
-		setTimeout(() => { m.style.animation = ''; }, 10);
+		motivation.innerText = MOTIVATIONAL_PHRASES[phrase];
+		motivation.style.animation = "none";
+		setTimeout(() => { motivation.style.animation = ""; }, 100);
+	} else if (spins - 2 > MOTIVATION[MOTIVATION.length - 1]) {
+		motivation.innerText = "Sorry, you've already won all of the prizes. Come back next year.";
+		motivation.style.animation = "none";
+		setTimeout(() => { motivation.style.animation = ""; }, 100);
 	}
 }

@@ -43,17 +43,17 @@ body {
 
 .fade-in-out {
 	animation-name: fade-in-out;
-	animation-duration: 4s;
+	animation-duration: 5s;
 }
 
 @keyframes fade-in-out {
 	0% {
 		opacity: 0;
 	}
-	25% {
+	20% {
 		opacity: 1;
 	}
-	75% {
+	80% {
 		opacity: 1;
 	}
 	100% {
@@ -84,6 +84,35 @@ body {
 	bottom: 0;
 	margin: auto;
 	width: 1%;
+}
+
+.slot-machine-light-alarm {
+	animation-name: slot-machine-light-alarm;
+	animation-duration: 0.3s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes slot-machine-light-alarm {
+	0% {
+		background-image: radial-gradient(farthest-side at 100% 50%, red, darkred);
+		box-shadow: 1em 0 1em 1em red;
+	}
+	25% {
+		background-image: radial-gradient(farthest-corner at 50% 75%, red, darkred);
+		box-shadow: 0 0 2.5em 2.5em red;
+	}
+	50% {
+		background-image: radial-gradient(farthest-side at 0% 50%, red, darkred);
+		box-shadow: -1em 0 1em 1em red;
+	}
+	75% {
+		background-image: radial-gradient(closest-side at 50% 0%, red, darkred);
+		box-shadow: 0 0 1em 1em red;
+	}
+	100% {
+		background-image: radial-gradient(farthest-corner at 100% 50%, red, darkred);
+		box-shadow: 1em 0 1em 1em red;
+	}
 }
 
 #slot-machine-top {
@@ -157,14 +186,91 @@ body {
 }
 
 #slot-machine-right {
-	background-color: darkorange;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
-	align-content: center;
+	align-items: center;
+	padding: 0;
+}
+
+.slot-machine-buffer {
+	flex-grow: 1;
 }
 
 #slot-machine-lever {
-	background-color: yellow;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	align-items: center;
+	margin-left: 1em;
+	margin-right: 1em;
+	padding: 0;
+	width: 100%;
+}
+
+#slot-machine-lever-handle {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 7;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+}
+
+#slot-machine-lever-handle-ball {
+	animation-name: handle-idle;
+	animation-direction: alternate;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	background-image: radial-gradient(farthest-corner at 60% 30%, red, darkred);
+	border-top: 0.25em groove red;
+	border-left: 0.25em groove red;
+	border-right: 0.25em ridge red;
+	border-bottom: 0.25em ridge red;
+	border-radius: 100%;
 	cursor: pointer;
+	flex-grow: 1;
+	width: 75%;
+	z-index: 1;
+}
+
+#slot-machine-lever-handle-ball:hover {
+	animation-name: handle-hover;
+}
+
+@keyframes handle-idle {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.2);
+	}
+}
+
+@keyframes handle-hover {
+	from {
+		box-shadow: 0 0 0 0 gold;
+	}
+	to {
+		box-shadow: 0 0 1em 1em gold;
+	}
+}
+
+#slot-machine-lever-handle-stick {
+	background-image: linear-gradient(to right, silver, gray);
+	border-left: 0.25em groove black;
+	border-right: 0.25em ridge black;
+	flex-grow: 5;
+	transform: scaleX(0.5);
+}
+
+#slot-machine-lever-notch {
+	background-image: linear-gradient(silver, gray);
+	border-right: 0.5em ridge black;
+	border-bottom: 0.5em groove black;
+	border-top: 0.5em groove black;
+	border-top-right-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	flex-grow: 1;
+	width: 50%;
 }

@@ -20,6 +20,9 @@
 	<div id="slot-machine">
 		<div id="slot-machine-left">
 			<div id="slot-machine-light"></div>
+			<script>
+				const light = document.getElementById("slot-machine-light");
+			</script>
 			<div id="slot-machine-top">
 				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
 			</div>
@@ -41,11 +44,15 @@
 			</div>
 		</div>
 		<div id="slot-machine-right">
-			<div style="background-color: blue;"></div>
-			<div id="slot-machine-lever" onclick="spin()">
-				hi
+			<div class="slot-machine-buffer"></div>
+			<div id="slot-machine-lever">
+				<div id="slot-machine-lever-handle">
+					<div id="slot-machine-lever-handle-ball" onclick="spin()"></div>
+					<div id="slot-machine-lever-handle-stick"></div>
+				</div>
+				<div id="slot-machine-lever-notch"></div>
 			</div>
-			<div style="background-color: blue;"></div>
+			<div class="slot-machine-buffer"></div>
 		</div>
 	</div>
 </body>
