@@ -115,6 +115,10 @@ body {
 	background-image: linear-gradient(to bottom right, red, lightpink);
 }
 
+#slot-machine-light:active {
+	background-image: linear-gradient(to top left, red, lightpink);
+}
+
 .slot-machine-light-alarm {
 	animation-name: slot-machine-light-alarm;
 	animation-duration: 0.3s;

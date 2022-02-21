@@ -6,7 +6,7 @@ const LSKEY_SPINNING = "spinning";
 const LSKEY_SPINS = "spins";
 
 const PRIZES = [1, 9, 25, 36];
-const SLOT_VALUES = ["💅", "🌱", "☕", "🍸", "🛬"];
+const SLOT_VALUES = ["☕", "🌱", "💅", "🍸", "🛬"];
 
 const MOTIVATION = [4, 8, 12, 16, 20, 24, 27, 29, 30, 31, 32, 33, 34, 35, 36];
 const MOTIVATIONAL_PHRASES = [
