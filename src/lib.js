@@ -21,7 +21,7 @@ const MOTIVATIONAL_PHRASES = [
 	"Honestly, it's coded to only let you win 3 times.",
 	"Do you think I would add an easter egg or something like that?",
 	"Don't you know how lazy I am? Why would I make a fourth prize?",
-	"This is beginning to get exessive, don't you think?",
+	"This is beginning to get excessive, don't you think?",
 	"Alright, fine. Due to your persistence, I shall grant you a fourth prize...",
 	"Psyche! Haha totally fooled you didn't I?",
 	"Okay, now I feel bad. Here, you can have your prize.",
