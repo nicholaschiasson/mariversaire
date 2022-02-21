@@ -35,6 +35,8 @@ const WINNER_SOUND = new Audio("/rsrc/audio/winner.mp3");
 WINNER_SOUND.addEventListener("ended", () => {
 	localStorage.removeItem(LSKEY_SPINNING);
 	light.classList.remove("slot-machine-light-alarm");
+	handle.classList.remove("slot-machine-lever-handle-pull");
+	ball.classList.add("slot-machine-lever-handle-ball-idle");
 });
 
 localStorage.removeItem(LSKEY_SPINNING);
@@ -59,12 +61,12 @@ function endSpin(slot, last) {
 	if (last) {
 		SPINNING_SOUND.pause();
 		machine.classList.remove("slot-machine-spinning");
-		handle.classList.remove("slot-machine-lever-handle-pull");
-		ball.classList.add("slot-machine-lever-handle-ball-idle");
 		if (won()) {
 			WINNER_SOUND.play();
 			light.classList.add("slot-machine-light-alarm");
 		} else {
+			handle.classList.remove("slot-machine-lever-handle-pull");
+			ball.classList.add("slot-machine-lever-handle-ball-idle");
 			BINGBONG_SOUND.play();
 			localStorage.removeItem(LSKEY_SPINNING);
 		}
