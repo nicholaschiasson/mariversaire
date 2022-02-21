@@ -19,7 +19,7 @@ const MOTIVATIONAL_PHRASES = [
 	"Alright, you can stop spinning now.",
 	"Seriously, there were only 3 prizes.",
 	"Honestly, it's coded to only let you win 3 times.",
-	"Do you think I would add an easter egg or something like that?",
+	"Did you think I would add an easter egg or something like that?",
 	"Don't you know how lazy I am? Why would I make a fourth prize?",
 	"This is beginning to get excessive, don't you think?",
 	"Alright, fine. Due to your persistence, I shall grant you a fourth prize...",
@@ -64,6 +64,7 @@ function endSpin(slot, last) {
 		if (won()) {
 			WINNER_SOUND.play();
 			light.classList.add("slot-machine-light-alarm");
+			redeemPrize(slot.innerText);
 		} else {
 			handle.classList.remove("slot-machine-lever-handle-pull");
 			ball.classList.add("slot-machine-lever-handle-ball-idle");
@@ -75,6 +76,15 @@ function endSpin(slot, last) {
 
 function won() {
 	return slot1.innerText === slot2.innerText && slot1.innerText === slot3.innerText;
+}
+
+function redeemPrize(prize) {
+	const newPrize = document.createElement("a");
+	newPrize.setAttribute("class", "prize");
+	newPrize.setAttribute("href", `${prize}.html`);
+	newPrize.setAttribute("target", "_blank");
+	newPrize.innerText = prize;
+	prizes.appendChild(newPrize);
 }
 
 function spin() {
@@ -115,5 +125,8 @@ function spin() {
 }
 
 function resetSpins() {
+	while (prizes.hasChildNodes()) {
+		prizes.removeChild(prizes.lastChild);
+	}
 	localStorage.setItem(LSKEY_SPINS, 0);
 }

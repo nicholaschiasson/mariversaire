@@ -108,6 +108,8 @@ body {
 	bottom: 0;
 	cursor: pointer;
 	margin: auto;
+	transform-origin: bottom;
+	transition: 0.1s;
 	width: 1%;
 }
 
@@ -117,6 +119,7 @@ body {
 
 #slot-machine-light:active {
 	background-image: linear-gradient(to top left, red, lightpink);
+	transform: scaleY(0.9);
 }
 
 .slot-machine-light-alarm {
@@ -329,4 +332,55 @@ body {
 	border-bottom-right-radius: 0.5em;
 	flex-grow: 1;
 	width: 50%;
+}
+
+.prize {
+	animation-name: prize-idle;
+	animation-duration: 0.2s;
+	animation-iteration-count: infinite;
+	cursor: pointer;
+	display: inline-block;
+	margin: 3em;
+	padding: 0;
+	text-decoration: none;
+	transform: scale(4);
+	transition: 0.1s;
+}
+
+.prize:hover {
+	transform: scale(4.5);
+}
+
+.prize:active {
+	transform: scale(3.5);
+}
+
+@keyframes prize-idle {
+	0% {
+		text-shadow: 0.2em 0 0.2em gold;
+	}
+	12.5% {
+		text-shadow: 0.1em 0.1em 0.2em gold;
+	}
+	25% {
+		text-shadow: 0 0.2em 0.2em gold;
+	}
+	37.5% {
+		text-shadow: -0.1em 0.1em 0.2em gold;
+	}
+	50% {
+		text-shadow: -0.2em 0 0.2em gold;
+	}
+	62.5% {
+		text-shadow: -0.1em -0.1em 0.2em gold;
+	}
+	75% {
+		text-shadow: 0 -0.2em 0.2em gold;
+	}
+	87.5% {
+		text-shadow: 0.1em -0.1em 0.2em gold;
+	}
+	100% {
+		text-shadow: 0.2em 0 0.2em gold;
+	}
 }
