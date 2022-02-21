@@ -27,9 +27,10 @@ const MOTIVATIONAL_PHRASES = [
 	"Okay, now I feel bad. Here, you can have your prize.",
 ]
 
+const BINGBONG_SOUND = new Audio("/rsrc/audio/bingbong.mp3");
+const LEVER_SOUND = new Audio("/rsrc/audio/lever.mp3");
 const SPINNING_SOUND = new Audio("/rsrc/audio/spinning.mp3");
 SPINNING_SOUND.loop = true;
-const BINGBONG_SOUND = new Audio("/rsrc/audio/bingbong.mp3");
 const WINNER_SOUND = new Audio("/rsrc/audio/winner.mp3");
 WINNER_SOUND.addEventListener("ended", () => {
 	localStorage.removeItem(LSKEY_SPINNING);
@@ -58,6 +59,8 @@ function endSpin(slot, last) {
 	if (last) {
 		SPINNING_SOUND.pause();
 		machine.classList.remove("slot-machine-spinning");
+		handle.classList.remove("slot-machine-lever-handle-pull");
+		ball.classList.add("slot-machine-lever-handle-ball-idle");
 		if (won()) {
 			WINNER_SOUND.play();
 			light.classList.add("slot-machine-light-alarm");
@@ -79,12 +82,15 @@ function spin() {
 	}
 	localStorage.setItem(LSKEY_SPINNING, true);
 	const spins = Number.parseInt(localStorage.getItem(LSKEY_SPINS) || 0) + 1;
+	LEVER_SOUND.play();
 	SPINNING_SOUND.play();
 	localStorage.setItem(LSKEY_SPINS, spins);
 	machine.classList.add("slot-machine-spinning");
 	slot1.classList.add("spinning");
 	slot2.classList.add("spinning");
 	slot3.classList.add("spinning");
+	handle.classList.add("slot-machine-lever-handle-pull");
+	ball.classList.remove("slot-machine-lever-handle-ball-idle");
 	if ((spins - 2) > 35 && !SLOT_VALUES.includes("💆")) {
 		SLOT_VALUES.push("💆");
 	}
@@ -104,4 +110,8 @@ function spin() {
 		motivation.style.animation = "none";
 		setTimeout(() => { motivation.style.animation = ""; }, 100);
 	}
+}
+
+function resetSpins() {
+	localStorage.setItem(LSKEY_SPINS, 0);
 }

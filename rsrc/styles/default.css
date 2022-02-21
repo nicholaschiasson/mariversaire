@@ -76,19 +76,19 @@ body {
 
 @keyframes slot-machine-spinning {
 	0% {
-		transform: rotate(0deg) translateY(-0.25em);
+		transform: rotate(0) translateY(-0.25em);
 	}
 	25% {
 		transform: rotate(1deg) translateY(0);
 	}
 	50% {
-		transform: rotate(0deg) translateY(-0.25em);
+		transform: rotate(0) translateY(-0.25em);
 	}
 	75% {
 		transform: rotate(-1deg) translateY(0);
 	}
 	100% {
-		transform: rotate(0deg) translateY(-0.25em);
+		transform: rotate(0) translateY(-0.25em);
 	}
 }
 
@@ -106,8 +106,13 @@ body {
 	border-top-left-radius: 100%;
 	border-top-right-radius: 100%;
 	bottom: 0;
+	cursor: pointer;
 	margin: auto;
 	width: 1%;
+}
+
+#slot-machine-light:hover {
+	background-image: linear-gradient(to bottom right, red, lightpink);
 }
 
 .slot-machine-light-alarm {
@@ -229,6 +234,7 @@ body {
 	margin-left: 1em;
 	margin-right: 1em;
 	padding: 0;
+	perspective: 32em;
 	width: 100%;
 }
 
@@ -239,26 +245,48 @@ body {
 	align-items: center;
 	margin: 0;
 	padding: 0;
+	transform-origin: bottom;
+	transform-style: preserve-3d;
+}
+
+.slot-machine-lever-handle-pull {
+	animation-name: slot-machine-lever-handle-pull;
+	animation-duration: 1.5s;
+}
+
+@keyframes slot-machine-lever-handle-pull {
+	0% {
+		transform: rotateX(0);
+	}
+	50% {
+		transform: rotateX(-50deg);
+	}
+	100% {
+		transform: rotateX(0);
+	}
 }
 
 #slot-machine-lever-handle-ball {
-	animation-name: handle-idle;
-	animation-direction: alternate;
-	animation-duration: 0.5s;
-	animation-iteration-count: infinite;
 	background-image: radial-gradient(farthest-corner at 60% 30%, red, darkred);
 	border-top: 0.25em groove red;
 	border-left: 0.25em groove red;
 	border-right: 0.25em ridge red;
 	border-bottom: 0.25em ridge red;
 	border-radius: 100%;
-	cursor: pointer;
 	flex-grow: 1;
 	width: 75%;
 	z-index: 1;
 }
 
-#slot-machine-lever-handle-ball:hover {
+.slot-machine-lever-handle-ball-idle {
+	animation-name: handle-idle;
+	animation-direction: alternate;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	cursor: pointer;
+}
+
+.slot-machine-lever-handle-ball-idle:hover {
 	animation-name: handle-hover;
 }
 
@@ -267,7 +295,7 @@ body {
 		transform: scale(1);
 	}
 	to {
-		transform: scale(1.2);
+		transform: scale(1.1);
 	}
 }
 

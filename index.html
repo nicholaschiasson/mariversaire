@@ -17,7 +17,7 @@
 	<h1 id="motivation" class="page-title fade-in-out">WIN UP TO 3 MAGNIFICENT PRIZES</h1>
 	<div id="slot-machine">
 		<div id="slot-machine-left">
-			<div id="slot-machine-light"></div>
+			<div id="slot-machine-light" onclick="resetSpins()" title="Reset spin count"></div>
 			<div id="slot-machine-top">
 				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
 			</div>
@@ -34,7 +34,7 @@
 			<div class="slot-machine-buffer"></div>
 			<div id="slot-machine-lever">
 				<div id="slot-machine-lever-handle">
-					<div id="slot-machine-lever-handle-ball" onclick="spin()"></div>
+					<div id="slot-machine-lever-handle-ball" class="slot-machine-lever-handle-ball-idle" onclick="spin()" title="Spin"></div>
 					<div id="slot-machine-lever-handle-stick"></div>
 				</div>
 				<div id="slot-machine-lever-notch"></div>
@@ -49,6 +49,8 @@
 		const slot1 = document.getElementById("slot-1");
 		const slot2 = document.getElementById("slot-2");
 		const slot3 = document.getElementById("slot-3");
+		const handle = document.getElementById("slot-machine-lever-handle");
+		const ball = document.getElementById("slot-machine-lever-handle-ball");
 		slot1.innerText = SLOT_VALUES.random();
 		slot2.innerText = SLOT_VALUES.random();
 		slot3.innerText = SLOT_VALUES.random();
