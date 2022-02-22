@@ -22,9 +22,21 @@
 				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
 			</div>
 			<div id="slot-machine-body">
-				<div id="slot-1" class="slot"></div>
-				<div id="slot-2" class="slot"></div>
-				<div id="slot-3" class="slot"></div>
+				<div class="slot">
+					<div class="slot-mask">
+						<div id="slot-1" class="slot-text"></div>
+					</div>
+				</div>
+				<div class="slot">
+					<div class="slot-mask">
+						<div id="slot-2" class="slot-text"></div>
+					</div>
+				</div>
+				<div class="slot">
+					<div class="slot-mask">
+						<div id="slot-3" class="slot-text"></div>
+					</div>
+				</div>
 			</div>
 			<div id="slot-machine-bottom">
 				<h1 class="slot-machine-title">BONNE MARIVERSAIRE</h1>
@@ -54,8 +66,11 @@
 		const ball = document.getElementById("slot-machine-lever-handle-ball");
 		const prizes = document.getElementById("prizes");
 		slot1.innerText = SLOT_VALUES.random();
+		slot1.style["animation-duration"] = "0.22s"
 		slot2.innerText = SLOT_VALUES.random();
+		slot2.style["animation-duration"] = "0.2s"
 		slot3.innerText = SLOT_VALUES.random();
+		slot3.style["animation-duration"] = "0.18s";
 		if ((Number.parseInt(localStorage.getItem(LSKEY_SPINS)) - 2) >= PRIZES.at(-1) && !SLOT_VALUES.includes("💆")) {
 			SLOT_VALUES.push("💆");
 		}

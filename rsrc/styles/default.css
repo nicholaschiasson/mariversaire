@@ -198,8 +198,23 @@ body {
 
 .slot {
 	background-color: white;
-	border: 0.125em ridge silver;
-	border-radius: 0.75em;
+	border: 0.375em ridge silver;
+	border-radius: 2.25em;
+	padding: 0;
+}
+
+.slot-mask {
+	/* This seems so weird... Doesn't matter what my colour values are as long as they are opaque. */
+	-webkit-mask-image: radial-gradient(black, black);
+	mask-image: radial-gradient(black, black);
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	padding: 0;
+}
+
+.slot-text {
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
 	font: 3em 'Courier New', monospace;
 	min-height: 1.5em;
 	min-width: 1.5em;
@@ -208,6 +223,19 @@ body {
 	padding-bottom: 0.5em;
 	padding-top: 0.5em;
 	text-align: center;
+}
+
+.spinning {
+	animation-name: slot-text-spinning;
+}
+
+@keyframes slot-text-spinning {
+	from {
+		transform: translateY(-80%);
+	}
+	to {
+		transform: translateY(80%);
+	}
 }
 
 #slot-machine-bottom {

@@ -41,10 +41,10 @@ WINNER_SOUND.addEventListener("ended", () => {
 
 localStorage.removeItem(LSKEY_SPINNING);
 
-function animateSpin(slot, i, t) {
+function animateSpin(slot, i) {
 	if (slot.classList.contains("spinning")) {
 		slot.innerText = SLOT_VALUES[i % SLOT_VALUES.length];
-		setTimeout(animateSpin, t, slot, i + 1, t);
+		setTimeout(animateSpin, getAnimationDuration(slot), slot, i + 1);
 	}
 }
 
@@ -106,9 +106,9 @@ function spin() {
 	if ((spins - 2) > 35 && !SLOT_VALUES.includes("💆")) {
 		SLOT_VALUES.push("💆");
 	}
-	setTimeout(animateSpin, 130, slot1, 0, 130);
-	setTimeout(animateSpin, 115, slot2, 1, 115);
-	setTimeout(animateSpin, 100, slot3, 2, 100);
+	setTimeout(animateSpin, getAnimationDuration(slot1), slot1, 0);
+	setTimeout(animateSpin, getAnimationDuration(slot2), slot2, 1);
+	setTimeout(animateSpin, getAnimationDuration(slot3), slot3, 2);
 	setTimeout(endSpin, 1666, slot1);
 	setTimeout(endSpin, 3333, slot2);
 	setTimeout(endSpin, 5000, slot3, true);
@@ -122,6 +122,10 @@ function spin() {
 		motivation.style.animation = "none";
 		setTimeout(() => { motivation.style.animation = ""; }, 100);
 	}
+}
+
+function getAnimationDuration(element) {
+	return Number.parseFloat(element.style["animation-duration"]) * 1000;
 }
 
 function resetSpins() {
