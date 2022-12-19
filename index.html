@@ -20,9 +20,9 @@
 					: 1
 			);
 
-			let urlPath = '/notfound.html';
+			let urlPath = '/404.html';
 			for (let y = year; y >= birthYear; y--) {
-				let path = `/${y}/index.html`;
+				let path = `/${y}`;
 				if ((await fetch(path, { method: "HEAD", cache: "no-cache" })).ok) {
 					urlPath = path;
 					break;
