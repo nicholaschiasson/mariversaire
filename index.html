@@ -8,81 +8,30 @@
 	<meta name="description" content="Website celebrating Marianne's birthday.">
 	<title>mariversaire</title>
 	<link href="/rsrc/images/birthday-cake.png" rel="icon" type="image/png">
-	<link href="/rsrc/styles/fonts.css" rel="stylesheet">
-	<link href="/rsrc/styles/default.css" rel="stylesheet">
-	<script src="/src/lib.js"></script>
-</head>
+	<script async>
+		(async function main() {
+			let birthYear = 2001;
+			let birthdate = new Date(birthYear, 1 /* february */, 21);
+			let date = new Date();
+			let year = date.getFullYear() - (
+				date.getMonth() > birthdate.getMonth()
+					|| (date.getMonth() === birthdate.getMonth() && date.getDate() >= birthdate.getDate())
+					? 0
+					: 1
+			);
 
-<body>
-	<h1 id="motivation" class="page-title fade-in-out">WIN UP TO 3 MAGNIFICENT PRIZES</h1>
-	<div id="slot-machine">
-		<div id="slot-machine-left">
-			<div id="slot-machine-light" onclick="resetSpins()" title="Reset spin count"></div>
-			<div id="slot-machine-top">
-				<h1 class="slot-machine-title">JACKPOT ANNIVERSAIRE</h1>
-			</div>
-			<div id="slot-machine-body">
-				<div class="slot">
-					<div class="slot-mask">
-						<div id="slot-1" class="slot-text"></div>
-					</div>
-				</div>
-				<div class="slot">
-					<div class="slot-mask">
-						<div id="slot-2" class="slot-text"></div>
-					</div>
-				</div>
-				<div class="slot">
-					<div class="slot-mask">
-						<div id="slot-3" class="slot-text"></div>
-					</div>
-				</div>
-			</div>
-			<div id="slot-machine-bottom">
-				<h1 class="slot-machine-title">BONNE MARIVERSAIRE</h1>
-			</div>
-		</div>
-		<div id="slot-machine-right">
-			<div class="slot-machine-buffer"></div>
-			<div id="slot-machine-lever">
-				<div id="slot-machine-lever-handle">
-					<div id="slot-machine-lever-handle-ball" class="slot-machine-lever-handle-ball-idle" onclick="spin()" title="Spin"></div>
-					<div id="slot-machine-lever-handle-stick"></div>
-				</div>
-				<div id="slot-machine-lever-notch"></div>
-			</div>
-			<div class="slot-machine-buffer"></div>
-		</div>
-	</div>
-	<div id="prizes"></div>
-	<script>
-		const motivation = document.getElementById("motivation");
-		const machine = document.getElementById("slot-machine");
-		const light = document.getElementById("slot-machine-light");
-		const slot1 = document.getElementById("slot-1");
-		const slot2 = document.getElementById("slot-2");
-		const slot3 = document.getElementById("slot-3");
-		const handle = document.getElementById("slot-machine-lever-handle");
-		const ball = document.getElementById("slot-machine-lever-handle-ball");
-		const prizes = document.getElementById("prizes");
-		slot1.innerText = SLOT_VALUES.random();
-		slot1.style["animation-duration"] = "0.22s"
-		slot2.innerText = SLOT_VALUES.random();
-		slot2.style["animation-duration"] = "0.2s"
-		slot3.innerText = SLOT_VALUES.random();
-		slot3.style["animation-duration"] = "0.18s";
-		if ((Number.parseInt(localStorage.getItem(LSKEY_SPINS)) - 2) >= PRIZES.at(-1) && !SLOT_VALUES.includes("💆")) {
-			SLOT_VALUES.push("💆");
-		}
-		for (const prize of PRIZES) {
-			if ((Number.parseInt(localStorage.getItem(LSKEY_SPINS)) - 2) >= prize) {
-				redeemPrize(SLOT_VALUES[Math.sqrt(prize) - 1]);
+			let urlPath = '/notfound.html';
+			for (let y = year; y >= birthYear; y--) {
+				let path = `/${y}/index.html`;
+				if ((await fetch(path, { method: "HEAD", cache: "no-cache" })).ok) {
+					urlPath = path;
+					break;
+				}
 			}
-			else {
-				break;
-			}
-		}
+
+			window.location.replace(urlPath);
+		})();
 	</script>
-</body>
+</head>
 
 </html>

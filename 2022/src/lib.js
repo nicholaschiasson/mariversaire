@@ -27,11 +27,11 @@ const MOTIVATIONAL_PHRASES = [
 	"Okay, now I feel bad. Here, you can have your prize.",
 ]
 
-const BINGBONG_SOUND = new Audio("/rsrc/audio/bingbong.mp3");
-const LEVER_SOUND = new Audio("/rsrc/audio/lever.mp3");
-const SPINNING_SOUND = new Audio("/rsrc/audio/spinning.mp3");
+const BINGBONG_SOUND = new Audio("./rsrc/audio/bingbong.mp3");
+const LEVER_SOUND = new Audio("./rsrc/audio/lever.mp3");
+const SPINNING_SOUND = new Audio("./rsrc/audio/spinning.mp3");
 SPINNING_SOUND.loop = true;
-const WINNER_SOUND = new Audio("/rsrc/audio/winner.mp3");
+const WINNER_SOUND = new Audio("./rsrc/audio/winner.mp3");
 WINNER_SOUND.addEventListener("ended", () => {
 	localStorage.removeItem(LSKEY_SPINNING);
 	light.classList.remove("slot-machine-light-alarm");
