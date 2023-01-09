@@ -9,7 +9,7 @@
 	background-size: cover;
 	display: flex;
 	align-content: space-around;
-	justify-content: space-evenly;
+	justify-content: center;
 	height: 100%;
 }
 
