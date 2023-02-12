@@ -1,0 +1,204 @@
+* {
+	margin: auto;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+@media screen and (min-width: 64pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: xx-large;
+	}
+
+	sup {
+		font-size: medium;
+	}
+}
+
+@media screen and (min-width: 37.5pc) and (max-width: 64pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: large;
+	}
+
+	#keyboard-header {
+		font-size: medium;
+	}
+
+	sup {
+		font-size: small;
+	}
+}
+
+@media screen and (max-width: 37.5pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: smaller;
+	}
+
+	#keyboard-header {
+		font-size: large;
+	}
+
+	sup {
+		font-size: xx-small;
+	}
+}
+
+:root {
+	background-color: #eeeeee;
+}
+
+#game-area {
+	background-color: white;
+	border-radius: 1em;
+	filter: drop-shadow(0 0 1mm #888888);
+	margin: 0.5em;
+	padding-bottom: 0.25em;
+	padding-top: 0.5em;
+}
+
+#game-title {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	text-align: left;
+}
+
+#racers-area {
+	margin: 1em;
+}
+
+#racers-lanes {
+	width: 100%;
+}
+
+.racer-lane {
+	border-bottom-color: gold;
+	border-bottom-style: dashed;
+	border-bottom-width: 2px;
+	text-align: left;
+}
+
+#racer {
+	width: 4em;
+}
+
+#passage-area {
+	background-color: ghostwhite;
+	border-color: powderblue;
+	border-radius: 1em;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0.5em;
+	padding: 1em;
+
+}
+
+#correct {
+	color: #99cc00;
+}
+
+#incorrect {
+	animation: blink 1s infinite;/* delay iteration-count direction fill-mode; */
+	background-color: #f0a3a3;
+	border-right-style: solid;
+	border-right-width: 1px;
+	color: #803333;
+}
+
+@keyframes blink {
+  from, to {
+    border-right-color: transparent;
+    /* border-right-style: none; */
+  }
+  50% {
+    border-right-color: black;
+    /* border-right-style: solid; */
+  }
+}
+
+#passage-text {
+	margin-bottom: 0.5em;
+	text-align: justify;
+}
+
+#passage-input {
+	color: black;
+	border-color: #52a8eccc;
+	border-radius: 1mm;
+	border-style: solid;
+	border-width: 0.75mm;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	text-align: left;
+	width: calc(100% - 1em);
+}
+
+#passage-input:hover {
+	cursor: text;
+}
+
+#keyboard {
+	background-color: darkgray;
+	border-color: black;
+	border-radius: 0.5em;
+	border-style: solid;
+	border-width: 0.75mm;
+	margin-bottom: 0.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.25em;
+	padding-top: 0.25em;
+}
+
+#keyboard-header {
+	text-align: left;
+}
+
+#keyboard-header span {
+	background-color: #333333;
+	border-radius: 0.25em;
+	color: #CCCCCC;
+	padding: 0.125em;
+	padding-bottom: 0.0625em;
+	text-shadow: 1px 1px white;
+}
+
+.keyboard-horizontal-rules {
+	margin-bottom: 0.25em;
+	margin-top: 0.125em;
+	border-style: double;
+	border-width: 2Q;
+	scale: 1.1875;
+	translate: -0.75em;
+}
+
+#keyboard tr:nth-child(2) { --n: -1; }
+#keyboard tr:nth-child(3) { --n: 0; }
+#keyboard tr:nth-child(4) { --n: 1; }
+
+#keyboard tr {
+	transform: translateX(calc(var(--n) * 0.5em));
+}
+
+.keyboard-key {
+	background-color: lightgray;
+	border-color: gray;
+	border-style: ridge;
+	border-width: 2mm;
+	border-bottom-style: ridge;
+	border-right-style: ridge;
+	border-left-style: groove;
+	border-top-style: groove;
+	height: 1.5em;
+	width: 1.5em;
+}
+
+.keyboard-key:hover {
+	background-color: aliceblue;
+	cursor: pointer;
+}
+
+.keyboard-key:active {
+	background-color: gray;
+	border-color: #444444;
+}

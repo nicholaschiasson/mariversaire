@@ -8,10 +8,99 @@
 	<meta name="description" content="Website celebrating Marianne's birthday.">
 	<title>mariversaire</title>
 	<link href="/rsrc/images/birthday-cake.png" rel="icon" type="image/png">
+	<link href="/rsrc/styles/fonts.css" rel="stylesheet">
+	<link href="./rsrc/styles/default.css" rel="stylesheet">
+	<script src="./src/passages.js"></script>
+	<script src="./src/lib.js"></script>
 </head>
 
 <body>
-	<h1>happy birthday marianne</h1>
+	<div id="game-area">
+		<h2 id="game-title" class="state-game-preparing">The race is about to start!<span></span></h2>
+		<div id="racers-area">
+			<table id="racers-lanes">
+				<td class="racer-lane" width="90%">
+					<image id="racer" src="./rsrc/images/car-pink.svg" />
+				</td>
+				<td class="racer-wpm">0 wpm</td>
+			</table>
+		</div>
+		<div id="passage-area">
+			<p id="passage-text">
+				<span id="passage-correct"></span>
+				<span id="passage-incorrect"></span>
+				<span id="passage-current-word"></span>
+				<span id="passage-cursor"></span>
+				<span id="passage-remainder"></span>
+			</p>
+			<input id="passage-input" type="text" disabled="true" placeholder="Type the above text here when the race begins" />
+		</div>
+		<div id="keyboard-area">
+			<table id="keyboard">
+				<tr>
+					<th id="keyboard-header" colspan="5">
+						<span>JUST MY TYPE<sup>TM</sup></span>
+					</th>
+					<th colspan="5">
+						<hr class="keyboard-horizontal-rules" />
+						<hr class="keyboard-horizontal-rules" />
+						<hr class="keyboard-horizontal-rules" />
+					</th>
+				</tr>
+				<tr>
+					<td class="keyboard-key">Q</td>
+					<td class="keyboard-key">W</td>
+					<td class="keyboard-key">E</td>
+					<td class="keyboard-key">R</td>
+					<td class="keyboard-key">T</td>
+					<td class="keyboard-key">Y</td>
+					<td class="keyboard-key">U</td>
+					<td class="keyboard-key">I</td>
+					<td class="keyboard-key">O</td>
+					<td class="keyboard-key">P</td>
+				</tr>
+				<tr>
+					<td class="keyboard-key">A</td>
+					<td class="keyboard-key">S</td>
+					<td class="keyboard-key">D</td>
+					<td class="keyboard-key">F</td>
+					<td class="keyboard-key">G</td>
+					<td class="keyboard-key">H</td>
+					<td class="keyboard-key">J</td>
+					<td class="keyboard-key">K</td>
+					<td class="keyboard-key">L</td>
+					<td class="keyboard-key">'</td>
+				</tr>
+				<tr>
+					<td class="keyboard-key">Z</td>
+					<td class="keyboard-key">X</td>
+					<td class="keyboard-key">C</td>
+					<td class="keyboard-key">V</td>
+					<td class="keyboard-key">B</td>
+					<td class="keyboard-key">N</td>
+					<td class="keyboard-key">M</td>
+					<td class="keyboard-key">,</td>
+					<td class="keyboard-key">.</td>
+					<td class="keyboard-key">?</td>
+				</tr>
+				<tr>
+					<td class="keyboard-key" colspan="8"> </td>
+					<td id="keyboard-key-backspace" class="keyboard-key" colspan="2">⌫</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script id="main">
+		// const keyboard = await navigator.usb.requestDevice({filters:[]});
+
+		const passageInput = document.getElementById("passage-input");
+
+		window.addEventListener("keydown", windowOnKeyDown);
+		passageInput.addEventListener("keydown", passageInputOnKeyDown);
+		for (let keyboardKey of document.getElementsByClassName("keyboard-key")) {
+			keyboardKey.addEventListener("click", visualKeyboardKeyOnClick);
+		}
+	</script>
 </body>
 
 </html>
