@@ -10,8 +10,8 @@
 	<link href="/rsrc/images/birthday-cake.png" rel="icon" type="image/png">
 	<link href="/rsrc/styles/fonts.css" rel="stylesheet">
 	<link href="./rsrc/styles/default.css" rel="stylesheet">
-	<script src="./src/passages.js"></script>
-	<script src="./src/lib.js"></script>
+	<script src="/src/arrayExtensions.js"></script>
+	<script defer type="module" src="./src/main.js"></script>
 </head>
 
 <body>
@@ -27,11 +27,10 @@
 		</div>
 		<div id="passage-area">
 			<p id="passage-text">
-				<span id="passage-correct"></span>
-				<span id="passage-incorrect"></span>
-				<span id="passage-current-word"></span>
-				<span id="passage-cursor"></span>
-				<span id="passage-remainder"></span>
+				<span id="passage-correct">
+					<span class="correct"></span>
+				</span>
+				<span id="passage-current"><span class="correct"></span><span class="incorrect"></span><span class="remainder cursor-left"></span></span><span id="passage-remainder"><span class="incorrect cursor-right"></span><span class="remainder"></span></span>
 			</p>
 			<input id="passage-input" type="text" disabled="true" placeholder="Type the above text here when the race begins" />
 		</div>
@@ -90,17 +89,6 @@
 			</table>
 		</div>
 	</div>
-	<script id="main">
-		// const keyboard = await navigator.usb.requestDevice({filters:[]});
-
-		const passageInput = document.getElementById("passage-input");
-
-		window.addEventListener("keydown", windowOnKeyDown);
-		passageInput.addEventListener("keydown", passageInputOnKeyDown);
-		for (let keyboardKey of document.getElementsByClassName("keyboard-key")) {
-			keyboardKey.addEventListener("click", visualKeyboardKeyOnClick);
-		}
-	</script>
 </body>
 
 </html>

@@ -91,29 +91,47 @@
 	border-width: 1px;
 	margin: 0.5em;
 	padding: 1em;
-
 }
 
-#correct {
+#passage-current {
+	text-decoration: underline;
+}
+
+span.correct {
 	color: #99cc00;
 }
 
-#incorrect {
-	animation: blink 1s infinite;/* delay iteration-count direction fill-mode; */
+#passage-current span.correct {
+	text-decoration: underline;
+}
+
+span.incorrect {
 	background-color: #f0a3a3;
+	color: #803333;
+}
+
+#passage-current span.incorrect {
+	text-decoration: underline;
+}
+
+span.cursor-left:not(:empty), span.cursor-left[word-end] {
+	animation: blink 1s infinite;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+
+span.cursor-right:not(:empty) {
+	animation: blink 1s infinite;
 	border-right-style: solid;
 	border-right-width: 1px;
-	color: #803333;
 }
 
 @keyframes blink {
   from, to {
-    border-right-color: transparent;
-    /* border-right-style: none; */
+    border-color: transparent;
   }
   50% {
-    border-right-color: black;
-    /* border-right-style: solid; */
+    border-color: black;
   }
 }
 

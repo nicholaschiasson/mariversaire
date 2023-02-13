@@ -1,4 +1,4 @@
-const PASSAGES = [
+export default [
 	"A bad workman blames his tools.",
 	"A bird doesn't sing because it has an answer, it sings because it has a song.",
 	"A bird in the hand is worth two in the bush.",
