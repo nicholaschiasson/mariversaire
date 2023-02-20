@@ -20,13 +20,13 @@ state.set(LS_KEY.StateGame, STATE_GAME.Preparing);
 setInterval(State.onTick, TICK_INTERVAL);
 setInterval(onTick, TICK_INTERVAL);
 
-// state.addSubscriber(LS_KEY.StateGame, elements.connectKeyboardButton);
+state.addSubscriber(LS_KEY.StateGame, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTimer);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTitle);
 state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
 state.addSubscriber(LS_KEY.StateGame, elements.raceAgainButton);
-// state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
-// state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
+state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
+state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
 state.addSubscriber(LS_KEY.StateProgression, elements.keyboardArea);
 
 window.addEventListener("keydown", windowOnKeyDown);

@@ -319,7 +319,6 @@ span.cursor-right:not(:empty) {
 
 #buttons {
 	margin: 0.5em;
-	margin-top: 0.75em;
 	width: calc(100% - 1em);
 }
 
@@ -328,10 +327,11 @@ span.cursor-right:not(:empty) {
 	border-radius: 2mm;
 	color: white;
 	display: none;
-	padding: 1em;
+	padding: calc(50% - 0.75em);
 	padding-bottom: 0.5em;
 	padding-top: 0.5em;
 	transition-duration: 0.25s;
+	width: 100%;
 }
 
 .game-menu-button:hover {
@@ -343,6 +343,16 @@ span.cursor-right:not(:empty) {
 	display: initial;
 }
 
+#race-again {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#buttons td {
+	text-align: left;
+}
+
 #buttons :nth-child(4) {
 	text-align: right;
+	width: 75%;
 }
