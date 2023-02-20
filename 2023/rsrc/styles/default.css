@@ -47,6 +47,7 @@
 
 :root {
 	background-color: #eeeeee;
+	overflow: hidden;
 }
 
 #game-area {
