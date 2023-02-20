@@ -4,6 +4,7 @@ export const LS_DELIM = ".";
 
 export const LS_KEY = {
 	StateGame: "stateGame",
+	StateKeyboard: "stateKeyboard",
 	StateProgression: "stateProgression"
 }
 
@@ -19,10 +20,14 @@ export const STATE_SUCCESS = {
 }
 
 export const STATE_PROGRESSION = {
-	Visual: 0,
+	Virtual: 0,
 	Integrated: 1,
-	External: 2,
-	Super: 3
+	External: 2
+}
+
+export const STATE_KEYBOARD = {
+	Virtual: 0,
+	Physical: 1
 }
 
 export const TICK_INTERVAL = 1000;

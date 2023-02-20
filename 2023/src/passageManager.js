@@ -1,7 +1,7 @@
-import { LS_KEY, STATE_PROGRESSION } from "./constants.js";
+import { LS_KEY, STATE_KEYBOARD } from "./constants.js";
 import passages from "./passages.js";
 import PassageText from "./passageText.js";
-import State from "./state.js";
+import state from "./state.js";
 
 export const PassagePushResult = {
 	None: "None",
@@ -18,7 +18,7 @@ export default class PassageManager {
 		this.passageRemainder = new PassageText("passage-remainder");
 		this.cursorLeft = document.getElementsByClassName("cursor-left")[0];
 		this.cursorRight = document.getElementsByClassName("cursor-right")[0];
-		this.initPassage();
+		this.cyclePassages();
 	}
 
 	get progress() {
@@ -34,14 +34,19 @@ export default class PassageManager {
 	}
 
 	checkInput(value) {
-		return State.get(LS_KEY.StateProgression) === STATE_PROGRESSION.Visual
+		return state.get(LS_KEY.StateKeyboard, true) === STATE_KEYBOARD.Virtual
 			? value.toLowerCase() === this.passageCurrent.peekRemainder().toLowerCase()
 			: value === this.passageCurrent.peekRemainder();
 	}
 
 	cyclePassages() {
-		this.passages = [...this.passages.slice(1), this.passages[0]];
-		this.initPassage()
+		let filter = state.get(LS_KEY.StateKeyboard) === STATE_KEYBOARD.Virtual
+			? (p, l) => p.length >= l
+			: (p, l) => p.length < l;
+		do {
+			this.passages = [...this.passages.slice(1), this.passages[0]];
+		} while (filter(this.passages[0], 128));
+		this.initPassage();
 		return this.passages[0];
 	}
 

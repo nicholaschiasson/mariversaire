@@ -47,7 +47,7 @@
 
 :root {
 	background-color: #eeeeee;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 #game-area {
@@ -247,7 +247,7 @@ span.cursor-right:not(:empty) {
 	display: none;
 }
 
-#keyboard-area[stateprogression="0"] {
+#keyboard-area[statekeyboard="0"] {
 	display: block;
 }
 
@@ -327,9 +327,10 @@ span.cursor-right:not(:empty) {
 	border-radius: 2mm;
 	color: white;
 	display: none;
+	font-size: 1.5em;
 	padding: calc(50% - 0.75em);
-	padding-bottom: 0.5em;
-	padding-top: 0.5em;
+	padding-bottom: 0.125em;
+	padding-top: 0.25em;
 	transition-duration: 0.25s;
 	width: 100%;
 }
@@ -346,6 +347,9 @@ span.cursor-right:not(:empty) {
 #race-again {
 	padding-left: 1em;
 	padding-right: 1em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	font-size: 1em;
 }
 
 #buttons td {
@@ -355,4 +359,19 @@ span.cursor-right:not(:empty) {
 #buttons :nth-child(4) {
 	text-align: right;
 	width: 75%;
+}
+
+#use-virtual-keyboard[stateprogression="0"],
+#use-physical-keyboard[stateprogression="0"],
+#connect-keyboard[stateprogression="0"],
+#connect-keyboard[stateprogression="1"] {
+	display: none;
+}
+
+#use-virtual-keyboard[statekeyboard="0"],
+#use-physical-keyboard[statekeyboard="1"],
+#use-virtual-keyboard[statekeyboard="0"]:hover,
+#use-physical-keyboard[statekeyboard="1"]:hover {
+	background-color: lightgray;
+	cursor: initial;
 }

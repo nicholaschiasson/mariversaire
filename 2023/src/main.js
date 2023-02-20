@@ -1,4 +1,4 @@
-import { DURATION, LS_KEY, STATE_GAME, STATE_PROGRESSION, TICK_INTERVAL } from "./constants.js";
+import { DURATION, LS_KEY, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, TICK_INTERVAL } from "./constants.js";
 import elements from "./elements.js";
 import PassageManager, { PassagePushResult } from "./passageManager.js";
 import Racer from "./racer.js";
@@ -27,12 +27,19 @@ state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
 state.addSubscriber(LS_KEY.StateGame, elements.raceAgainButton);
 state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
-state.addSubscriber(LS_KEY.StateProgression, elements.keyboardArea);
+state.addSubscriber(LS_KEY.StateKeyboard, elements.keyboardArea);
+state.addSubscriber(LS_KEY.StateKeyboard, elements.usePhysicalKeyboardButton);
+state.addSubscriber(LS_KEY.StateKeyboard, elements.useVirtualKeyboardButton);
+state.addSubscriber(LS_KEY.StateProgression, elements.connectKeyboardButton);
+state.addSubscriber(LS_KEY.StateProgression, elements.usePhysicalKeyboardButton);
+state.addSubscriber(LS_KEY.StateProgression, elements.useVirtualKeyboardButton);
 
 window.addEventListener("keydown", windowOnKeyDown);
 
 elements.passageInput.addEventListener("keydown", passageInputOnKeyDown);
 elements.raceAgainButton.addEventListener("click", raceAgainOnClick);
+elements.usePhysicalKeyboardButton.addEventListener("click", usePhysicalKeyboardOnClick);
+elements.useVirtualKeyboardButton.addEventListener("click", useVirtualKeyboardOnClick);
 
 for (let keyboardKey of elements.keyboardKeys) {
 	keyboardKey.addEventListener("click", visualKeyboardKeyOnClick);
@@ -61,17 +68,12 @@ function windowOnKeyDown(keyboardEvent) {
 	if (keyboardEvent.altKey || keyboardEvent.ctrlKey || keyboardEvent.metaKey) {
 		return;
 	}
-	switch (state.get(LS_KEY.StateProgression)) {
-		case STATE_PROGRESSION.Integrated:
-		case STATE_PROGRESSION.External: {
+	switch (state.get(LS_KEY.StateKeyboard, true)) {
+		case STATE_KEYBOARD.Physical: {
 			if (keyboardEvent.isTrusted && /^([a-z.,'? ]|Backspace)$/i.test(keyboardEvent.key)) {
 				// Call the event handler directly instead of dispatching another event
 				passageInputOnKeyDown(new KeyboardEvent("keydown", keyboardEvent));
 			}
-			break;
-		}
-		case STATE_PROGRESSION.Super: {
-			// superpowers
 			break;
 		}
 		default: {
@@ -108,7 +110,12 @@ function passageInputOnKeyDown(keyboardEvent) {
 				case PassagePushResult.Done: {
 					elements.passageInput.value = "";
 					updateRacer();
+					let keyboard = state.get(LS_KEY.StateKeyboard);
+					let progress = state.get(LS_KEY.StateProgression);
 					state.cycle(LS_KEY.StateGame);
+					if (keyboard === progress & progress !== STATE_PROGRESSION.External) {
+						state.cycle(LS_KEY.StateProgression);
+					}
 					break;
 				}
 			}
@@ -116,6 +123,14 @@ function passageInputOnKeyDown(keyboardEvent) {
 	} else {
 		keyboardEvent.preventDefault();
 	}
+}
+
+function usePhysicalKeyboardOnClick(mouseEvent) {
+	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
+}
+
+function useVirtualKeyboardOnClick(mouseEvent) {
+	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Virtual);
 }
 
 function raceAgainOnClick(mouseEvent) {
@@ -153,3 +168,4 @@ function updateRacer() {
  */
 
 // const keyboard = await navigator.usb.requestDevice({filters:[]});
+// fail with alert dialog if browser doesn't support
