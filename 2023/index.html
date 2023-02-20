@@ -16,13 +16,24 @@
 
 <body>
 	<div id="game-area">
-		<h2 id="game-title" class="state-game-preparing">The race is about to start!<span></span></h2>
+		<table id="game-header">
+			<td>
+				<h2 id="game-title"></h2>
+			</td>
+			<td>
+				<p id="game-timer"></p>
+			</td>
+		</table>
 		<div id="racers-area">
 			<table id="racers-lanes">
 				<td class="racer-lane" width="90%">
-					<image id="racer" src="./rsrc/images/car-pink.svg" />
+					<div id="racer-wrapper">
+						<image id="racer" src="./rsrc/images/car-pink.svg" />
+					</div>
 				</td>
-				<td class="racer-wpm">0 wpm</td>
+				<td id="racer-wpm-wrapper">
+					<span id="racer-wpm">0</span> wpm
+				</td>
 			</table>
 		</div>
 		<div id="passage-area">
@@ -88,6 +99,22 @@
 				</tr>
 			</table>
 		</div>
+		<table id="buttons">
+			<td>
+				<div id="use-virtual-keyboard" class="game-menu-button">🖱️</div>
+			</td>
+			<td>
+				<div id="use-physical-keyboard" class="game-menu-button">⌨️</div>
+			</td>
+			<td>
+				<div id="connect-keyboard" class="game-menu-button">🔌</div>
+			</td>
+			<td>
+				<div id="race-again" class="game-menu-button">
+					Race again
+				</div>
+			</td>
+		</table>
 	</div>
 </body>
 

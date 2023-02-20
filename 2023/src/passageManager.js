@@ -1,4 +1,4 @@
-import { STATE_PROGRESSION } from "./constants.js";
+import { LS_KEY, STATE_PROGRESSION } from "./constants.js";
 import passages from "./passages.js";
 import PassageText from "./passageText.js";
 import State from "./state.js";
@@ -16,25 +16,38 @@ export default class PassageManager {
 		this.passageCorrect = new PassageText("passage-correct");
 		this.passageCurrent = new PassageText("passage-current");
 		this.passageRemainder = new PassageText("passage-remainder");
-		this.passageRemainder.pushRemainder(this.passages[0]);
-		this.passageCurrent.pushRemainder(this.passageRemainder.popWordRemainder());
 		this.cursorLeft = document.getElementsByClassName("cursor-left")[0];
 		this.cursorRight = document.getElementsByClassName("cursor-right")[0];
+		this.initPassage();
 	}
 
-	get wordsPerMinute() {
+	get progress() {
+		return Math.min(this.passageCorrect.length / this.passages[0].length, 1);
+	}
 
+	initPassage() {
+		this.passageCorrect.clear();
+		this.passageCurrent.clear();
+		this.passageRemainder.clear();
+		this.passageRemainder.pushRemainder(this.passages[0]);
+		this.passageCurrent.pushRemainder(this.passageRemainder.popWordRemainder());
 	}
 
 	checkInput(value) {
-		return State.progression === STATE_PROGRESSION.Visual
+		return State.get(LS_KEY.StateProgression) === STATE_PROGRESSION.Visual
 			? value.toLowerCase() === this.passageCurrent.peekRemainder().toLowerCase()
 			: value === this.passageCurrent.peekRemainder();
 	}
 
 	cyclePassages() {
 		this.passages = [...this.passages.slice(1), this.passages[0]];
+		this.initPassage()
 		return this.passages[0];
+	}
+
+	getWpm(elapsedMinutes) {
+		// We could use the real number of words typed, but supposedly WPM is roughly calculated with word length 5.
+		return Math.floor((this.passageCorrect.length / 5) / elapsedMinutes) || 0;
 	}
 
 	placeCursorEndOfWord() {

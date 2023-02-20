@@ -1,23 +1,36 @@
+export const LS_PREFIX = "2023";
+
+export const LS_DELIM = ".";
+
+export const LS_KEY = {
+	StateGame: "stateGame",
+	StateProgression: "stateProgression"
+}
+
 export const STATE_GAME = {
-	Preparing: 0x001,
-	Playing: 0x002,
-	Over: 0x004
+	Preparing: 0,
+	Playing: 1,
+	Over: 2
 }
 
 export const STATE_SUCCESS = {
-	Pending: 0x008,
-	Complete: 0x010,
+	Pending: 0,
+	Complete: 1,
 }
 
 export const STATE_PROGRESSION = {
-	Visual: 0x020,
-	Integrated: 0x040,
-	External: 0x080,
-	Super: 0x100
+	Visual: 0,
+	Integrated: 1,
+	External: 2,
+	Super: 3
 }
 
-export const LS_KEY = {
-	StateProgression: "2023.stateProgression"
+export const TICK_INTERVAL = 1000;
+
+export const DURATION = {
+	[STATE_GAME.Preparing]: 10,
+	[STATE_GAME.Playing]: 60,
+	[STATE_GAME.Over]: 0
 }
 
 export const GAME_TITLE = {

@@ -58,10 +58,78 @@
 	padding-top: 0.5em;
 }
 
-#game-title {
+#game-header {
 	margin-left: 0.5em;
 	margin-right: 0.5em;
+	width: calc(100% - 1em);
+}
+
+#game-title {
 	text-align: left;
+}
+
+#game-title[stategame="0"]::before {
+	content: "The race is about to start!";
+}
+
+#game-title[stategame="1"]::before {
+	content: "The race is on! Type the text below:";
+}
+
+#game-title[stategame="2"]::before {
+	content: "The race has ended.";
+}
+
+#game-timer {
+	color: black;
+	font-size: 1.75em;
+	font-weight: bolder;
+	margin-right: 0.25em;
+	text-align: right;
+	transition-duration: 2s;
+}
+
+#game-timer[remaining="0"],
+#game-timer[remaining="1"],
+#game-timer[remaining="2"],
+#game-timer[remaining="3"],
+#game-timer[remaining="4"],
+#game-timer[remaining="5"] {
+	color: red;
+	filter: drop-shadow(0 0 1mm yellow);
+}
+
+#game-timer[stategame="0"]::before {
+	content: "Get ready! ";
+	font-size: 0.5em;
+	transition-duration: 2s;
+}
+
+#game-timer[remaining="0"][stategame="0"]::before,
+#game-timer[remaining="1"][stategame="0"]::before,
+#game-timer[remaining="2"][stategame="0"]::before {
+	color: transparent;
+}
+
+#game-timer[stategame="1"]::before {
+	color: transparent;
+	content: "Go! ";
+	transition-duration: 2s;
+}
+
+#game-timer[remaining="60"][stategame="1"]::before,
+#game-timer[remaining="59"][stategame="1"]::before {
+	color: green;
+	transition-duration: 0.25s;
+}
+
+#game-timer[stategame="2"] {
+	color: lightgray;
+	filter: none;
+}
+
+#game-timer[remaining="0"][stategame="2"] {
+	filter: drop-shadow(0 0 1mm red);
 }
 
 #racers-area {
@@ -76,11 +144,21 @@
 	border-bottom-color: gold;
 	border-bottom-style: dashed;
 	border-bottom-width: 2px;
+}
+
+#racer-wrapper {
 	text-align: left;
+	transition-duration: 0.5s;
+	width: 100%;
 }
 
 #racer {
+	transition-duration: 0.5s;
 	width: 4em;
+}
+
+#racer-wpm-wrapper {
+	text-align: right;
 }
 
 #passage-area {
@@ -141,18 +219,35 @@ span.cursor-right:not(:empty) {
 }
 
 #passage-input {
-	color: black;
 	border-color: #52a8eccc;
 	border-radius: 1mm;
 	border-style: solid;
 	border-width: 0.75mm;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	color: black;
 	text-align: left;
 	width: calc(100% - 1em);
 }
 
 #passage-input:hover {
 	cursor: text;
+}
+
+#passage-input[stategame="0"],
+#passage-input[stategame="2"] {
+	background-color: lightgray;
+	border-color: #AAAAAA;
+	border-width: 1px;
+	box-shadow: none;
+	color: gray;
+}
+
+#keyboard-area {
+	display: none;
+}
+
+#keyboard-area[stateprogression="0"] {
+	display: block;
 }
 
 #keyboard {
@@ -219,4 +314,34 @@ span.cursor-right:not(:empty) {
 .keyboard-key:active {
 	background-color: gray;
 	border-color: #444444;
+}
+
+#buttons {
+	margin: 0.5em;
+	margin-top: 0.75em;
+	width: calc(100% - 1em);
+}
+
+.game-menu-button {
+	background-color: rgb(60, 193, 163);
+	border-radius: 2mm;
+	color: white;
+	display: none;
+	padding: 1em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	transition-duration: 0.25s;
+}
+
+.game-menu-button:hover {
+	background-color: rgb(64, 168, 43);
+	cursor: pointer;
+}
+
+.game-menu-button[stategame="2"] {
+	display: initial;
+}
+
+#buttons :nth-child(4) {
+	text-align: right;
 }

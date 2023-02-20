@@ -1,8 +1,16 @@
 class PrivateElements {
 	static Instance;
 
+	static ConnectKeyboardButton;
+	static GameTimer;
+	static GameTitle;
+	static KeyboardArea;
 	static KeyboardKeys;
 	static PassageInput;
+	static RacerWpm;
+	static RaceAgainButton;
+	static UsePhysicalKeyboardButton;
+	static UseVirtualKeyboardButton;
 }
 
 export class Elements {
@@ -11,6 +19,34 @@ export class Elements {
 					return PrivateElements.Instance;
 			}
 			PrivateElements.Instance = this;
+	}
+
+	get connectKeyboardButton() {
+		if (!PrivateElements.ConnectKeyboardButton) {
+			PrivateElements.ConnectKeyboardButton = document.getElementById("connect-keyboard");
+		}
+		return PrivateElements.ConnectKeyboardButton;
+	}
+
+	get gameTitle() {
+		if (!PrivateElements.GameTitle) {
+			PrivateElements.GameTitle = document.getElementById("game-title");
+		}
+		return PrivateElements.GameTitle;
+	}
+
+	get gameTimer() {
+		if (!PrivateElements.GameTimer) {
+			PrivateElements.GameTimer = document.getElementById("game-timer");
+		}
+		return PrivateElements.GameTimer;
+	}
+
+	get keyboardArea() {
+		if (!PrivateElements.KeyboardArea) {
+			PrivateElements.KeyboardArea = document.getElementById("keyboard-area");
+		}
+		return PrivateElements.KeyboardArea;
 	}
 
 	get keyboardKeys() {
@@ -25,6 +61,34 @@ export class Elements {
 			PrivateElements.PassageInput = document.getElementById("passage-input");
 		}
 		return PrivateElements.PassageInput;
+	}
+
+	get racerWpm() {
+		if (!PrivateElements.RacerWpm) {
+			PrivateElements.RacerWpm = document.getElementById("racer-wpm");
+		}
+		return PrivateElements.RacerWpm;
+	}
+
+	get raceAgainButton() {
+		if (!PrivateElements.RaceAgainButton) {
+			PrivateElements.RaceAgainButton = document.getElementById("race-again");
+		}
+		return PrivateElements.RaceAgainButton;
+	}
+
+	get usePhysicalKeyboardButton() {
+		if (!PrivateElements.UsePhysicalKeyboardButton) {
+			PrivateElements.UsePhysicalKeyboardButton = document.getElementById("use-physical-keyboard");
+		}
+		return PrivateElements.UsePhysicalKeyboardButton;
+	}
+
+	get useVirtualKeyboardButton() {
+		if (!PrivateElements.UseVirtualKeyboardButton) {
+			PrivateElements.UseVirtualKeyboardButton = document.getElementById("use-virtual-keyboard");
+		}
+		return PrivateElements.UseVirtualKeyboardButton;
 	}
 }
 

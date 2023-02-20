@@ -9,6 +9,24 @@ export default class PassageText {
 		this.spanRemainder = this.element.getElementsByClassName("remainder")[0];
 	}
 
+	get words() {
+		return this.textContent.split(" ");
+	}
+
+	get length() {
+		return this.textContent.length;
+	}
+
+	get textContent() {
+		return (this.spanCorrect?.textContent ?? "") + (this.spanIncorrect?.textContent ?? "") + (this.spanRemainder?.textContent ?? "");
+	}
+
+	clear() {
+		this.clearCorrect();
+		this.clearIncorrect();
+		this.clearRemainder();
+	}
+
 	pushCorrect(value) {
 		if (value && this.spanCorrect) {
 			this.spanCorrect.textContent += value;
@@ -30,7 +48,7 @@ export default class PassageText {
 	}
 
 	clearCorrect() {
-		if (value && this.spanCorrect) {
+		if (this.spanCorrect) {
 			this.spanCorrect.textContent = "";
 		}
 	}
@@ -56,7 +74,7 @@ export default class PassageText {
 	}
 
 	clearIncorrect() {
-		if (value && this.spanIncorrect) {
+		if (this.spanIncorrect) {
 			this.spanIncorrect.textContent = "";
 		}
 	}
@@ -66,7 +84,7 @@ export default class PassageText {
 			this.spanRemainder.textContent = value + this.spanRemainder.textContent;
 			return true;
 		}
-		return false;e
+		return false;
 	}
 
 	popRemainder() {
@@ -82,7 +100,7 @@ export default class PassageText {
 	}
 
 	clearRemainder() {
-		if (value && this.spanRemainder) {
+		if (this.spanRemainder) {
 			this.spanRemainder.textContent = "";
 		}
 	}
