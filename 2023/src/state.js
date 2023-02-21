@@ -1,8 +1,9 @@
-import { LS_DELIM, LS_KEY, LS_PREFIX, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON } from "./constants.js";
+import { LS_DELIM, LS_KEY, LS_PREFIX, STATE_CONNECTED_KEYBOARD, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON } from "./constants.js";
 
 class PrivateState {
 	static Instance;
 	static StateMap;
+	static UsbDevice;
 }
 
 export class State {
@@ -12,22 +13,43 @@ export class State {
 		}
 		PrivateState.Instance = this;
 		PrivateState.StateMap = new Map();
+		PrivateState.UsbDevice = undefined;
 		this.elapsedTime = 0;
 		this.subscribers = new Map();
-		this.usbDevice = undefined;
 	}
 
 	get connectedRegularKeyboard() {
-		return this.usbDevice && !this.connectedSuperKeyboard;
+		return this.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Regular;
 	}
 
 	get connectedSuperKeyboard() {
-		return this.usbDevice?.vendorId === 1452 && this.usbDevice?.productId === 591;
+		return this.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Super;
+	}
+
+	get usbDevice() {
+		return PrivateState.UsbDevice;
+	}
+
+	set usbDevice(value) {
+		if (value) {
+			if (value.vendorId === 1452 && value.productId === 591) {
+				this.set(LS_KEY.StateConnectedKeyboard, STATE_CONNECTED_KEYBOARD.Super);
+			} else {
+				this.set(LS_KEY.StateConnectedKeyboard, STATE_CONNECTED_KEYBOARD.Regular);
+			}
+		} else {
+			this.set(LS_KEY.StateConnectedKeyboard, STATE_CONNECTED_KEYBOARD.None);
+		}
+		PrivateState.UsbDevice = value;
 	}
 
 	cycle(state, cache = false) {
 		let states = {};
 		switch (state) {
+			case LS_KEY.StateConnectedKeyboard: {
+				states = STATE_CONNECTED_KEYBOARD;
+				break;
+			}
 			case LS_KEY.StateGame: {
 				states = STATE_GAME;
 				break;
@@ -55,6 +77,7 @@ export class State {
 
 	get(state) {
 		switch (state) {
+			case LS_KEY.StateConnectedKeyboard:
 			case LS_KEY.StateGame:
 			case LS_KEY.StateKeyboard:
 			case LS_KEY.StateProgression:
@@ -71,6 +94,12 @@ export class State {
 
 	set(state, value, cache = false) {
 		switch (state) {
+			case LS_KEY.StateConnectedKeyboard: {
+				if (!Object.values(STATE_CONNECTED_KEYBOARD).includes(value)) {
+					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);
+				}
+				break;
+			}
 			case LS_KEY.StateGame: {
 				if (!Object.values(STATE_GAME).includes(value)) {
 					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);

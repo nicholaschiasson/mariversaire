@@ -1,4 +1,4 @@
-import { DURATION, LS_KEY, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON, TICK_INTERVAL } from "./constants.js";
+import { DURATION, LS_KEY, STATE_CONNECTED_KEYBOARD, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON, TICK_INTERVAL } from "./constants.js";
 import elements from "./elements.js";
 import KeyboardLayout from "./keyboardLayout.js";
 import PassageManager, { PassagePushResult } from "./passageManager.js";
@@ -37,6 +37,7 @@ state.addSubscriber(LS_KEY.StateProgression, elements.usePhysicalKeyboardButton)
 state.addSubscriber(LS_KEY.StateProgression, elements.useVirtualKeyboardButton);
 state.addSubscriber(LS_KEY.StateWebUsbSupport, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateWebUsbSupport, elements.toggleWebUsbSupportButton);
+state.addSubscriber(LS_KEY.StateConnectedKeyboard, elements.toggleWebUsbSupportButton);
 state.addSubscriber(LS_KEY.StateWebUsbSupportToggleButton, elements.toggleWebUsbSupportButton);
 
 window.addEventListener("keydown", windowOnKeyDown);
@@ -176,7 +177,6 @@ async function connectKeyboardOnClick(mouseEvent) {
 	}
 	elements.connectKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
-	state.usbDevice = undefined;
 	if (!navigator.usb || !navigator.usb.requestDevice) {
 		console.warn("WebUSB API not supported by current browser.");
 		alert([
@@ -189,8 +189,10 @@ async function connectKeyboardOnClick(mouseEvent) {
 	}
 	try {
 		state.usbDevice = await navigator.usb.requestDevice({ filters: [] });
+		elements.toggleWebUsbSupportButton.removeAttribute("new");
 	} catch (e) {
 		console.warn(e);
+		state.usbDevice = undefined;
 		if (state.get(LS_KEY.StateWebUsbSupportToggleButton) === STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON.Disabled) {
 			alert([
 				"It looks like you didn't select a keyboard!",
@@ -205,6 +207,9 @@ async function connectKeyboardOnClick(mouseEvent) {
 }
 
 function toggleWebUsbSupportOnClick(mouseEvent) {
+	if (state.get(LS_KEY.StateConnectedKeyboard) !== STATE_CONNECTED_KEYBOARD.None) {
+		return;
+	}
 	elements.toggleWebUsbSupportButton.removeAttribute("new");
 	state.cycle(LS_KEY.StateWebUsbSupport);
 }
@@ -269,14 +274,12 @@ function unlockButton() {
 
 /**
  * TODO:
- * - Start menu state (before "Preparing" state)
- * - Quit button
  * - Add on connect and on disconnect handlers
  * - Add keyboard connected indicator
- * - Disable toggle button when keyboard is connected
+ * - Start menu state (before "Preparing" state)
  * - Test super keyboard
- * - Add sound
  * - Make things flashy during super
+ * - Add sound
  * - Add voice over
  * Maybes:
  * - Add random delay for

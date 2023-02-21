@@ -411,7 +411,11 @@ span.cursor-right:not(:empty) {
 #use-virtual-keyboard[statekeyboard="0"]:hover,
 #use-physical-keyboard[statekeyboard="1"]:hover,
 #connect-keyboard[statewebusbsupport="1"],
-#connect-keyboard[statewebusbsupport="1"]:hover {
+#connect-keyboard[statewebusbsupport="1"]:hover,
+#toggle-web-usb-support[stateconnectedkeyboard="1"],
+#toggle-web-usb-support[stateconnectedkeyboard="1"]:hover,
+#toggle-web-usb-support[stateconnectedkeyboard="2"],
+#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover {
 	background-color: lightgray;
 	cursor: initial;
 }
