@@ -7,8 +7,8 @@ class PrivateElements {
 	static KeyboardArea;
 	static KeyboardKeys;
 	static PassageInput;
+	static PlayQuitButton;
 	static RacerWpm;
-	static RaceAgainButton;
 	static ToggleWebUsbSupportButton;
 	static UsePhysicalKeyboardButton;
 	static UseVirtualKeyboardButton;
@@ -64,18 +64,18 @@ export class Elements {
 		return PrivateElements.PassageInput;
 	}
 
+	get playQuitButton() {
+		if (!PrivateElements.PlayQuitButton) {
+			PrivateElements.PlayQuitButton = document.getElementById("play-quit");
+		}
+		return PrivateElements.PlayQuitButton;
+	}
+
 	get racerWpm() {
 		if (!PrivateElements.RacerWpm) {
 			PrivateElements.RacerWpm = document.getElementById("racer-wpm");
 		}
 		return PrivateElements.RacerWpm;
-	}
-
-	get raceAgainButton() {
-		if (!PrivateElements.RaceAgainButton) {
-			PrivateElements.RaceAgainButton = document.getElementById("race-again");
-		}
-		return PrivateElements.RaceAgainButton;
 	}
 
 	get toggleWebUsbSupportButton() {

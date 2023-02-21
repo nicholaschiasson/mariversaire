@@ -332,6 +332,12 @@ span.cursor-right:not(:empty) {
 	width: calc(100% - 1em);
 }
 
+#buttons:has(#play-quit[stategame="0"]),
+#buttons:has(#play-quit[stategame="1"]) {
+	margin-bottom: 0.875em;
+	margin-top: 0.875em;
+}
+
 .game-menu-button {
 	background-color: rgb(60, 193, 163);
 	border-radius: 2mm;
@@ -354,12 +360,32 @@ span.cursor-right:not(:empty) {
 	display: initial;
 }
 
-#race-again {
+#play-quit {
 	padding-left: 1em;
 	padding-right: 1em;
 	padding-bottom: 0.5em;
 	padding-top: 0.5em;
 	font-size: 1em;
+}
+
+#play-quit[stategame="0"],
+#play-quit[stategame="1"] {
+	background-color: rgb(168, 64, 43);
+	display: initial;
+}
+
+#play-quit[stategame="0"]:hover,
+#play-quit[stategame="1"]:hover {
+	background-color: rgb(193, 60, 163);
+}
+
+#play-quit[stategame="0"]::before,
+#play-quit[stategame="1"]::before {
+	content: "Quit";
+}
+
+#play-quit[stategame="2"]::before {
+	content: "Race again";
 }
 
 #buttons td {

@@ -25,7 +25,7 @@ state.addSubscriber(LS_KEY.StateGame, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTimer);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTitle);
 state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
-state.addSubscriber(LS_KEY.StateGame, elements.raceAgainButton);
+state.addSubscriber(LS_KEY.StateGame, elements.playQuitButton);
 state.addSubscriber(LS_KEY.StateGame, elements.toggleWebUsbSupportButton);
 state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
@@ -46,7 +46,7 @@ navigator?.usb?.addEventListener("disconnect", navigatorUsbOnDisconnect);
 
 elements.connectKeyboardButton.addEventListener("click", connectKeyboardOnClick);
 elements.passageInput.addEventListener("keydown", passageInputOnKeyDown);
-elements.raceAgainButton.addEventListener("click", raceAgainOnClick);
+elements.playQuitButton.addEventListener("click", playQuitOnClick);
 elements.toggleWebUsbSupportButton.addEventListener("click", toggleWebUsbSupportOnClick);
 elements.usePhysicalKeyboardButton.addEventListener("click", usePhysicalKeyboardOnClick);
 elements.useVirtualKeyboardButton.addEventListener("click", useVirtualKeyboardOnClick);
@@ -154,16 +154,20 @@ function useVirtualKeyboardOnClick(mouseEvent) {
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Virtual);
 }
 
-function raceAgainOnClick(mouseEvent) {
-	elements.useVirtualKeyboardButton.removeAttribute("new");
-	elements.usePhysicalKeyboardButton.removeAttribute("new");
-	elements.connectKeyboardButton.removeAttribute("new");
-	elements.toggleWebUsbSupportButton.removeAttribute("new");
-	passageManager.cyclePassages();
-	state.cycle(LS_KEY.StateGame);
-	updateRacer();
-	updateTimer();
-	elements.passageInput.value = "";
+function playQuitOnClick(mouseEvent) {
+	if (state.get(LS_KEY.StateGame) === STATE_GAME.Over) {
+		elements.useVirtualKeyboardButton.removeAttribute("new");
+		elements.usePhysicalKeyboardButton.removeAttribute("new");
+		elements.connectKeyboardButton.removeAttribute("new");
+		elements.toggleWebUsbSupportButton.removeAttribute("new");
+		passageManager.cyclePassages();
+		state.cycle(LS_KEY.StateGame);
+		updateRacer();
+		updateTimer();
+		elements.passageInput.value = "";
+	} else {
+		state.set(LS_KEY.StateGame, STATE_GAME.Over);
+	}
 }
 
 async function connectKeyboardOnClick(mouseEvent) {
