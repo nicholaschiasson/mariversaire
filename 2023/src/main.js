@@ -9,21 +9,23 @@ import state, { State } from "./state.js";
  * Declarations
  */
 
-let passageManager = new PassageManager();
-let racer = new Racer();
+const passageManager = new PassageManager();
+const racer = new Racer();
 
 /**
  * Initialize & register event handlers
  */
 
-state.set(LS_KEY.StateGame, STATE_GAME.Preparing);
+state.set(LS_KEY.StateGame, STATE_GAME.Start);
 
 setInterval(State.onTick, TICK_INTERVAL);
 setInterval(onTick, TICK_INTERVAL);
 
+state.addCallback(LS_KEY.StateGame, stateGameOnChange);
 state.addSubscriber(LS_KEY.StateGame, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTimer);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTitle);
+state.addSubscriber(LS_KEY.StateGame, elements.passageArea);
 state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
 state.addSubscriber(LS_KEY.StateGame, elements.playQuitButton);
 state.addSubscriber(LS_KEY.StateGame, elements.toggleWebUsbSupportButton);
@@ -52,7 +54,7 @@ elements.toggleWebUsbSupportButton.addEventListener("click", toggleWebUsbSupport
 elements.usePhysicalKeyboardButton.addEventListener("click", usePhysicalKeyboardOnClick);
 elements.useVirtualKeyboardButton.addEventListener("click", useVirtualKeyboardOnClick);
 
-for (let keyboardKey of elements.keyboardKeys) {
+for (const keyboardKey of elements.keyboardKeys) {
 	keyboardKey.addEventListener("click", visualKeyboardKeyOnClick);
 }
 
@@ -61,6 +63,21 @@ updateTimer();
 /**
  * Event handlers
  */
+
+// Decided to introduce this callback way too late in development...
+// Opportunity for a LOT of refactoring.
+function stateGameOnChange(state, value) {
+	switch (value) {
+		case STATE_GAME.Playing: {
+			elements.passageInput.placeholder = "Type like the wind!";
+			break;
+		}
+		default: {
+			elements.passageInput.placeholder = "Type the above text here when the race begins";
+			break;
+		}
+	}
+}
 
 function onTick() {
 	updateTimer();
@@ -128,8 +145,8 @@ function passageInputOnKeyDown(keyboardEvent) {
 				case PassagePushResult.Done: {
 					elements.passageInput.value = "";
 					updateRacer();
-					let keyboard = state.get(LS_KEY.StateKeyboard);
-					let progress = state.get(LS_KEY.StateProgression);
+					const keyboard = state.get(LS_KEY.StateKeyboard);
+					const progress = state.get(LS_KEY.StateProgression);
 					state.cycle(LS_KEY.StateGame);
 					if (keyboard === progress & progress !== STATE_PROGRESSION.External) {
 						state.cycle(LS_KEY.StateProgression, true);
@@ -156,18 +173,24 @@ function useVirtualKeyboardOnClick(mouseEvent) {
 }
 
 function playQuitOnClick(mouseEvent) {
-	if (state.get(LS_KEY.StateGame) === STATE_GAME.Over) {
-		elements.useVirtualKeyboardButton.removeAttribute("new");
-		elements.usePhysicalKeyboardButton.removeAttribute("new");
-		elements.connectKeyboardButton.removeAttribute("new");
-		elements.toggleWebUsbSupportButton.removeAttribute("new");
-		passageManager.cyclePassages();
-		state.cycle(LS_KEY.StateGame);
-		updateRacer();
-		updateTimer();
-		elements.passageInput.value = "";
-	} else {
-		state.set(LS_KEY.StateGame, STATE_GAME.Over);
+	switch (state.get(LS_KEY.StateGame)) {
+		case STATE_GAME.Start:
+		case STATE_GAME.Over: {
+			elements.useVirtualKeyboardButton.removeAttribute("new");
+			elements.usePhysicalKeyboardButton.removeAttribute("new");
+			elements.connectKeyboardButton.removeAttribute("new");
+			elements.toggleWebUsbSupportButton.removeAttribute("new");
+			passageManager.cyclePassages();
+			state.cycle(LS_KEY.StateGame);
+			updateRacer();
+			updateTimer();
+			elements.passageInput.value = "";
+			break;
+		}
+		default: {
+			state.set(LS_KEY.StateGame, STATE_GAME.Over);
+			break;
+		}
 	}
 }
 
@@ -221,7 +244,7 @@ function toggleWebUsbSupportOnClick(mouseEvent) {
 function updateTimer() {
 	let gameState = state.get(LS_KEY.StateGame);
 	let remaining = Math.max(DURATION[gameState] - state.elapsedTime, 0);
-	if (gameState !== STATE_GAME.Over) {
+	if (gameState !== STATE_GAME.Start && gameState !== STATE_GAME.Over) {
 		if (!remaining) {
 			gameState = state.cycle(LS_KEY.StateGame);
 			remaining = DURATION[gameState];
@@ -276,7 +299,7 @@ function unlockButton() {
  * TODO:
  * - Add on connect and on disconnect handlers
  * - Add keyboard connected indicator
- * - Start menu state (before "Preparing" state)
+ * - Make win screen
  * - Test super keyboard
  * - Make things flashy during super
  * - Add sound

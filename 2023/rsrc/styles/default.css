@@ -69,6 +69,10 @@
 	text-align: left;
 }
 
+#game-title[stategame="-1"]::before {
+	content: "BONNE MARIVERSAIRE! ❤️";
+}
+
 #game-title[stategame="0"]::before {
 	content: "The race is about to start!";
 }
@@ -88,6 +92,10 @@
 	margin-right: 0.25em;
 	text-align: right;
 	transition-duration: 2s;
+}
+
+#game-timer[stategame="-1"] {
+	display: none;
 }
 
 #game-timer[remaining="0"],
@@ -168,6 +176,10 @@
 	border-width: 1px;
 	margin: 0.5em;
 	padding: 1em;
+}
+
+#passage-area[stategame="-1"] {
+	display: none;
 }
 
 #passage-current {
@@ -356,6 +368,7 @@ span.cursor-right:not(:empty) {
 	cursor: pointer;
 }
 
+.game-menu-button[stategame="-1"],
 .game-menu-button[stategame="2"] {
 	display: initial;
 }
@@ -377,6 +390,10 @@ span.cursor-right:not(:empty) {
 #play-quit[stategame="0"]:hover,
 #play-quit[stategame="1"]:hover {
 	background-color: rgb(193, 60, 163);
+}
+
+#play-quit[stategame="-1"]::before {
+	content: "Play";
 }
 
 #play-quit[stategame="0"]::before,

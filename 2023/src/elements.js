@@ -6,6 +6,7 @@ class PrivateElements {
 	static GameTitle;
 	static KeyboardArea;
 	static KeyboardKeys;
+	static PassageArea;
 	static PassageInput;
 	static PlayQuitButton;
 	static RacerWpm;
@@ -55,6 +56,13 @@ export class Elements {
 			PrivateElements.KeyboardKeys = document.getElementsByClassName("keyboard-key");
 		}
 		return PrivateElements.KeyboardKeys;
+	}
+
+	get passageArea() {
+		if (!PrivateElements.PassageArea) {
+			PrivateElements.PassageArea = document.getElementById("passage-area");
+		}
+		return PrivateElements.PassageArea;
 	}
 
 	get passageInput() {

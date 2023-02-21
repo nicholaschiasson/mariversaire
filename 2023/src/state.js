@@ -15,6 +15,7 @@ export class State {
 		PrivateState.StateMap = new Map();
 		PrivateState.UsbDevice = undefined;
 		this.elapsedTime = 0;
+		this.callbacks = new Map();
 		this.subscribers = new Map();
 	}
 
@@ -70,7 +71,7 @@ export class State {
 				throw new TypeError(`Attempt to cycle invalid state '${state}.`);
 			}
 		}
-		let nextState = (this.get(state) + 1) % Object.keys(states).length
+		let nextState = (this.get(state) + 1) % Object.values(states).filter(v => v >= 0).length
 		this.set(state, nextState, cache);
 		return nextState;
 	}
@@ -136,6 +137,7 @@ export class State {
 				throw new TypeError(`Attempt to get value of invalid state '${state}.`);
 			}
 		}
+		this.notifyCallbacks(state, value);
 		this.notifySubscribers(state, value);
 		PrivateState.StateMap.set(state, value);
 		if (cache) {
@@ -143,15 +145,30 @@ export class State {
 		}
 	}
 
+	addCallback(topic, callback) {
+		this.notifyCallback(callback, topic, this.get(topic));
+		this.callbacks.get(topic)?.add(callback) ?? this.callbacks.set(topic, new Set([callback]));
+	}
+
 	addSubscriber(topic, subscriber) {
 		this.notifySubscriber(subscriber, topic, this.get(topic));
 		this.subscribers.get(topic)?.add(subscriber) ?? this.subscribers.set(topic, new Set([subscriber]));
+	}
+
+	notifyCallbacks(topic, value) {
+		for (const callback of this.callbacks.get(topic) ?? []) {
+			this.notifyCallback(callback, topic, value);
+		}
 	}
 
 	notifySubscribers(topic, value) {
 		for (const subscriber of this.subscribers.get(topic) ?? []) {
 			this.notifySubscriber(subscriber, topic, value);
 		}
+	}
+
+	notifyCallback(callback, topic, value) {
+		callback(topic, value);
 	}
 
 	notifySubscriber(subscriber, topic, value) {

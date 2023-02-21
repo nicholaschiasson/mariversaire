@@ -12,6 +12,7 @@ export const LS_KEY = {
 };
 
 export const STATE_GAME = {
+	Start: -1,
 	Preparing: 0,
 	Playing: 1,
 	Over: 2
