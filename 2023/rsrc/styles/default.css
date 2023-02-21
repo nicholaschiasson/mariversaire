@@ -410,10 +410,10 @@ span.cursor-right:not(:empty) {
 	width: 10%;
 }
 
-#buttons :nth-child(5) {
+#buttons :nth-child(8) {
 	text-align: right;
 	transform-origin: right;
-	width: 60%;
+	width: 30%;
 }
 
 #use-virtual-keyboard[stateprogression="0"],
@@ -451,7 +451,6 @@ span.cursor-right:not(:empty) {
 #toggle-web-usb-support[statewebusbsupport="1"]::before {
 	content: "🔒";
 }
-
 
 #buttons td:has(.game-menu-button[new]) {
 	animation: throb 1s infinite;

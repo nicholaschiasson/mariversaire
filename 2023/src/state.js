@@ -176,7 +176,7 @@ export class State {
 	}
 
 	static onTick() {
-		let state = new State();
+		const state = new State();
 		++state.elapsedTime;
 	}
 }

@@ -44,8 +44,8 @@ state.addSubscriber(LS_KEY.StateWebUsbSupportToggleButton, elements.toggleWebUsb
 
 window.addEventListener("keydown", windowOnKeyDown);
 
-navigator?.usb?.addEventListener("connect", navigatorUsbOnConnect);
-navigator?.usb?.addEventListener("disconnect", navigatorUsbOnDisconnect);
+navigator.usb?.addEventListener("connect", navigatorUsbOnConnect);
+navigator.usb?.addEventListener("disconnect", navigatorUsbOnDisconnect);
 
 elements.connectKeyboardButton.addEventListener("click", connectKeyboardOnClick);
 elements.passageInput.addEventListener("keydown", passageInputOnKeyDown);
@@ -111,11 +111,12 @@ function windowOnKeyDown(keyboardEvent) {
 }
 
 function navigatorUsbOnConnect(usbConnectionEvent) {
-	console.debug(usbConnectionEvent);
+	state.usbDevice = usbConnectionEvent.device;
+	state.set(LS_KEY.StateWebUsbSupport, STATE_WEB_USB_SUPPORT.Supported);
 }
 
 function navigatorUsbOnDisconnect(usbConnectionEvent) {
-	console.debug(usbConnectionEvent);
+	state.usbDevice = undefined;
 }
 
 function visualKeyboardKeyOnClick(mouseEvent) {
@@ -298,10 +299,8 @@ function unlockButton() {
 
 /**
  * TODO:
- * - Add on connect and on disconnect handlers
  * - Add keyboard connected indicator
  * - Make win screen
- * - Test super keyboard
  * - Make things flashy during super
  * - Add sound
  * - Add voice over
@@ -309,4 +308,5 @@ function unlockButton() {
  * Maybes:
  * - Add random delay for
  * - Allow passage input to be focused on mobile
+ * - Lighthouse
  */
