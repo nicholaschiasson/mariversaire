@@ -439,7 +439,11 @@ span.cursor-right:not(:empty) {
 }
 
 #toggle-web-usb-support::before,
-#toggle-web-usb-support[statewebusbsupport="1"]:hover::before {
+#toggle-web-usb-support[statewebusbsupport="1"]:hover::before,
+#toggle-web-usb-support[stateconnectedkeyboard="1"]::before,
+#toggle-web-usb-support[stateconnectedkeyboard="1"]:hover::before,
+#toggle-web-usb-support[stateconnectedkeyboard="2"]::before,
+#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover::before {
 	content: "🔓";
 }
 
