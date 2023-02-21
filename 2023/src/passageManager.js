@@ -40,7 +40,15 @@ export default class PassageManager {
 	}
 
 	cyclePassages() {
-		let filter = (!state.usbDevice && state.get(LS_KEY.StateWebUsbSupport) !== STATE_WEB_USB_SUPPORT.Unsupported)
+		let keyboardState = state.get(LS_KEY.StateKeyboard);
+		let filter = (
+			keyboardState === STATE_KEYBOARD.Virtual
+			|| (
+				keyboardState === STATE_KEYBOARD.Physical
+				&& state.get(LS_KEY.StateWebUsbSupport) === STATE_WEB_USB_SUPPORT.Supported
+				&& !state.usbDevice
+			)
+		)
 			? (p, l) => p.length >= l
 			: (p, l) => p.length < l;
 		do {

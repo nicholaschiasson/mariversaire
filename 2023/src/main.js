@@ -132,7 +132,9 @@ function passageInputOnKeyDown(keyboardEvent) {
 					state.cycle(LS_KEY.StateGame);
 					if (keyboard === progress & progress !== STATE_PROGRESSION.External) {
 						state.cycle(LS_KEY.StateProgression, true);
+						unlockButton();
 					}
+
 					break;
 				}
 			}
@@ -143,14 +145,20 @@ function passageInputOnKeyDown(keyboardEvent) {
 }
 
 function usePhysicalKeyboardOnClick(mouseEvent) {
+	elements.usePhysicalKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
 }
 
 function useVirtualKeyboardOnClick(mouseEvent) {
+	elements.useVirtualKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Virtual);
 }
 
 function raceAgainOnClick(mouseEvent) {
+	elements.useVirtualKeyboardButton.removeAttribute("new");
+	elements.usePhysicalKeyboardButton.removeAttribute("new");
+	elements.connectKeyboardButton.removeAttribute("new");
+	elements.toggleWebUsbSupportButton.removeAttribute("new");
 	passageManager.cyclePassages();
 	state.cycle(LS_KEY.StateGame);
 	updateRacer();
@@ -162,6 +170,9 @@ async function connectKeyboardOnClick(mouseEvent) {
 	if (state.get(LS_KEY.StateWebUsbSupport, STATE_WEB_USB_SUPPORT.Unsupported)) {
 		return;
 	}
+	elements.connectKeyboardButton.removeAttribute("new");
+	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
+	state.usbDevice = undefined;
 	if (!navigator.usb || !navigator.usb.requestDevice) {
 		console.warn("WebUSB API not supported by current browser.");
 		alert([
@@ -184,11 +195,13 @@ async function connectKeyboardOnClick(mouseEvent) {
 				"Use it if you want!"
 			].join("\n\n"));
 			state.set(LS_KEY.StateWebUsbSupportToggleButton, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON.Enabled);
+			elements.toggleWebUsbSupportButton.setAttribute("new", true);
 		}
 	}
 }
 
 function toggleWebUsbSupportOnClick(mouseEvent) {
+	elements.toggleWebUsbSupportButton.removeAttribute("new");
 	state.cycle(LS_KEY.StateWebUsbSupport);
 }
 
@@ -232,14 +245,36 @@ function processPhysicalKeyStroke(keyboardEvent) {
 	passageInputOnKeyDown(new KeyboardEvent("keydown", { key: KeyboardLayout.getAdjacent(keyboardEvent.key) }));
 }
 
+function unlockButton() {
+	elements.usePhysicalKeyboardButton.removeAttribute("new");
+	elements.connectKeyboardButton.removeAttribute("new");
+	switch (state.get(LS_KEY.StateProgression)) {
+		case STATE_PROGRESSION.Integrated: {
+			elements.usePhysicalKeyboardButton.setAttribute("new", true);
+			break;
+		}
+		case STATE_PROGRESSION.External: {
+			elements.connectKeyboardButton.setAttribute("new", true);
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+}
+
 /**
  * TODO:
- * - Add random delay for
- * - Button first enabled state
  * - Start menu state (before "Preparing" state)
  * - Quit button
  * - Add on connect and on disconnect handlers
  * - Add keyboard connected indicator
  * - Disable toggle button when keyboard is connected
+ * - Test super keyboard
+ * - Add sound
+ * - Make things flashy during super
+ * - Add voice over
+ * Maybes:
+ * - Add random delay for
  * - Allow passage input to be focused on mobile
  */

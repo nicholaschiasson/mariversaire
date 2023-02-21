@@ -59,7 +59,7 @@ export default [
 	"The concept of entropy, which describes the tendency for systems to move towards a state of greater disorder, is a fundamental principle in physics and thermodynamics.",
 	"The concept of the atom was first proposed by ancient Greek philosophers and is the building block of all matter in the universe.",
 	"The concept of the black hole was first proposed by physicist John Michell in the eighteenth century and has since been confirmed by numerous observations and experiments.",
-	"The concept of the gene was first described by Danish botanist Wilhelm Johannsen in the early twentieth century and",
+	"The concept of the gene was first described by Danish botanist Wilhelm Johannsen in the early twentieth century.",
 	"The concept of the hormone was first described by Dutch physiologist Henry Dale in the early twentieth century and refers to chemical messengers produced by the body to regulate various physiological processes.",
 	"The concept of zero was invented by ancient Indian mathematicians and is a fundamental idea in mathematics and science.",
 	"The digestive system is a complex network of organs and tissues that work together to break down food, absorb nutrients, and eliminate waste.",
