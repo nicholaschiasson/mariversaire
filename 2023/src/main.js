@@ -1,5 +1,6 @@
-import { DURATION, LS_KEY, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, TICK_INTERVAL } from "./constants.js";
+import { DURATION, LS_KEY, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON, TICK_INTERVAL } from "./constants.js";
 import elements from "./elements.js";
+import KeyboardLayout from "./keyboardLayout.js";
 import PassageManager, { PassagePushResult } from "./passageManager.js";
 import Racer from "./racer.js";
 import state, { State } from "./state.js";
@@ -25,6 +26,7 @@ state.addSubscriber(LS_KEY.StateGame, elements.gameTimer);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTitle);
 state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
 state.addSubscriber(LS_KEY.StateGame, elements.raceAgainButton);
+state.addSubscriber(LS_KEY.StateGame, elements.toggleWebUsbSupportButton);
 state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
 state.addSubscriber(LS_KEY.StateKeyboard, elements.keyboardArea);
@@ -33,11 +35,19 @@ state.addSubscriber(LS_KEY.StateKeyboard, elements.useVirtualKeyboardButton);
 state.addSubscriber(LS_KEY.StateProgression, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateProgression, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateProgression, elements.useVirtualKeyboardButton);
+state.addSubscriber(LS_KEY.StateWebUsbSupport, elements.connectKeyboardButton);
+state.addSubscriber(LS_KEY.StateWebUsbSupport, elements.toggleWebUsbSupportButton);
+state.addSubscriber(LS_KEY.StateWebUsbSupportToggleButton, elements.toggleWebUsbSupportButton);
 
 window.addEventListener("keydown", windowOnKeyDown);
 
+navigator?.usb?.addEventListener("connect", navigatorUsbOnConnect);
+navigator?.usb?.addEventListener("disconnect", navigatorUsbOnDisconnect);
+
+elements.connectKeyboardButton.addEventListener("click", connectKeyboardOnClick);
 elements.passageInput.addEventListener("keydown", passageInputOnKeyDown);
 elements.raceAgainButton.addEventListener("click", raceAgainOnClick);
+elements.toggleWebUsbSupportButton.addEventListener("click", toggleWebUsbSupportOnClick);
 elements.usePhysicalKeyboardButton.addEventListener("click", usePhysicalKeyboardOnClick);
 elements.useVirtualKeyboardButton.addEventListener("click", useVirtualKeyboardOnClick);
 
@@ -71,8 +81,7 @@ function windowOnKeyDown(keyboardEvent) {
 	switch (state.get(LS_KEY.StateKeyboard, true)) {
 		case STATE_KEYBOARD.Physical: {
 			if (keyboardEvent.isTrusted && /^([a-z.,'? ]|Backspace)$/i.test(keyboardEvent.key)) {
-				// Call the event handler directly instead of dispatching another event
-				passageInputOnKeyDown(new KeyboardEvent("keydown", keyboardEvent));
+				processPhysicalKeyStroke(keyboardEvent);
 			}
 			break;
 		}
@@ -81,6 +90,14 @@ function windowOnKeyDown(keyboardEvent) {
 		}
 	}
 	keyboardEvent.preventDefault();
+}
+
+function navigatorUsbOnConnect(usbConnectionEvent) {
+	console.debug(usbConnectionEvent);
+}
+
+function navigatorUsbOnDisconnect(usbConnectionEvent) {
+	console.debug(usbConnectionEvent);
 }
 
 function visualKeyboardKeyOnClick(mouseEvent) {
@@ -114,7 +131,7 @@ function passageInputOnKeyDown(keyboardEvent) {
 					let progress = state.get(LS_KEY.StateProgression);
 					state.cycle(LS_KEY.StateGame);
 					if (keyboard === progress & progress !== STATE_PROGRESSION.External) {
-						state.cycle(LS_KEY.StateProgression);
+						state.cycle(LS_KEY.StateProgression, true);
 					}
 					break;
 				}
@@ -141,6 +158,40 @@ function raceAgainOnClick(mouseEvent) {
 	elements.passageInput.value = "";
 }
 
+async function connectKeyboardOnClick(mouseEvent) {
+	if (state.get(LS_KEY.StateWebUsbSupport, STATE_WEB_USB_SUPPORT.Unsupported)) {
+		return;
+	}
+	if (!navigator.usb || !navigator.usb.requestDevice) {
+		console.warn("WebUSB API not supported by current browser.");
+		alert([
+			"Uh oh! Looks like your browser doesn't support detecting USB devices.",
+			"Not to worry. We can just pretend it does and fix your keyboard for you.",
+			"Tada! As if by magic, your keyboard should work like normal now! Carry on!"
+		].join("\n\n"));
+		state.set(LS_KEY.StateWebUsbSupport, STATE_WEB_USB_SUPPORT.Unsupported);
+		return;
+	}
+	try {
+		state.usbDevice = await navigator.usb.requestDevice({ filters: [] });
+	} catch (e) {
+		console.warn(e);
+		if (state.get(LS_KEY.StateWebUsbSupportToggleButton) === STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON.Disabled) {
+			alert([
+				"It looks like you didn't select a keyboard!",
+				"Whether that's because you don't have one or you simply don't want to, don't worry about it.",
+				"I've given you a special toggle button to allow you to fix your messed up keyboard.",
+				"Use it if you want!"
+			].join("\n\n"));
+			state.set(LS_KEY.StateWebUsbSupportToggleButton, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON.Enabled);
+		}
+	}
+}
+
+function toggleWebUsbSupportOnClick(mouseEvent) {
+	state.cycle(LS_KEY.StateWebUsbSupport);
+}
+
 /**
  * Functions
  */
@@ -163,9 +214,32 @@ function updateRacer() {
 	racer.progress = passageManager.progress;
 }
 
-/**
- * stuff for later
- */
+function processPhysicalKeyStroke(keyboardEvent) {
+	// Call the event handler from here directly instead of dispatching another event
+	if (state.connectedSuperKeyboard) {
+		for (const c of passageManager.passageCurrent.textContent) {
+			passageInputOnKeyDown(new KeyboardEvent("keydown", { key: c }));
+		}
+		if (passageManager.passageRemainder.peekRemainder()) {
+			passageInputOnKeyDown(new KeyboardEvent("keydown", { key: " " }));
+		}
+		return;
+	}
+	if (state.get(LS_KEY.StateWebUsbSupport) === STATE_WEB_USB_SUPPORT.Unsupported || state.connectedRegularKeyboard) {
+		passageInputOnKeyDown(new KeyboardEvent("keydown", keyboardEvent));
+		return;
+	}
+	passageInputOnKeyDown(new KeyboardEvent("keydown", { key: KeyboardLayout.getAdjacent(keyboardEvent.key) }));
+}
 
-// const keyboard = await navigator.usb.requestDevice({filters:[]});
-// fail with alert dialog if browser doesn't support
+/**
+ * TODO:
+ * - Add random delay for
+ * - Button first enabled state
+ * - Start menu state (before "Preparing" state)
+ * - Quit button
+ * - Add on connect and on disconnect handlers
+ * - Add keyboard connected indicator
+ * - Disable toggle button when keyboard is connected
+ * - Allow passage input to be focused on mobile
+ */

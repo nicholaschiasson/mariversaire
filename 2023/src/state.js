@@ -1,4 +1,4 @@
-import { LS_DELIM, LS_KEY, LS_PREFIX, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION } from "./constants.js";
+import { LS_DELIM, LS_KEY, LS_PREFIX, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON } from "./constants.js";
 
 class PrivateState {
 	static Instance;
@@ -7,13 +7,22 @@ class PrivateState {
 
 export class State {
 	constructor() {
-			if (PrivateState.Instance) {
-				return PrivateState.Instance;
-			}
-			PrivateState.Instance = this;
-			PrivateState.StateMap = new Map();
-			this.elapsedTime = 0;
-			this.subscribers = new Map();
+		if (PrivateState.Instance) {
+			return PrivateState.Instance;
+		}
+		PrivateState.Instance = this;
+		PrivateState.StateMap = new Map();
+		this.elapsedTime = 0;
+		this.subscribers = new Map();
+		this.usbDevice = undefined;
+	}
+
+	get connectedRegularKeyboard() {
+		return this.usbDevice && !this.connectedSuperKeyboard;
+	}
+
+	get connectedSuperKeyboard() {
+		return this.usbDevice?.vendorId === 1452 && this.usbDevice?.productId === 591;
 	}
 
 	cycle(state, cache = false) {
@@ -31,6 +40,10 @@ export class State {
 				states = STATE_PROGRESSION;
 				break;
 			}
+			case LS_KEY.StateWebUsbSupport: {
+				states = STATE_WEB_USB_SUPPORT;
+				break;
+			}
 			default: {
 				throw new TypeError(`Attempt to cycle invalid state '${state}.`);
 			}
@@ -44,7 +57,9 @@ export class State {
 		switch (state) {
 			case LS_KEY.StateGame:
 			case LS_KEY.StateKeyboard:
-			case LS_KEY.StateProgression: {
+			case LS_KEY.StateProgression:
+			case LS_KEY.StateWebUsbSupport:
+			case LS_KEY.StateWebUsbSupportToggleButton: {
 				break;
 			}
 			default: {
@@ -72,6 +87,18 @@ export class State {
 			}
 			case LS_KEY.StateProgression: {
 				if (!Object.values(STATE_PROGRESSION).includes(value)) {
+					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);
+				}
+				break;
+			}
+			case LS_KEY.StateWebUsbSupport: {
+				if (!Object.values(STATE_WEB_USB_SUPPORT).includes(value)) {
+					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);
+				}
+				break;
+			}
+			case LS_KEY.StateWebUsbSupportToggleButton: {
+				if (!Object.values(STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON).includes(value)) {
 					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);
 				}
 				break;

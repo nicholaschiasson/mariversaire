@@ -93,9 +93,7 @@
 #game-timer[remaining="0"],
 #game-timer[remaining="1"],
 #game-timer[remaining="2"],
-#game-timer[remaining="3"],
-#game-timer[remaining="4"],
-#game-timer[remaining="5"] {
+#game-timer[remaining="3"] {
 	color: red;
 	filter: drop-shadow(0 0 1mm yellow);
 }
@@ -193,7 +191,8 @@ span.incorrect {
 	text-decoration: underline;
 }
 
-span.cursor-left:not(:empty), span.cursor-left[word-end] {
+span.cursor-left:not(:empty),
+span.cursor-left[word-end] {
 	animation: blink 1s infinite;
 	border-left-style: solid;
 	border-left-width: 1px;
@@ -206,12 +205,15 @@ span.cursor-right:not(:empty) {
 }
 
 @keyframes blink {
-  from, to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: black;
-  }
+
+	from,
+	to {
+		border-color: transparent;
+	}
+
+	50% {
+		border-color: black;
+	}
 }
 
 #passage-text {
@@ -286,9 +288,17 @@ span.cursor-right:not(:empty) {
 	translate: -0.75em;
 }
 
-#keyboard tr:nth-child(2) { --n: -1; }
-#keyboard tr:nth-child(3) { --n: 0; }
-#keyboard tr:nth-child(4) { --n: 1; }
+#keyboard tr:nth-child(2) {
+	--n: -1;
+}
+
+#keyboard tr:nth-child(3) {
+	--n: 0;
+}
+
+#keyboard tr:nth-child(4) {
+	--n: 1;
+}
 
 #keyboard tr {
 	transform: translateX(calc(var(--n) * 0.5em));
@@ -356,22 +366,35 @@ span.cursor-right:not(:empty) {
 	text-align: left;
 }
 
-#buttons :nth-child(4) {
+#buttons :nth-child(5) {
 	text-align: right;
-	width: 75%;
+	width: 70%;
 }
 
 #use-virtual-keyboard[stateprogression="0"],
 #use-physical-keyboard[stateprogression="0"],
 #connect-keyboard[stateprogression="0"],
-#connect-keyboard[stateprogression="1"] {
+#connect-keyboard[stateprogression="1"],
+#toggle-web-usb-support[statewebusbsupporttogglebutton="0"] {
 	display: none;
 }
 
 #use-virtual-keyboard[statekeyboard="0"],
 #use-physical-keyboard[statekeyboard="1"],
 #use-virtual-keyboard[statekeyboard="0"]:hover,
-#use-physical-keyboard[statekeyboard="1"]:hover {
+#use-physical-keyboard[statekeyboard="1"]:hover,
+#connect-keyboard[statewebusbsupport="1"],
+#connect-keyboard[statewebusbsupport="1"]:hover {
 	background-color: lightgray;
 	cursor: initial;
+}
+
+#toggle-web-usb-support::before,
+#toggle-web-usb-support[statewebusbsupport="1"]:hover::before {
+	content: "🔓";
+}
+
+#toggle-web-usb-support:hover::before,
+#toggle-web-usb-support[statewebusbsupport="1"]::before {
+	content: "🔒";
 }

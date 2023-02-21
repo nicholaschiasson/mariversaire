@@ -9,16 +9,17 @@ class PrivateElements {
 	static PassageInput;
 	static RacerWpm;
 	static RaceAgainButton;
+	static ToggleWebUsbSupportButton;
 	static UsePhysicalKeyboardButton;
 	static UseVirtualKeyboardButton;
 }
 
 export class Elements {
 	constructor() {
-			if (PrivateElements.Instance) {
-					return PrivateElements.Instance;
-			}
-			PrivateElements.Instance = this;
+		if (PrivateElements.Instance) {
+			return PrivateElements.Instance;
+		}
+		PrivateElements.Instance = this;
 	}
 
 	get connectKeyboardButton() {
@@ -75,6 +76,13 @@ export class Elements {
 			PrivateElements.RaceAgainButton = document.getElementById("race-again");
 		}
 		return PrivateElements.RaceAgainButton;
+	}
+
+	get toggleWebUsbSupportButton() {
+		if (!PrivateElements.ToggleWebUsbSupportButton) {
+			PrivateElements.ToggleWebUsbSupportButton = document.getElementById("toggle-web-usb-support");
+		}
+		return PrivateElements.ToggleWebUsbSupportButton;
 	}
 
 	get usePhysicalKeyboardButton() {

@@ -1,4 +1,4 @@
-import { LS_KEY, STATE_KEYBOARD } from "./constants.js";
+import { LS_KEY, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT } from "./constants.js";
 import passages from "./passages.js";
 import PassageText from "./passageText.js";
 import state from "./state.js";
@@ -40,7 +40,7 @@ export default class PassageManager {
 	}
 
 	cyclePassages() {
-		let filter = state.get(LS_KEY.StateKeyboard) === STATE_KEYBOARD.Virtual
+		let filter = (!state.usbDevice && state.get(LS_KEY.StateWebUsbSupport) !== STATE_WEB_USB_SUPPORT.Unsupported)
 			? (p, l) => p.length >= l
 			: (p, l) => p.length < l;
 		do {
