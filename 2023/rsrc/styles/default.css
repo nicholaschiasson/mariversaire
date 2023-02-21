@@ -412,6 +412,7 @@ span.cursor-right:not(:empty) {
 
 #buttons :nth-child(5) {
 	text-align: right;
+	transform-origin: right;
 	width: 60%;
 }
 

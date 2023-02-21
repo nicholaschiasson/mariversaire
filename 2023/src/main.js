@@ -180,6 +180,7 @@ function playQuitOnClick(mouseEvent) {
 			elements.usePhysicalKeyboardButton.removeAttribute("new");
 			elements.connectKeyboardButton.removeAttribute("new");
 			elements.toggleWebUsbSupportButton.removeAttribute("new");
+			elements.playQuitButton.removeAttribute("new");
 			passageManager.cyclePassages();
 			state.cycle(LS_KEY.StateGame);
 			updateRacer();
@@ -304,6 +305,7 @@ function unlockButton() {
  * - Make things flashy during super
  * - Add sound
  * - Add voice over
+ * - Add reset localStorage button
  * Maybes:
  * - Add random delay for
  * - Allow passage input to be focused on mobile
