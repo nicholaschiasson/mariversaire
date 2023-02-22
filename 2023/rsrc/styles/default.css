@@ -257,7 +257,9 @@ span.cursor-right:not(:empty) {
 	color: gray;
 }
 
-#keyboard-area {
+#keyboard-area,
+#keyboard-area[stategame="-1"],
+#keyboard-area[stategame="-1"][statekeyboard="0"] {
 	display: none;
 }
 

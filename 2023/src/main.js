@@ -1,3 +1,4 @@
+import AudioManager from "./audioManager.js";
 import { DURATION, LS_KEY, STATE_CONNECTED_KEYBOARD, STATE_GAME, STATE_KEYBOARD, STATE_PROGRESSION, STATE_WEB_USB_SUPPORT, STATE_WEB_USB_SUPPORT_TOGGLE_BUTTON, TICK_INTERVAL } from "./constants.js";
 import elements from "./elements.js";
 import KeyboardLayout from "./keyboardLayout.js";
@@ -9,6 +10,7 @@ import state, { State } from "./state.js";
  * Declarations
  */
 
+const audioManager = new AudioManager();
 const passageManager = new PassageManager();
 const racer = new Racer();
 
@@ -25,6 +27,7 @@ state.addCallback(LS_KEY.StateGame, stateGameOnChange);
 state.addSubscriber(LS_KEY.StateGame, elements.connectKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTimer);
 state.addSubscriber(LS_KEY.StateGame, elements.gameTitle);
+state.addSubscriber(LS_KEY.StateGame, elements.keyboardArea);
 state.addSubscriber(LS_KEY.StateGame, elements.passageArea);
 state.addSubscriber(LS_KEY.StateGame, elements.passageInput);
 state.addSubscriber(LS_KEY.StateGame, elements.playQuitButton);
@@ -66,7 +69,7 @@ updateTimer();
 
 // Decided to introduce this callback way too late in development...
 // Opportunity for a LOT of refactoring.
-function stateGameOnChange(state, value) {
+function stateGameOnChange(state, value, previous) {
 	switch (value) {
 		case STATE_GAME.Playing: {
 			elements.passageInput.placeholder = "Type like the wind!";
@@ -149,11 +152,13 @@ function passageInputOnKeyDown(keyboardEvent) {
 					const keyboard = state.get(LS_KEY.StateKeyboard);
 					const progress = state.get(LS_KEY.StateProgression);
 					state.cycle(LS_KEY.StateGame);
-					if (keyboard === progress & progress !== STATE_PROGRESSION.External) {
+					if (keyboard === progress && progress !== STATE_PROGRESSION.External) {
 						state.cycle(LS_KEY.StateProgression, true);
 						unlockButton();
+						audioManager.play(t => t?.win[0] ?? t?.win);
+					} else if (state.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Regular) {
+						audioManager.play(t => t?.win[1]);
 					}
-
 					break;
 				}
 			}
@@ -175,7 +180,11 @@ function useVirtualKeyboardOnClick(mouseEvent) {
 
 function playQuitOnClick(mouseEvent) {
 	switch (state.get(LS_KEY.StateGame)) {
-		case STATE_GAME.Start:
+		case STATE_GAME.Start: {
+			if (audioManager.play()) {
+				break;
+			}
+		}
 		case STATE_GAME.Over: {
 			elements.useVirtualKeyboardButton.removeAttribute("new");
 			elements.usePhysicalKeyboardButton.removeAttribute("new");
@@ -250,6 +259,7 @@ function updateTimer() {
 		if (!remaining) {
 			gameState = state.cycle(LS_KEY.StateGame);
 			remaining = DURATION[gameState];
+			audioManager.play(t => t?.lose);
 		}
 		elements.gameTimer.setAttribute("remaining", remaining);
 		elements.gameTimer.textContent = remaining;
@@ -302,8 +312,7 @@ function unlockButton() {
  * - Add keyboard connected indicator
  * - Make win screen
  * - Make things flashy during super
- * - Add sound
- * - Add voice over
+ * - Mute button
  * - Add reset localStorage button
  * Maybes:
  * - Add random delay for

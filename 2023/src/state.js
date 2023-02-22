@@ -137,7 +137,7 @@ export class State {
 				throw new TypeError(`Attempt to get value of invalid state '${state}.`);
 			}
 		}
-		this.notifyCallbacks(state, value);
+		this.notifyCallbacks(state, value, PrivateState.StateMap.get(state));
 		this.notifySubscribers(state, value);
 		PrivateState.StateMap.set(state, value);
 		if (cache) {
@@ -155,9 +155,9 @@ export class State {
 		this.subscribers.get(topic)?.add(subscriber) ?? this.subscribers.set(topic, new Set([subscriber]));
 	}
 
-	notifyCallbacks(topic, value) {
+	notifyCallbacks(topic, value, previous) {
 		for (const callback of this.callbacks.get(topic) ?? []) {
-			this.notifyCallback(callback, topic, value);
+			this.notifyCallback(callback, topic, value, previous);
 		}
 	}
 
@@ -167,8 +167,8 @@ export class State {
 		}
 	}
 
-	notifyCallback(callback, topic, value) {
-		callback(topic, value);
+	notifyCallback(callback, topic, value, previous) {
+		callback(topic, value, previous);
 	}
 
 	notifySubscriber(subscriber, topic, value) {
