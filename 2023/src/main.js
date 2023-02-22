@@ -156,7 +156,10 @@ function passageInputOnKeyDown(keyboardEvent) {
 						state.cycle(LS_KEY.StateProgression, true);
 						unlockButton();
 						audioManager.play(t => t?.win[0] ?? t?.win);
-					} else if (state.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Regular) {
+					} else if (
+						state.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Regular
+						|| state.get(LS_KEY.StateWebUsbSupport) == STATE_WEB_USB_SUPPORT.Unsupported
+					) {
 						audioManager.play(t => t?.win[1]);
 					}
 					break;
