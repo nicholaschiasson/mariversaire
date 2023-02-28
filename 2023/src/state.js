@@ -80,6 +80,7 @@ export class State {
 		switch (state) {
 			case LS_KEY.StateConnectedKeyboard:
 			case LS_KEY.StateGame:
+			case LS_KEY.StateIntroPlayed:
 			case LS_KEY.StateKeyboard:
 			case LS_KEY.StateProgression:
 			case LS_KEY.StateWebUsbSupport:
@@ -107,6 +108,12 @@ export class State {
 				}
 				// We reset the elapsed time if the game state changes
 				this.elapsedTime = 0;
+				break;
+			}
+			case LS_KEY.StateIntroPlayed: {
+				if (![false, true].includes(value)) {
+					throw new TypeError(`Invalid attempt to set state '${state}' to '${value}'.`);
+				}
 				break;
 			}
 			case LS_KEY.StateKeyboard: {

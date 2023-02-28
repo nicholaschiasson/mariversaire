@@ -5,6 +5,7 @@ export const LS_DELIM = ".";
 export const LS_KEY = {
 	StateConnectedKeyboard: "stateConnectedKeyboard",
 	StateGame: "stateGame",
+	StateIntroPlayed: "stateIntroPlayed",
 	StateKeyboard: "stateKeyboard",
 	StateProgression: "stateProgression",
 	StateWebUsbSupport: "stateWebUsbSupport",
@@ -53,6 +54,7 @@ export const STATE_CONNECTED_KEYBOARD = {
 export const TICK_INTERVAL = 1000;
 
 export const DURATION = {
+	[STATE_GAME.Start]: 38,
 	[STATE_GAME.Preparing]: 5,
 	[STATE_GAME.Playing]: 60,
 	[STATE_GAME.Over]: 0

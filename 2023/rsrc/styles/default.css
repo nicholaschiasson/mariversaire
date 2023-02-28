@@ -435,7 +435,8 @@ span.cursor-right:not(:empty) {
 #toggle-web-usb-support[stateconnectedkeyboard="1"],
 #toggle-web-usb-support[stateconnectedkeyboard="1"]:hover,
 #toggle-web-usb-support[stateconnectedkeyboard="2"],
-#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover {
+#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover,
+#play-quit[stateintroplayed="true"]:not([remaining="0"]) {
 	background-color: lightgray;
 	cursor: initial;
 }

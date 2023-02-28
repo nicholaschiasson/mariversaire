@@ -34,6 +34,7 @@ state.addSubscriber(LS_KEY.StateGame, elements.playQuitButton);
 state.addSubscriber(LS_KEY.StateGame, elements.toggleWebUsbSupportButton);
 state.addSubscriber(LS_KEY.StateGame, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateGame, elements.useVirtualKeyboardButton);
+state.addSubscriber(LS_KEY.StateIntroPlayed, elements.playQuitButton);
 state.addSubscriber(LS_KEY.StateKeyboard, elements.keyboardArea);
 state.addSubscriber(LS_KEY.StateKeyboard, elements.usePhysicalKeyboardButton);
 state.addSubscriber(LS_KEY.StateKeyboard, elements.useVirtualKeyboardButton);
@@ -158,7 +159,10 @@ function passageInputOnKeyDown(keyboardEvent) {
 						audioManager.play(t => t?.win[0] ?? t?.win);
 					} else if (
 						state.get(LS_KEY.StateConnectedKeyboard) === STATE_CONNECTED_KEYBOARD.Regular
-						|| state.get(LS_KEY.StateWebUsbSupport) == STATE_WEB_USB_SUPPORT.Unsupported
+						|| (
+							state.get(LS_KEY.StateWebUsbSupport) == STATE_WEB_USB_SUPPORT.Unsupported
+							&& keyboard === STATE_KEYBOARD.Physical
+						)
 					) {
 						audioManager.play(t => t?.win[1]);
 					}
@@ -185,6 +189,8 @@ function playQuitOnClick(mouseEvent) {
 	switch (state.get(LS_KEY.StateGame)) {
 		case STATE_GAME.Start: {
 			if (audioManager.play()) {
+				state.set(LS_KEY.StateIntroPlayed, true);
+				state.elapsedTime = 0;
 				break;
 			}
 		}
@@ -257,15 +263,32 @@ function toggleWebUsbSupportOnClick(mouseEvent) {
 
 function updateTimer() {
 	let gameState = state.get(LS_KEY.StateGame);
-	let remaining = Math.max(DURATION[gameState] - state.elapsedTime, 0);
-	if (gameState !== STATE_GAME.Start && gameState !== STATE_GAME.Over) {
-		if (!remaining) {
-			gameState = state.cycle(LS_KEY.StateGame);
-			remaining = DURATION[gameState];
-			audioManager.play(t => t?.lose);
+	switch (gameState) {
+		case STATE_GAME.Start: {
+			const remaining = Math.max(DURATION[gameState] - state.elapsedTime, 0);
+			elements.playQuitButton.setAttribute("remaining", remaining);
+			if (state.get(LS_KEY.StateIntroPlayed) && remaining) {
+				elements.playQuitButton.removeAttribute("new");
+			} else {
+				elements.playQuitButton.setAttribute("new", "");
+			}
+			break;
 		}
-		elements.gameTimer.setAttribute("remaining", remaining);
-		elements.gameTimer.textContent = remaining;
+		case STATE_GAME.Playing:
+		case STATE_GAME.Preparing: {
+			let remaining = Math.max(DURATION[gameState] - state.elapsedTime, 0);
+			if (!remaining) {
+				gameState = state.cycle(LS_KEY.StateGame);
+				remaining = DURATION[gameState];
+				audioManager.play(t => t?.lose);
+			}
+			elements.gameTimer.setAttribute("remaining", remaining);
+			elements.gameTimer.textContent = remaining;
+			break;
+		}
+		default: {
+			break;
+		}
 	}
 }
 
@@ -317,8 +340,12 @@ function unlockButton() {
  * - Make things flashy during super
  * - Mute button
  * - Add reset localStorage button
- * Maybes:
+ * Post:
  * - Add random delay for
  * - Allow passage input to be focused on mobile
+ * - Add secret button/mechanism to allow anyone to use the super keyboard without actually having it
+ * - Light refactoring
+ *   - Cleanup unused stuff like font inclusions
  * - Lighthouse
+ * - Store best wpm and add ghost to race against
  */
