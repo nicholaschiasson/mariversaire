@@ -178,11 +178,15 @@ function passageInputOnKeyDown(keyboardEvent) {
 function usePhysicalKeyboardOnClick(mouseEvent) {
 	elements.usePhysicalKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
+	if (!window.matchMedia("(hover: hover)").matches) {
+		elements.passageInput.removeAttribute("disabled");
+	}
 }
 
 function useVirtualKeyboardOnClick(mouseEvent) {
 	elements.useVirtualKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Virtual);
+	elements.passageInput.setAttribute("disabled", true);
 }
 
 function playQuitOnClick(mouseEvent) {
@@ -220,6 +224,9 @@ async function connectKeyboardOnClick(mouseEvent) {
 	}
 	elements.connectKeyboardButton.removeAttribute("new");
 	state.set(LS_KEY.StateKeyboard, STATE_KEYBOARD.Physical);
+	if (!window.matchMedia("(hover: hover)").matches) {
+		elements.passageInput.removeAttribute("disabled");
+	}
 	if (!navigator.usb || !navigator.usb.requestDevice) {
 		console.warn("WebUSB API not supported by current browser.");
 		alert([
@@ -342,7 +349,6 @@ function unlockButton() {
  * - Add reset localStorage button
  * Post:
  * - Add random delay for
- * - Allow passage input to be focused on mobile
  * - Add secret button/mechanism to allow anyone to use the super keyboard without actually having it
  * - Light refactoring
  *   - Cleanup unused stuff like font inclusions
