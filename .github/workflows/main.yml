@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,29 +44,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: just build --release
-      - name: Debug
-        run: find build
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: build
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    needs: [build]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: build
-      - name: Debug
-        run: find build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: pages
           folder: build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
