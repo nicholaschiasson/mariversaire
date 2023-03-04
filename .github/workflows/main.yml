@@ -13,22 +13,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: install toolchain
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: wasm32-unknown-unknown
           override: true
           profile: minimal
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install trunk
         uses: jetli/trunk-action@v0.1.0
         with:
           version: 'latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install nushell
         uses: hustcer/setup-nu@v3
         with:
           version: '0.76.0'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install justfile
         uses: extractions/setup-just@v1
         with:
