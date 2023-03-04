@@ -1,1 +1,4 @@
 audacity/
+build/
+dist/
+target/
