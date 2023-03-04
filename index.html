@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Website celebrating Marianne's birthday.">
+	<title>mariversaire</title>
+	<link href="/rsrc/images/birthday-cake.png" rel="icon" type="image/png">
+	<script async>
+		(async function main() {
+			let birthYear = 2001;
+			let birthdate = new Date(birthYear, 1 /* february */, 21);
+			let date = new Date();
+			let year = date.getFullYear() - (
+				date.getMonth() > birthdate.getMonth()
+					|| (date.getMonth() === birthdate.getMonth() && date.getDate() >= birthdate.getDate())
+					? 0
+					: 1
+			);
+
+			let urlPath = '/404.html';
+			for (let y = year; y >= birthYear; y--) {
+				let path = `/${y}`;
+				if ((await fetch(path, { method: "HEAD", cache: "no-cache" })).ok) {
+					urlPath = path;
+					break;
+				}
+			}
+
+			window.location.replace(urlPath);
+		})();
+	</script>
+</head>
+
+</html>

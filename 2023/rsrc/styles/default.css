@@ -1,0 +1,472 @@
+* {
+	margin: auto;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+@media screen and (min-width: 64pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: xx-large;
+	}
+
+	sup {
+		font-size: medium;
+	}
+}
+
+@media screen and (min-width: 37.5pc) and (max-width: 64pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: large;
+	}
+
+	#keyboard-header {
+		font-size: medium;
+	}
+
+	sup {
+		font-size: small;
+	}
+}
+
+@media screen and (max-width: 37.5pc) {
+	:not(h1, h2, h3, h4, h5, h6) {
+		font-size: smaller;
+	}
+
+	#keyboard-header {
+		font-size: large;
+	}
+
+	sup {
+		font-size: xx-small;
+	}
+}
+
+:root {
+	background-color: #eeeeee;
+	overflow-x: hidden;
+}
+
+#game-area {
+	background-color: white;
+	border-radius: 1em;
+	filter: drop-shadow(0 0 1mm #888888);
+	margin: 0.5em;
+	padding-bottom: 0.25em;
+	padding-top: 0.5em;
+}
+
+#game-header {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	width: calc(100% - 1em);
+}
+
+#game-title {
+	text-align: left;
+}
+
+#game-title[stategame="-1"]::before {
+	content: "BONNE MARIVERSAIRE! ❤️";
+}
+
+#game-title[stategame="0"]::before {
+	content: "The race is about to start!";
+}
+
+#game-title[stategame="1"]::before {
+	content: "The race is on! Type the text below:";
+}
+
+#game-title[stategame="2"]::before {
+	content: "The race has ended.";
+}
+
+#game-timer {
+	color: black;
+	font-size: 1.75em;
+	font-weight: bolder;
+	margin-right: 0.25em;
+	text-align: right;
+	transition-duration: 2s;
+}
+
+#game-timer[stategame="-1"] {
+	display: none;
+}
+
+#game-timer[remaining="0"],
+#game-timer[remaining="1"],
+#game-timer[remaining="2"],
+#game-timer[remaining="3"] {
+	color: red;
+	filter: drop-shadow(0 0 1mm yellow);
+}
+
+#game-timer[stategame="0"]::before {
+	content: "Get ready! ";
+	font-size: 0.5em;
+	transition-duration: 2s;
+}
+
+#game-timer[remaining="0"][stategame="0"]::before,
+#game-timer[remaining="1"][stategame="0"]::before,
+#game-timer[remaining="2"][stategame="0"]::before {
+	color: transparent;
+}
+
+#game-timer[stategame="1"]::before {
+	color: transparent;
+	content: "Go! ";
+	transition-duration: 2s;
+}
+
+#game-timer[remaining="60"][stategame="1"]::before,
+#game-timer[remaining="59"][stategame="1"]::before {
+	color: green;
+	transition-duration: 0.25s;
+}
+
+#game-timer[stategame="2"] {
+	color: lightgray;
+	filter: none;
+}
+
+#game-timer[remaining="0"][stategame="2"] {
+	filter: drop-shadow(0 0 1mm red);
+}
+
+#racers-area {
+	margin: 1em;
+}
+
+#racers-lanes {
+	width: 100%;
+}
+
+.racer-lane {
+	border-bottom-color: gold;
+	border-bottom-style: dashed;
+	border-bottom-width: 2px;
+}
+
+#racer-wrapper {
+	text-align: left;
+	transition-duration: 0.5s;
+	width: 100%;
+}
+
+#racer {
+	transition-duration: 0.5s;
+	width: 4em;
+}
+
+#racer-wpm-wrapper {
+	text-align: right;
+}
+
+#passage-area {
+	background-color: ghostwhite;
+	border-color: powderblue;
+	border-radius: 1em;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0.5em;
+	padding: 1em;
+}
+
+#passage-area[stategame="-1"] {
+	display: none;
+}
+
+#passage-current {
+	text-decoration: underline;
+}
+
+span.correct {
+	color: #99cc00;
+}
+
+#passage-current span.correct {
+	text-decoration: underline;
+}
+
+span.incorrect {
+	background-color: #f0a3a3;
+	color: #803333;
+}
+
+#passage-current span.incorrect {
+	text-decoration: underline;
+}
+
+span.cursor-left:not(:empty),
+span.cursor-left[word-end] {
+	animation: blink 1s infinite;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+
+span.cursor-right:not(:empty) {
+	animation: blink 1s infinite;
+	border-right-style: solid;
+	border-right-width: 1px;
+}
+
+@keyframes blink {
+
+	from,
+	to {
+		border-color: transparent;
+	}
+
+	50% {
+		border-color: black;
+	}
+}
+
+#passage-text {
+	margin-bottom: 0.5em;
+	text-align: justify;
+}
+
+#passage-input {
+	border-color: #52a8eccc;
+	border-radius: 1mm;
+	border-style: solid;
+	border-width: 0.75mm;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	color: black;
+	text-align: left;
+	width: calc(100% - 1em);
+}
+
+#passage-input:hover {
+	cursor: text;
+}
+
+#passage-input[stategame="0"],
+#passage-input[stategame="2"] {
+	background-color: lightgray;
+	border-color: #AAAAAA;
+	border-width: 1px;
+	box-shadow: none;
+	color: gray;
+}
+
+#keyboard-area,
+#keyboard-area[stategame="-1"],
+#keyboard-area[stategame="-1"][statekeyboard="0"] {
+	display: none;
+}
+
+#keyboard-area[statekeyboard="0"] {
+	display: block;
+}
+
+#keyboard {
+	background-color: darkgray;
+	border-color: black;
+	border-radius: 0.5em;
+	border-style: solid;
+	border-width: 0.75mm;
+	margin-bottom: 0.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.25em;
+	padding-top: 0.25em;
+}
+
+#keyboard-header {
+	text-align: left;
+}
+
+#keyboard-header span {
+	background-color: #333333;
+	border-radius: 0.25em;
+	color: #CCCCCC;
+	padding: 0.125em;
+	padding-bottom: 0.0625em;
+	text-shadow: 1px 1px white;
+}
+
+.keyboard-horizontal-rules {
+	margin-bottom: 0.25em;
+	margin-top: 0.125em;
+	border-style: double;
+	border-width: 2Q;
+	scale: 1.1875;
+	translate: -0.75em;
+}
+
+#keyboard tr:nth-child(2) {
+	--n: -1;
+}
+
+#keyboard tr:nth-child(3) {
+	--n: 0;
+}
+
+#keyboard tr:nth-child(4) {
+	--n: 1;
+}
+
+#keyboard tr {
+	transform: translateX(calc(var(--n) * 0.5em));
+}
+
+.keyboard-key {
+	background-color: lightgray;
+	border-color: gray;
+	border-style: ridge;
+	border-width: 2mm;
+	border-bottom-style: ridge;
+	border-right-style: ridge;
+	border-left-style: groove;
+	border-top-style: groove;
+	height: 1.5em;
+	width: 1.5em;
+}
+
+.keyboard-key:hover {
+	background-color: aliceblue;
+	cursor: pointer;
+}
+
+.keyboard-key:active {
+	background-color: gray;
+	border-color: #444444;
+}
+
+#buttons {
+	margin: 0.5em;
+	width: calc(100% - 1em);
+}
+
+#buttons:has(#play-quit[stategame="0"]),
+#buttons:has(#play-quit[stategame="1"]) {
+	margin-bottom: 0.875em;
+	margin-top: 0.875em;
+}
+
+.game-menu-button {
+	background-color: rgb(60, 193, 163);
+	border-radius: 2mm;
+	color: white;
+	display: none;
+	font-size: 1.5em;
+	padding: calc(50% - 0.75em);
+	padding-bottom: 0.125em;
+	padding-top: 0.25em;
+	transition-duration: 0.25s;
+	width: 100%;
+}
+
+.game-menu-button:hover {
+	background-color: rgb(64, 168, 43);
+	cursor: pointer;
+}
+
+.game-menu-button[stategame="-1"],
+.game-menu-button[stategame="2"] {
+	display: initial;
+}
+
+#play-quit {
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	font-size: 1em;
+}
+
+#play-quit[stategame="0"],
+#play-quit[stategame="1"] {
+	background-color: rgb(168, 64, 43);
+	display: initial;
+}
+
+#play-quit[stategame="0"]:hover,
+#play-quit[stategame="1"]:hover {
+	background-color: rgb(193, 60, 163);
+}
+
+#play-quit[stategame="-1"]::before {
+	content: "Play";
+}
+
+#play-quit[stategame="0"]::before,
+#play-quit[stategame="1"]::before {
+	content: "Quit";
+}
+
+#play-quit[stategame="2"]::before {
+	content: "Race again";
+}
+
+#buttons td {
+	text-align: left;
+	width: 10%;
+}
+
+#buttons :nth-child(8) {
+	text-align: right;
+	transform-origin: right;
+	width: 30%;
+}
+
+#use-virtual-keyboard[stateprogression="0"],
+#use-physical-keyboard[stateprogression="0"],
+#connect-keyboard[stateprogression="0"],
+#connect-keyboard[stateprogression="1"],
+#toggle-web-usb-support[statewebusbsupporttogglebutton="0"] {
+	display: none;
+}
+
+#use-virtual-keyboard[statekeyboard="0"],
+#use-physical-keyboard[statekeyboard="1"],
+#use-virtual-keyboard[statekeyboard="0"]:hover,
+#use-physical-keyboard[statekeyboard="1"]:hover,
+#connect-keyboard[statewebusbsupport="1"],
+#connect-keyboard[statewebusbsupport="1"]:hover,
+#toggle-web-usb-support[stateconnectedkeyboard="1"],
+#toggle-web-usb-support[stateconnectedkeyboard="1"]:hover,
+#toggle-web-usb-support[stateconnectedkeyboard="2"],
+#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover,
+#play-quit[stateintroplayed="true"]:not([remaining="0"]) {
+	background-color: lightgray;
+	cursor: initial;
+}
+
+#toggle-web-usb-support::before,
+#toggle-web-usb-support[statewebusbsupport="1"]:hover::before,
+#toggle-web-usb-support[stateconnectedkeyboard="1"]::before,
+#toggle-web-usb-support[stateconnectedkeyboard="1"]:hover::before,
+#toggle-web-usb-support[stateconnectedkeyboard="2"]::before,
+#toggle-web-usb-support[stateconnectedkeyboard="2"]:hover::before {
+	content: "🔓";
+}
+
+#toggle-web-usb-support:hover::before,
+#toggle-web-usb-support[statewebusbsupport="1"]::before {
+	content: "🔒";
+}
+
+#buttons td:has(.game-menu-button[new]) {
+	animation: throb 1s infinite;
+}
+
+@keyframes throb {
+
+	from,
+	to {
+		scale: 1;
+	}
+
+	50% {
+		scale: 1.1;
+	}
+}

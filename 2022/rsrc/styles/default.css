@@ -1,0 +1,414 @@
+* {
+	user-select: none;
+}
+
+:root {
+	/* background-color: blanchedalmond; */
+	background-image: url('../images/painted-shed.jpeg');
+	background-position: center bottom;
+	background-size: cover;
+	display: flex;
+	align-content: space-around;
+	justify-content: center;
+	height: 100%;
+}
+
+:not(:root, body) {
+	padding: 1em;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	margin: 0;
+}
+
+.page-title {
+	color: lightpink;
+	font: bold 2em 'Alfa Slab One';
+	opacity: 0;
+	padding: 0;
+	text-shadow:
+		-0.125em 0 0 black,
+		0.125em 0 0 black,
+		0 -0.125em 0 black,
+		0 0.125em 0 black,
+		-0.125em -0.125em 0 black,
+		0.125em -0.125em 0 black,
+		-0.125em 0.125em 0 black,
+		0.125em 0.125em 0 black;
+}
+
+.fade-in-out {
+	animation-name: fade-in-out;
+	animation-duration: 5s;
+}
+
+@keyframes fade-in-out {
+	0% {
+		opacity: 0;
+	}
+	20% {
+		opacity: 1;
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#slot-machine {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	padding: 0;
+}
+
+.slot-machine-spinning {
+	animation-name: slot-machine-spinning;
+	animation-duration: 0.125s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes slot-machine-spinning {
+	0% {
+		transform: rotate(0) translateY(-0.25em);
+	}
+	25% {
+		transform: rotate(1deg) translateY(0);
+	}
+	50% {
+		transform: rotate(0) translateY(-0.25em);
+	}
+	75% {
+		transform: rotate(-1deg) translateY(0);
+	}
+	100% {
+		transform: rotate(0) translateY(-0.25em);
+	}
+}
+
+#slot-machine-left {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	justify-content: space-evenly;
+	padding: 0;
+}
+
+#slot-machine-light {
+	background-image: linear-gradient(to bottom right, rgb(117, 0, 0), darkred);
+	border: 0.35em solid black;
+	border-top-left-radius: 100%;
+	border-top-right-radius: 100%;
+	bottom: 0;
+	cursor: pointer;
+	margin: auto;
+	transform-origin: bottom;
+	transition: 0.1s;
+	width: 1%;
+}
+
+#slot-machine-light:hover {
+	background-image: linear-gradient(to bottom right, red, lightpink);
+}
+
+#slot-machine-light:active {
+	background-image: linear-gradient(to top left, red, lightpink);
+	transform: scaleY(0.9);
+}
+
+.slot-machine-light-alarm {
+	animation-name: slot-machine-light-alarm;
+	animation-duration: 0.3s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes slot-machine-light-alarm {
+	0% {
+		background-image: radial-gradient(farthest-side at 100% 50%, red, darkred);
+		box-shadow: 1em 0 1em 1em red;
+	}
+	25% {
+		background-image: radial-gradient(farthest-corner at 50% 75%, red, darkred);
+		box-shadow: 0 0 2.5em 2.5em red;
+	}
+	50% {
+		background-image: radial-gradient(farthest-side at 0% 50%, red, darkred);
+		box-shadow: -1em 0 1em 1em red;
+	}
+	75% {
+		background-image: radial-gradient(closest-side at 50% 0%, red, darkred);
+		box-shadow: 0 0 1em 1em red;
+	}
+	100% {
+		background-image: radial-gradient(farthest-corner at 100% 50%, red, darkred);
+		box-shadow: 1em 0 1em 1em red;
+	}
+}
+
+#slot-machine-top {
+	background-image: url('../images/flowery-card.jpg');
+	background-size: 100% 200%;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-top: 0.5em solid black;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+	display: flex;
+	justify-content: right;
+	padding-top: 4em;
+	text-align: right;
+}
+
+.slot-machine-title {
+	color: gold;
+	font: bold 2em 'Alfa Slab One';
+	padding: 0;
+	text-shadow:
+		-0.125em 0 0 black,
+		0.125em 0 0 black,
+		0 -0.125em 0 black,
+		0 0.125em 0 black,
+		-0.125em -0.125em 0 black,
+		0.125em -0.125em 0 black,
+		-0.125em 0.125em 0 black,
+		0.125em 0.125em 0 black;
+	width: 90%;
+	word-wrap: break-word;
+}
+
+#slot-machine-body {
+	background-image: url('../images/metal-abstract.jpg');
+	background-position: center;
+	background-size: cover;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-bottom: 0.5em groove gray;
+	border-top: 0.5em groove gray;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	padding: 0.5em;
+}
+
+.slot {
+	background-color: white;
+	border: 0.375em ridge silver;
+	border-radius: 2.25em;
+	padding: 0;
+}
+
+.slot-mask {
+	/* This seems so weird... Doesn't matter what my colour values are as long as they are opaque. */
+	-webkit-mask-image: radial-gradient(black, black);
+	mask-image: radial-gradient(black, black);
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	padding: 0;
+}
+
+.slot-text {
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	font: 3em 'Courier New', monospace;
+	min-height: 1.5em;
+	min-width: 1.5em;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	text-align: center;
+}
+
+.spinning {
+	animation-name: slot-text-spinning;
+}
+
+@keyframes slot-text-spinning {
+	from {
+		transform: translateY(-80%);
+	}
+	to {
+		transform: translateY(80%);
+	}
+}
+
+#slot-machine-bottom {
+	background-image: url('../images/flowery-card.jpg');
+	background-position-y: -100%;
+	background-size: 100% 200%;
+	border-bottom: 0.5em solid black;
+	border-left: 0.5em solid black;
+	border-right: 0.5em solid black;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+#slot-machine-right {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: center;
+	padding: 0;
+}
+
+.slot-machine-buffer {
+	flex-grow: 1;
+}
+
+#slot-machine-lever {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	align-items: center;
+	margin-left: 1em;
+	margin-right: 1em;
+	padding: 0;
+	perspective: 32em;
+	width: 100%;
+}
+
+#slot-machine-lever-handle {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 7;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	transform-origin: bottom;
+	transform-style: preserve-3d;
+}
+
+.slot-machine-lever-handle-pull {
+	animation-name: slot-machine-lever-handle-pull;
+	animation-duration: 1.5s;
+}
+
+@keyframes slot-machine-lever-handle-pull {
+	0% {
+		transform: rotateX(0);
+	}
+	50% {
+		transform: rotateX(-50deg);
+	}
+	100% {
+		transform: rotateX(0);
+	}
+}
+
+#slot-machine-lever-handle-ball {
+	background-image: radial-gradient(farthest-corner at 60% 30%, red, darkred);
+	border-top: 0.25em groove red;
+	border-left: 0.25em groove red;
+	border-right: 0.25em ridge red;
+	border-bottom: 0.25em ridge red;
+	border-radius: 100%;
+	flex-grow: 1;
+	width: 75%;
+	z-index: 1;
+}
+
+.slot-machine-lever-handle-ball-idle {
+	animation-name: handle-idle;
+	animation-direction: alternate;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	cursor: pointer;
+}
+
+.slot-machine-lever-handle-ball-idle:hover {
+	animation-name: handle-hover;
+}
+
+@keyframes handle-idle {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.1);
+	}
+}
+
+@keyframes handle-hover {
+	from {
+		box-shadow: 0 0 0 0 gold;
+	}
+	to {
+		box-shadow: 0 0 1em 1em gold;
+	}
+}
+
+#slot-machine-lever-handle-stick {
+	background-image: linear-gradient(to right, silver, gray);
+	border-left: 0.25em groove silver;
+	border-right: 0.25em ridge silver;
+	flex-grow: 5;
+	transform: scaleX(0.5);
+}
+
+#slot-machine-lever-notch {
+	background-image: linear-gradient(silver, gray);
+	border-right: 0.5em ridge silver;
+	border-bottom: 0.5em groove silver;
+	border-top: 0.5em groove silver;
+	border-top-right-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	flex-grow: 1;
+	width: 50%;
+}
+
+.prize {
+	animation-name: prize-idle;
+	animation-duration: 0.2s;
+	animation-iteration-count: infinite;
+	cursor: pointer;
+	display: inline-block;
+	margin: 3em;
+	padding: 0;
+	text-decoration: none;
+	transform: scale(4);
+	transition: 0.1s;
+}
+
+.prize:hover {
+	transform: scale(4.5);
+}
+
+.prize:active {
+	transform: scale(3.5);
+}
+
+@keyframes prize-idle {
+	0% {
+		text-shadow: 0.2em 0 0.2em gold;
+	}
+	12.5% {
+		text-shadow: 0.1em 0.1em 0.2em gold;
+	}
+	25% {
+		text-shadow: 0 0.2em 0.2em gold;
+	}
+	37.5% {
+		text-shadow: -0.1em 0.1em 0.2em gold;
+	}
+	50% {
+		text-shadow: -0.2em 0 0.2em gold;
+	}
+	62.5% {
+		text-shadow: -0.1em -0.1em 0.2em gold;
+	}
+	75% {
+		text-shadow: 0 -0.2em 0.2em gold;
+	}
+	87.5% {
+		text-shadow: 0.1em -0.1em 0.2em gold;
+	}
+	100% {
+		text-shadow: 0.2em 0 0.2em gold;
+	}
+}
