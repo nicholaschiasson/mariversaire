@@ -5,7 +5,7 @@ default: build
 build *ARGS: (children ARGS)
 	mkdir build
 	nu build.nu {{ARGS}}
-	try {(ls */build | where type == dir).name | path dirname | each {|d| cp -r $"($d)/build" $"build/($d)"}}
+	try {(ls */build | where type == dir).name | path dirname | each {|d| ^cp -frv $"($d)/build" $"build/($d)"}}
 
 children *ARGS:
 	try {(ls */justfile).name | path dirname | each {|d| just $"($d)/build" {{ARGS}}}}
