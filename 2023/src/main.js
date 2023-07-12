@@ -190,13 +190,18 @@ function useVirtualKeyboardOnClick(mouseEvent) {
 }
 
 function playQuitOnClick(mouseEvent) {
-	switch (state.get(LS_KEY.StateGame)) {
+	const gameState = state.get(LS_KEY.StateGame);
+	switch (gameState) {
 		case STATE_GAME.Start: {
 			if (audioManager.play()) {
 				state.set(LS_KEY.StateIntroPlayed, true);
 				state.elapsedTime = 0;
 				break;
 			}
+			if (DURATION[gameState] > state.elapsedTime) {
+				break;
+			}
+			// Enough of the start song has played, so fall into the next case and start the game
 		}
 		case STATE_GAME.Over: {
 			elements.useVirtualKeyboardButton.removeAttribute("new");
@@ -348,7 +353,6 @@ function unlockButton() {
  * - Mute button
  * - Add reset localStorage button
  * Post:
- * - Add random delay for
  * - Add secret button/mechanism to allow anyone to use the super keyboard without actually having it
  * - Light refactoring
  *   - Cleanup unused stuff like font inclusions
