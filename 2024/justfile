@@ -1,1 +1,18 @@
-../justfile
+default: build
+
+outdir := "build"
+
+[unix]
+build *ARGS: b
+	rsync -uv *.html {{outdir}}/
+	rsync -ruv rsrc {{outdir}}/
+	rsync -ruv src {{outdir}}/
+
+[unix]
+clean:
+	rm -rf {{outdir}}
+
+[private]
+[unix]
+b:
+	mkdir -p {{outdir}}

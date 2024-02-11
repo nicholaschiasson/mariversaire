@@ -30,12 +30,6 @@ jobs:
           version: 'latest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install nushell
-        uses: hustcer/setup-nu@v3
-        with:
-          version: '0.76.0'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install justfile
         uses: extractions/setup-just@v1
         with:
