@@ -11,6 +11,8 @@
         buildInputs = [
           pkgs.just
           pkgs.miniserve
+          pkgs.nodePackages.typescript-language-server
+          pkgs.nodePackages.vscode-langservers-extracted
           pkgs.starship
           pkgs.watchexec
         ];
