@@ -1,3 +1,6 @@
-/**
- * todo
- */
+canvas {
+  border-color: powderblue;
+  border-radius: 1em;
+  border-style: solid;
+  border-width: 1px;
+}

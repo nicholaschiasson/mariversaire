@@ -10,6 +10,8 @@ addEventListener("load", dispatchInitialize);
 
 // entities
 class GameData {
+  score;
+
   constructor() {
     this.score = 0;
   }
@@ -28,12 +30,23 @@ class GameData {
 }
 
 class GameState {
+  canvas;
+  context;
+  entities;
+  gameData;
+  input;
+  previousTime;
+  
   constructor(canvas, context, gameData) {
-    this.entities = [];
-    this.previousTime = performance.now();
     this.canvas = canvas;
     this.context = context;
+    this.entities = [];
     this.gameData = gameData;
+    this.input = new Input();
+    this.previousTime = performance.now();
+    canvas.addEventListener("click", async function() {
+      await canvas.requestPointerLock();
+    });
   }
 
   addEntity(entity) {
@@ -41,9 +54,114 @@ class GameState {
   }
 }
 
+class Input {
+  mouse;
+
+  constructor() {
+    this.mouse = new MouseInput();
+  }
+
+  update(gameState, deltaTime) {
+    this.mouse.update(gameState, deltaTime);
+  }
+}
+
+class MouseInput {
+  buttons;
+  movement;
+  position;
+
+  constructor() {
+    this.buttons = Array(5).fill(new MouseButton);
+    this.movement = new Vector(0, 0);
+    this.position = new Vector(0, 0);
+    const mouse = this;
+    addEventListener("mousedown", function(e) {
+      mouse.buttons[e.button].press();
+    });
+    addEventListener("mouseup", function(e) {
+      mouse.buttons[e.button].release();
+    });
+    addEventListener("mousemove", function(e) {
+      mouse.movement.x = e.movementX;
+      mouse.movement.y = e.movementY;
+      mouse.position.x = e.x;
+      mouse.position.y = e.y;
+    });
+  }
+
+  update(gameState, deltaTime) {
+    for (const button of this.buttons) {
+      button.update(gameState, deltaTime);
+    }
+    this.movement.x = 0;
+    this.movement.y = 0;
+  }
+}
+
+class MouseButton {
+  #isDown;
+  #wasDown;
+
+  constructor() {
+    this.#isDown = false;
+    this.#wasDown = false;
+  }
+
+  press() {
+    this.#isDown = true;
+  }
+
+  release() {
+    this.#isDown = false;
+  }
+
+  down() {
+    return this.#wasDown && this.#isDown;
+  }
+
+  up() {
+    return !this.#wasDown && !this.#isDown;
+  }
+
+  pressed() {
+    return !this.#wasDown && this.#isDown;
+  }
+
+  released() {
+    return this.#wasDown && !this.#isDown;
+  }
+
+  update(gameState, deltaTime) {
+    this.#wasDown = this.#isDown;
+  }
+
+  static get Left() {
+    return 0;
+  }
+
+  static get Middle() {
+    return 1;
+  }
+
+  static get Right() {
+    return 2;
+  }
+
+  static get BrowserBack() {
+    return 3;
+  }
+
+  static get BrowserForward() {
+    return 4;
+  }
+}
+
 class Entity {
-  #update = undefined;
-  #draw = undefined;
+  #update;
+  #draw;
+
+  component;
 
   constructor() {
     this.component = {};
@@ -70,7 +188,10 @@ class Entity {
   }
 }
 
-class Position {
+class Vector {
+  x;
+  y;
+  
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -103,6 +224,7 @@ function dispatchUpdate(gameState) {
   gameState.previousTime = performance.now();
   const deltaTime = (gameState.previousTime - previousTime) * 0.001;
   update(gameState, deltaTime);
+  gameState.input.update(gameState, deltaTime);
   setTimeout(dispatchUpdate, UPDATE_DELAY, gameState);
 }
 
@@ -136,7 +258,10 @@ function draw(gameState) {
   }
 }
 
-function updatePlayer(gameState, deltaTime) {}
+// systems
+function updatePlayer(gameState, deltaTime) {
+  // todo
+}
 
 function drawEntity(gameState) {
   const position = this.component[CMP_POSITION];
