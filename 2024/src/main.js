@@ -45,7 +45,11 @@ class GameState {
     this.input = new Input();
     this.previousTime = performance.now();
     canvas.addEventListener("click", async function() {
-      await canvas.requestPointerLock();
+      try {
+        await canvas.requestPointerLock();
+      } catch (e) {
+        console.warn(e);
+      }
     });
   }
 
@@ -206,12 +210,32 @@ class Texture {
   }
 }
 
+// helpers and utils
+function resizeGameCanvas(canvas) {
+  const canvasComputedStyle = getComputedStyle(canvas);
+  canvas.setAttribute("height", canvasComputedStyle.height);
+  canvas.setAttribute("width", canvasComputedStyle.width);
+}
+
 // game engine
 function dispatchInitialize() {
   const gameCanvas = document.getElementById("game-canvas");
   const gameContext = gameCanvas.getContext("2d");
   const gameState = new GameState(gameCanvas, gameContext, GameData.Load(LS_DATA_KEY) ?? new GameData());
 
+  try {
+    screen.orientation.lock("natural")
+      .catch(e => {
+        console.warn(e)
+      });
+  } catch (e) {
+    console.warn(e)
+  }
+  resizeGameCanvas(gameCanvas);
+  // NOTE: Interesting, by not registering the resize handler, we have an effect where resizing the
+  // whole window/canvas scales the contents of the canvas proportionally. The CSS keeps the canvas
+  // aspect ratio in tact, so we don't actually need to recall the resize callback.
+  // addEventListener("resize", function() { resizeGameCanvas(gameCanvas); });
   initialize(gameState);
   setTimeout(dispatchUpdate, UPDATE_DELAY, gameState);
   requestAnimationFrame(function() {
