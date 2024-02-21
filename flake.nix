@@ -9,6 +9,7 @@
     in {
       devShell = pkgs.mkShell {
         buildInputs = [
+          pkgs.dprint
           pkgs.just
           pkgs.miniserve
           pkgs.nodePackages.typescript-language-server

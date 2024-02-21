@@ -1,9 +1,9 @@
 import Texture from "./texture.js";
 import Player from "./player.js";
 import Platform from "./platform.js";
-import BrokenPlatform from "./broken-platform.js";
 import MovingPlatform from "./moving-platform.js";
 import VanishingPlatform from "./vanishing-platform.js";
+import BrokenPlatform from "./broken-platform.js";
 
 export default class Content {
 	#texture;
@@ -18,7 +18,7 @@ export default class Content {
 	}
 
 	/**
-	 * @returns {HTMLImageElement} 
+	 * @returns {HTMLImageElement}
 	 */
 	texture(type) {
 		return this.#texture[type.name];
