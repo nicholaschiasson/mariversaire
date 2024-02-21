@@ -5,6 +5,7 @@ import Score from "./score.js";
 import MovingPlatform from "./moving-platform.js";
 import VanishingPlatform from "./vanishing-platform.js";
 import BrokenPlatform from "./broken-platform.js";
+import PlatformSpawner from "./platform-spawner.js";
 
 let player;
 
@@ -14,10 +15,7 @@ let player;
 export function initialize(gameState) {
 	player = new Player(gameState);
 	gameState.addEntity(player);
-	const platformVerticalBuffer = gameState.canvas.width / 18;
-	for (let i = gameState.canvas.height - platformVerticalBuffer; i > 0; i -= platformVerticalBuffer) {
-		gameState.addEntity(new Platform(gameState, player, i));
-	}
+	gameState.addEntity(new PlatformSpawner(gameState, player));
 	gameState.addEntity(new Score(gameState));
 }
 

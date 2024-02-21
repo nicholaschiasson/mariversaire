@@ -6,6 +6,18 @@ import Vector from "./vector.js";
 export default class Platform extends Entity {
 	player;
 
+	static get widthToScreenWidthFactor() {
+		return 4;
+	}
+
+	static get heightToWidthFactor() {
+		return 5;
+	}
+
+	static get heightToScreenWidthFactor() {
+		return this.heightToWidthFactor * this.widthToScreenWidthFactor;
+	}
+
 	/**
 	 * @param {GameState} gameState
 	 * @param {HTMLImageElement} texture
@@ -13,8 +25,8 @@ export default class Platform extends Entity {
 	 * @param {number} positionY
 	 */
 	constructor(gameState, player, positionY) {
-		const platformWidth = gameState.canvas.width / 4;
-		const platformHeight = platformWidth / 5;
+		const platformWidth = gameState.canvas.width / Platform.widthToScreenWidthFactor;
+		const platformHeight = platformWidth / Platform.heightToWidthFactor;
 		const platformX = Math.random() * (gameState.canvas.width - platformWidth);
 		const position = new Vector(platformX, positionY ?? 0);
 		const dimensions = new Vector(platformWidth, platformHeight);

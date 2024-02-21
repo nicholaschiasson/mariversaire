@@ -53,7 +53,7 @@ export default class Player extends Entity {
 		const bottom = this.position.y + this.dimensions.y;
 		const screenIntersection = bottom - gameState.canvas.height;
 		if (screenIntersection > 0) {
-			this.position.y -= screenIntersection * 2;
+			this.position.y -= screenIntersection;
 			this.velocity.y = -JUMP_FORCE;
 		}
 
@@ -83,7 +83,7 @@ export default class Player extends Entity {
 			case Platform:
 			case MovingPlatform:
 			case VanishingPlatform:
-				this.position.y -= intersection * 2;
+				this.position.y -= intersection;
 				this.velocity.y = -JUMP_FORCE;
 				this.climb(gameState);
 				break;
