@@ -2,6 +2,7 @@ import Entity from "./entity.js";
 import GameState from "./game-state.js";
 import MovingPlatform from "./moving-platform.js";
 import Platform from "./platform.js";
+import VanishingPlatform from "./vanishing-platform.js";
 import Vector from "./vector.js";
 
 const GRAVITY = 28;
@@ -78,6 +79,7 @@ export default class Player extends Entity {
     switch (entity.constructor) {
       case Platform:
       case MovingPlatform:
+      case VanishingPlatform:
         this.position.y -= intersection * 2;
         this.velocity.y = -JUMP_FORCE;
         this.climb(gameState);

@@ -44,6 +44,14 @@ export default class Platform extends Entity {
       && (this.position.x + this.dimensions.x) > this.player.position.x
     ) {
       this.player.collide(gameState, this, intersection);
+      this.collide(gameState, this.player, intersection);
     }
   }
+
+  /**
+   * @param {GameState} gameState 
+   * @param {Entity} entity 
+   * @param {number} intersection 
+   */
+  collide(gameState, entity, intersection) {}
 }
