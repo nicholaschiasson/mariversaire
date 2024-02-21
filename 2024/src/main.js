@@ -279,7 +279,10 @@ function dispatchDraw(gameState) {
 // game logic
 function initialize(gameState) {
   gameState.addEntity(newPlayer(gameState));
-  gameState.addEntity(newPlatform(gameState, new Vector(0, 0)));
+  const platformVerticalBuffer = gameState.canvas.width / 18;
+  for (let i = gameState.canvas.height - platformVerticalBuffer; i > 0; i -= platformVerticalBuffer) {
+    gameState.addEntity(newPlatform(gameState, i));
+  }
 }
 
 function update(gameState, deltaTime) {
@@ -342,18 +345,28 @@ function updatePlayer(gameState, deltaTime) {
   const moveUpBoundary = gameState.canvas.height / 2 - this.component[CMP_POSITION].y - this.component[CMP_DIMENSIONS].y / 2;
   if (moveUpBoundary > 0) {
     gameState.world.y += moveUpBoundary;
+    gameState.gameData.score += moveUpBoundary;
   }
 }
 
-function newPlatform(gameState, position) {
+function newPlatform(gameState, positionY) {
   const platform = new Entity();
   const platformWidth = gameState.canvas.width / 4;
+  const platformHeight = platformWidth / 5;
+  const platformX = Math.random() * (gameState.canvas.width - platformWidth);
   platform.addComponent(CMP_PLATFORM, true);
-  platform.addComponent(CMP_POSITION, position);
+  platform.addComponent(CMP_POSITION, new Vector(platformX, positionY ?? 0));
   platform.addComponent(CMP_TEXTURE, Texture.FromUrl("/rsrc/images/birthday-cake.png"));
-  platform.addComponent(CMP_DIMENSIONS, new Vector(platformWidth, platformWidth / 5));
+  platform.addComponent(CMP_DIMENSIONS, new Vector(platformWidth, platformHeight));
+  platform.update = updatePlatform;
   platform.draw = drawEntity;
   return platform;
+}
+
+function updatePlatform(gameState, deltaTime) {
+  if (this.component[CMP_POSITION].y > gameState.canvas.height) {
+    gameState.entities.splice(gameState.entities.indexOf(this));
+  }
 }
 
 function drawEntity(gameState) {
