@@ -1,3 +1,4 @@
+import GameState from "./game-state.js";
 import Vector from "./vector.js";
 
 export default class Input {
@@ -7,6 +8,10 @@ export default class Input {
     this.mouse = new MouseInput();
   }
 
+  /**
+   * @param {GameState} gameState 
+   * @param {number} deltaTime 
+   */
   update(gameState, deltaTime) {
     this.mouse.update(gameState, deltaTime);
   }
@@ -36,6 +41,10 @@ class MouseInput {
     });
   }
 
+  /**
+   * @param {GameState} gameState 
+   * @param {number} deltaTime 
+   */
   update(gameState, deltaTime) {
     for (const button of this.buttons) {
       button.update(gameState, deltaTime);
@@ -78,6 +87,10 @@ class MouseButton {
     return this.#wasDown && !this.#isDown;
   }
 
+  /**
+   * @param {GameState} gameState 
+   * @param {number} deltaTime 
+   */
   update(gameState, deltaTime) {
     this.#wasDown = this.#isDown;
   }

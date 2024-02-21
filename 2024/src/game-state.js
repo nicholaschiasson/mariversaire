@@ -1,3 +1,5 @@
+import Entity from "./entity.js";
+import GameData from "./game-data.js";
 import Input from "./input.js";
 import Vector from "./vector.js";
 
@@ -10,6 +12,11 @@ export default class GameState {
   previousTime;
   world;
   
+  /**
+   * @param {HTMLCanvasElement} canvas 
+   * @param {CanvasRenderingContext2D} context 
+   * @param {GameData} gameData 
+   */
   constructor(canvas, context, gameData) {
     this.canvas = canvas;
     this.context = context;
@@ -27,6 +34,9 @@ export default class GameState {
     });
   }
 
+  /**
+   * @param {Entity} entity 
+   */
   addEntity(entity) {
     this.entities.push(entity);
   }
