@@ -1,4 +1,6 @@
 import Entity from "./entity.js";
+import GameState from "./game-state.js";
+import Platform from "./platform.js";
 import Vector from "./vector.js";
 
 const GRAVITY = 28;
@@ -52,10 +54,35 @@ export default class Player extends Entity {
 
     this.position.x = (this.position.x + gameState.canvas.width) % gameState.canvas.width;
 
+    this.climb(gameState);
+  }
+
+  /**
+   * @param {GameState} gameState
+   */
+  climb(gameState) {
     const moveUpBoundary = gameState.canvas.height / 2 - this.position.y - this.dimensions.y / 2;
     if (moveUpBoundary > 0) {
       gameState.world.y += moveUpBoundary;
       gameState.gameData.score += moveUpBoundary;
+    }
+  }
+
+  /**
+   * @param {GameState} gameState 
+   * @param {Entity} entity 
+   * @param {number} intersection 
+   */
+  collide(gameState, entity, intersection) {
+    switch (entity.constructor) {
+      case Platform:
+        this.position.y -= intersection * 2;
+        this.velocity.y = -JUMP_FORCE;
+        this.climb(gameState);
+        break;
+      default:
+        console.warn(`unhandled collision with entity of type ${entity.constructor.name}`);
+        break;
     }
   }
 }

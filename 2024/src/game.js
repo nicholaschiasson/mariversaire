@@ -3,14 +3,17 @@ import Platform from "./platform.js";
 import Player from "./player.js";
 import Texture from "./texture.js";
 
+let player;
+
 /**
  * @param {GameState} gameState 
  */
 export function initialize(gameState) {
-  gameState.addEntity(new Player(gameState, Texture.FromUrl("/rsrc/images/birthday-cake.png")));
+  player = new Player(gameState, Texture.FromUrl("/rsrc/images/birthday-cake.png"));
+  gameState.addEntity(player);
   const platformVerticalBuffer = gameState.canvas.width / 18;
   for (let i = gameState.canvas.height - platformVerticalBuffer; i > 0; i -= platformVerticalBuffer) {
-    gameState.addEntity(new Platform(gameState, Texture.FromUrl("/rsrc/images/birthday-cake.png"), i));
+    gameState.addEntity(new Platform(gameState, Texture.FromUrl("/rsrc/images/birthday-cake.png"), player, i));
   }
 }
 

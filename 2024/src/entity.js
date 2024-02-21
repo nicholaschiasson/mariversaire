@@ -2,6 +2,7 @@ import GameState from "./game-state.js";
 import Vector from "./vector.js";
 
 export default class Entity {
+  alive;
   position;
   texture;
   dimensions;
@@ -13,6 +14,7 @@ export default class Entity {
 	 * @param {Vector} dimensions 
 	 */
   constructor(position, texture, dimensions) {
+    this.alive = true;
     this.position = position;
     this.texture = texture;
     this.dimensions = dimensions;

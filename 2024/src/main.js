@@ -55,6 +55,11 @@ function dispatchUpdate(gameState) {
       entity.position.y += gameState.world.y;
     }
   }
+  for (let i = gameState.entities.length - 1; i >= 0; i--) {
+    if (!gameState.entities[i].alive) {
+      gameState.entities.splice(i, 1);
+    }
+  }
   gameState.world.x = 0;
   gameState.world.y = 0;
   gameState.input.update(gameState, deltaTime);
