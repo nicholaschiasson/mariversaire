@@ -1,3 +1,4 @@
+import BrokenPlatform from "./broken-platform.js";
 import Entity from "./entity.js";
 import GameState from "./game-state.js";
 import MovingPlatform from "./moving-platform.js";
@@ -13,14 +14,13 @@ export default class Player extends Entity {
 
   /**
    * @param {GameState} gameState 
-   * @param {HTMLImageElement} texture 
    */
-  constructor(gameState, texture) {
+  constructor(gameState) {
     const playerWidth = gameState.canvas.width / 6;
     const position = new Vector(gameState.canvas.width / 2 - playerWidth / 2, gameState.canvas.height / 2 - playerWidth / 2);
     const dimensions = new Vector(playerWidth, playerWidth);
 
-    super(position, texture, dimensions);
+    super(gameState, position, dimensions);
     this.layer = Infinity;
     this.velocity = new Vector(0, 0);
   }
@@ -83,6 +83,8 @@ export default class Player extends Entity {
         this.position.y -= intersection * 2;
         this.velocity.y = -JUMP_FORCE;
         this.climb(gameState);
+        break;
+      case BrokenPlatform:
         break;
       default:
         console.warn(`unhandled collision with entity of type ${entity.constructor.name}`);

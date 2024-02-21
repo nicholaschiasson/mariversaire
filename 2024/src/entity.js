@@ -11,13 +11,13 @@ export default class Entity {
   layer;
 
 	/**
+   * @param {GameState} gameState 
 	 * @param {Vector} position 
-	 * @param {HTMLImageElement} texture 
 	 * @param {Vector} dimensions 
 	 */
-  constructor(position, texture, dimensions) {
+  constructor(gameState, position, dimensions) {
     this.position = position;
-    this.texture = texture;
+    this.texture = gameState.content.texture(this.constructor);
     this.dimensions = dimensions;
     this.alive = true;
     this.fixed = false;

@@ -12,14 +12,14 @@ export default class Platform extends Entity {
    * @param {Player} player 
    * @param {number} positionY 
    */
-  constructor(gameState, texture, player, positionY) {
+  constructor(gameState, player, positionY) {
     const platformWidth = gameState.canvas.width / 4;
     const platformHeight = platformWidth / 5;
     const platformX = Math.random() * (gameState.canvas.width - platformWidth);
     const position = new Vector(platformX, positionY ?? 0);
     const dimensions = new Vector(platformWidth, platformHeight);
 
-    super(position, texture, dimensions);
+    super(gameState, position, dimensions);
     this.player = player;
   }
 

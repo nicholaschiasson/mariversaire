@@ -11,8 +11,8 @@ export default class MovingPlatform extends Platform {
    * @param {Player} player 
    * @param {number} positionY 
    */
-  constructor(gameState, texture, player, positionY) {
-		super(gameState, texture, player, positionY);
+  constructor(gameState, player, positionY) {
+		super(gameState, player, positionY);
 		this.direction = Math.round(Math.random()) * 2 - 1;
 	}
 

@@ -1,3 +1,4 @@
+import Content from "./content.js";
 import Entity from "./entity.js";
 import GameData from "./game-data.js";
 import Input from "./input.js";
@@ -5,6 +6,7 @@ import Vector from "./vector.js";
 
 export default class GameState {
   canvas;
+  content;
   context;
   entities;
   gameData;
@@ -19,6 +21,7 @@ export default class GameState {
    */
   constructor(canvas, context, gameData) {
     this.canvas = canvas;
+    this.content = new Content();
     this.context = context;
     this.entities = [];
     this.gameData = gameData;

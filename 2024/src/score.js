@@ -13,7 +13,7 @@ export default class Score extends Entity {
 	 */
 	constructor(gameState) {
 		const margin = 10;
-		super(new Vector(gameState.canvas.width / 2, margin * 3));
+		super(gameState, new Vector(gameState.canvas.width / 2, margin * 3));
 		this.fixed = true;
 		this.layer = Infinity;
 		this.borderradius = 10;
