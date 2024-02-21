@@ -1,5 +1,6 @@
 import Entity from "./entity.js";
 import GameState from "./game-state.js";
+import MovingPlatform from "./moving-platform.js";
 import Platform from "./platform.js";
 import Vector from "./vector.js";
 
@@ -76,6 +77,7 @@ export default class Player extends Entity {
   collide(gameState, entity, intersection) {
     switch (entity.constructor) {
       case Platform:
+      case MovingPlatform:
         this.position.y -= intersection * 2;
         this.velocity.y = -JUMP_FORCE;
         this.climb(gameState);
