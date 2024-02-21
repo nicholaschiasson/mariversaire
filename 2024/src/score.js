@@ -9,7 +9,7 @@ export default class Score extends Entity {
 	maxTextMetrics;
 
 	/**
-	 * @param {GameState} gameState 
+	 * @param {GameState} gameState
 	 */
 	constructor(gameState) {
 		const margin = 10;
@@ -22,7 +22,7 @@ export default class Score extends Entity {
 	}
 
 	/**
-	 * @param {GameState} gameState 
+	 * @param {GameState} gameState
 	 */
 	draw(gameState) {
 		gameState.context.font = "bold 8vh \"Courier\", sans-serif";
@@ -33,7 +33,7 @@ export default class Score extends Entity {
 		this.maxTextMetrics.left = Math.max(this.maxTextMetrics.left, textMetrics.actualBoundingBoxLeft);
 		this.maxTextMetrics.right = Math.max(this.maxTextMetrics.right, textMetrics.actualBoundingBoxRight);
 		this.maxTextMetrics.top = Math.max(this.maxTextMetrics.top, textMetrics.fontBoundingBoxAscent);
-		this.maxTextMetrics.bottom= Math.max(this.maxTextMetrics.bottom, textMetrics.fontBoundingBoxDescent);
+		this.maxTextMetrics.bottom = Math.max(this.maxTextMetrics.bottom, textMetrics.fontBoundingBoxDescent);
 		gameState.context.fillStyle = "white";
 		gameState.context.strokeStyle = "black";
 		gameState.context.lineWidth = this.margin / 2;
@@ -43,7 +43,7 @@ export default class Score extends Entity {
 			this.position.y - this.maxTextMetrics.top - this.margin,
 			this.maxTextMetrics.left + this.maxTextMetrics.right + this.margin * 4,
 			this.maxTextMetrics.top + this.maxTextMetrics.bottom + this.margin,
-			this.borderradius
+			this.borderradius,
 		);
 		gameState.context.fill();
 		gameState.context.stroke();
