@@ -17,6 +17,7 @@ export default class Player extends Entity {
     const dimensions = new Vector(playerWidth, playerWidth);
 
     super(position, texture, dimensions);
+    this.layer = Infinity;
     this.velocity = new Vector(0, 0);
   }
 

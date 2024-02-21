@@ -5,6 +5,7 @@ export default class Entity {
   position;
   texture;
   dimensions;
+  layer;
 
 	/**
 	 * @param {Vector} position 
@@ -15,6 +16,7 @@ export default class Entity {
     this.position = position;
     this.texture = texture;
     this.dimensions = dimensions;
+    this.layer = 0;
   }
 
 	/**

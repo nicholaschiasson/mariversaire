@@ -38,6 +38,6 @@ export default class GameState {
    * @param {Entity} entity 
    */
   addEntity(entity) {
-    this.entities.push(entity);
+    this.entities.splice(this.entities.findIndex(e => e.layer > entity.layer), 0, entity);
   }
 }
