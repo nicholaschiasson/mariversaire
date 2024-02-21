@@ -1,0 +1,22 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+canvas {
+  background-color: cornflowerblue;
+  --viewport-height: 100vh;
+  height: var(--viewport-height);
+  width: calc(var(--viewport-height) / calc(16/10));
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+  canvas {
+    height: 100vh;
+    width: 100vh;
+  }
+}
