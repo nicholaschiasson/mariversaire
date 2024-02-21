@@ -50,7 +50,7 @@ function dispatchUpdate(gameState) {
   const deltaTime = (gameState.previousTime - previousTime) * 0.001;
   update(gameState, deltaTime);
   for (const entity of gameState.entities) {
-    if (entity.position) {
+    if (entity.position && !entity.fixed) {
       entity.position.x += gameState.world.x;
       entity.position.y += gameState.world.y;
     }

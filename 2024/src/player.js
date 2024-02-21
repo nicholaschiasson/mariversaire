@@ -64,7 +64,7 @@ export default class Player extends Entity {
     const moveUpBoundary = gameState.canvas.height / 2 - this.position.y - this.dimensions.y / 2;
     if (moveUpBoundary > 0) {
       gameState.world.y += moveUpBoundary;
-      gameState.gameData.score += moveUpBoundary;
+      gameState.gameData.score += moveUpBoundary / 100;
     }
   }
 

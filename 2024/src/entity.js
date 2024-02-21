@@ -2,10 +2,12 @@ import GameState from "./game-state.js";
 import Vector from "./vector.js";
 
 export default class Entity {
-  alive;
   position;
   texture;
   dimensions;
+
+  alive;
+  fixed;
   layer;
 
 	/**
@@ -14,10 +16,11 @@ export default class Entity {
 	 * @param {Vector} dimensions 
 	 */
   constructor(position, texture, dimensions) {
-    this.alive = true;
     this.position = position;
     this.texture = texture;
     this.dimensions = dimensions;
+    this.alive = true;
+    this.fixed = false;
     this.layer = 0;
   }
 
