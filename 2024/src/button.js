@@ -18,6 +18,7 @@ export default class Button extends Entity {
 	 */
 	constructor(gameState, position, dimensions) {
 		super(gameState, position, dimensions);
+		this.layer = Infinity;
 		this.over = false;
 		this.pressing = false;
 	}

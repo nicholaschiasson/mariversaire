@@ -14,7 +14,6 @@ export default class Score extends Entity {
 	constructor(gameState) {
 		super(gameState, new Vector(gameState.canvas.width / 2, gameState.canvas.height / 12));
 		this.fixed = true;
-		this.layer = Infinity;
 		this.borderRadius = 10;
 		this.margin = 10;
 		this.maxTextMetrics = new BoundingBox();

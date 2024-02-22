@@ -14,19 +14,25 @@
 - [x] Implement fallthrough platform, which will just break and allow the player to fall through it upon landing on it
 - [x] Implement content manager
 - [x] Implement tile incremental distance increase to a limit
-- [ ] Implement tile spawning patterns
-- [ ] Implement scene manager
-	- [ ] Start scene
-		- [ ] Play button
+- [x] Implement scene manager
+	- [x] Start scene
+		- [x] Play button
 		- [ ] Options button
 	- [ ] Options scene
 		- [ ] Toggle sounds button
 		- [ ] Toggle music button
-	- [ ] Game scene
-	- [ ] Game Over scene
+	- [x] Game scene
+	- [x] Game Over scene
 		- [ ] Display leaderboard
+		- [ ] Try Again button
+		- [ ] Options button
+- [x] Make player collision with bottom of screen a "Game Over"
+- [ ] Implement tile spawning patterns
+- [ ] Manage score
+	- [ ] Reset between games
+	- [ ] Save leaderboards
+	- [ ] Load leaderboards
 - [ ] Implement death animations
-- [ ] Make player collision with bottom of screen a "Game Over"
 - [ ] Implement items
 	- [ ] Spring, high bounce
 	- [ ] Spring shoes, three big bounces
