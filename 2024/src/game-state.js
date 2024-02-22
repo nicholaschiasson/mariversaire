@@ -11,6 +11,7 @@ export default class GameState {
 	entities;
 	gameData;
 	input;
+	playing;
 	previousTime;
 	world;
 
@@ -26,13 +27,16 @@ export default class GameState {
 		this.entities = [];
 		this.gameData = gameData;
 		this.input = new Input(this.canvas);
+		this.playing = false;
 		this.previousTime = performance.now();
 		this.world = new Vector(0, 0);
-		canvas.addEventListener("click", async function() {
-			try {
-				// await canvas.requestPointerLock();
-			} catch (e) {
-				console.warn(e);
+		canvas.addEventListener("click", () => {
+			if (this.playing) {
+				try {
+					canvas.requestPointerLock();
+				} catch (e) {
+					console.warn(e);
+				}
 			}
 		});
 	}

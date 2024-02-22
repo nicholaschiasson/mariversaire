@@ -63,6 +63,9 @@ export default class Button extends Entity {
 			if (this.pressing) {
 				if (gameState.input.mouse.buttons[MouseButton.Left].released) {
 					this.pressing = false;
+					if (this.onRelease) {
+						this.onRelease(gameState);
+					}
 				}
 			}
 		}
