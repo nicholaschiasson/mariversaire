@@ -12,12 +12,11 @@ export default class Score extends Entity {
 	 * @param {GameState} gameState
 	 */
 	constructor(gameState) {
-		const margin = 10;
-		super(gameState, new Vector(gameState.canvas.width / 2, margin * 3));
+		super(gameState, new Vector(gameState.canvas.width / 2, gameState.canvas.height / 12));
 		this.fixed = true;
 		this.layer = Infinity;
-		this.borderradius = 10;
-		this.margin = margin;
+		this.borderRadius = 10;
+		this.margin = 10;
 		this.maxTextMetrics = new BoundingBox();
 	}
 
@@ -27,7 +26,7 @@ export default class Score extends Entity {
 	draw(gameState) {
 		gameState.context.font = "bold 8vh \"Courier\", sans-serif";
 		gameState.context.textAlign = "center";
-		gameState.context.textBaseline = "top";
+		gameState.context.textBaseline = "middle";
 		const score = Math.floor(gameState.gameData.score);
 		const textMetrics = gameState.context.measureText(score);
 		this.maxTextMetrics.left = Math.max(this.maxTextMetrics.left, textMetrics.actualBoundingBoxLeft);
@@ -43,7 +42,7 @@ export default class Score extends Entity {
 			this.position.y - this.maxTextMetrics.top - this.margin,
 			this.maxTextMetrics.left + this.maxTextMetrics.right + this.margin * 4,
 			this.maxTextMetrics.top + this.maxTextMetrics.bottom + this.margin,
-			this.borderradius,
+			this.borderRadius,
 		);
 		gameState.context.fill();
 		gameState.context.stroke();

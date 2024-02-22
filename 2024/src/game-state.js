@@ -25,12 +25,12 @@ export default class GameState {
 		this.context = context;
 		this.entities = [];
 		this.gameData = gameData;
-		this.input = new Input();
+		this.input = new Input(this.canvas);
 		this.previousTime = performance.now();
 		this.world = new Vector(0, 0);
 		canvas.addEventListener("click", async function() {
 			try {
-				await canvas.requestPointerLock();
+				// await canvas.requestPointerLock();
 			} catch (e) {
 				console.warn(e);
 			}
