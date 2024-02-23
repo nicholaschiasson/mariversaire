@@ -17,19 +17,19 @@
 - [x] Implement scene manager
 	- [x] Start scene
 		- [x] Play button
-		- [ ] Options button
+		- [x] Options button
 	- [ ] Options scene
 		- [ ] Toggle sounds button
 		- [ ] Toggle music button
 	- [x] Game scene
 	- [x] Game Over scene
 		- [ ] Display leaderboard
-		- [ ] Try Again button
-		- [ ] Options button
+		- [x] Try Again button
+		- [x] Options button
 - [x] Make player collision with bottom of screen a "Game Over"
 - [ ] Implement tile spawning patterns
-- [ ] Manage score
-	- [ ] Reset between games
+- [x] Manage score
+	- [x] Reset between games
 	- [ ] Save leaderboards
 	- [ ] Load leaderboards
 - [ ] Implement death animations

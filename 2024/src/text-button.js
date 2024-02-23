@@ -2,10 +2,13 @@ import Button from "./button.js";
 import GameState from "./game-state.js";
 
 export default class TextButton extends Button {
+	#fontSize;
+
 	backgroundColor;
 	borderColor;
 	borderRadius;
 	borderWidth;
+	margin;
 	text;
 	textColor;
 
@@ -21,15 +24,31 @@ export default class TextButton extends Button {
 		this.borderColor = "black";
 		this.borderRadius = 10;
 		this.borderWidth = 5;
+		this.margin = 10;
 		this.text = text;
 		this.textColor = "black";
+		this.#fontSize = 1;
+		let textMetrics;
+		do {
+			this.#fontSize++;
+			gameState.context.font = this.#font;
+			textMetrics = gameState.context.measureText(text);
+		} while (
+			textMetrics.actualBoundingBoxLeft + textMetrics.actualBoundingBoxRight + this.margin * 2 < dimensions.x
+				&& textMetrics.fontBoundingBoxAscent + textMetrics.fontBoundingBoxDescent + this.margin * 2 < dimensions.y
+		)
+		this.#fontSize--;
+	}
+
+	get #font() {
+		return `bold ${this.#fontSize}pt "Courier", sans-serif`;
 	}
 
 	/**
 	 * @param {GameState} gameState 
 	 */
 	draw(gameState) {
-		gameState.context.font = "bold 8vh \"Courier\", sans-serif";
+		gameState.context.font = this.#font;
 		gameState.context.textAlign = "center";
 		gameState.context.textBaseline = "middle";
 		gameState.context.fillStyle = this.backgroundColor;

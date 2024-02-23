@@ -5,6 +5,7 @@ import Input from "./input.js";
 import Vector from "./vector.js";
 
 export default class GameState {
+	backgroundEntities;
 	canvas;
 	content;
 	context;
@@ -13,6 +14,7 @@ export default class GameState {
 	input;
 	playing;
 	previousTime;
+	score;
 	world;
 
 	/**
@@ -21,6 +23,7 @@ export default class GameState {
 	 * @param {GameData} gameData
 	 */
 	constructor(canvas, context, gameData) {
+		this.backgroundEntities = [];
 		this.canvas = canvas;
 		this.content = new Content();
 		this.context = context;
@@ -29,6 +32,7 @@ export default class GameState {
 		this.input = new Input(this.canvas);
 		this.playing = false;
 		this.previousTime = performance.now();
+		this.score = 0;
 		this.world = new Vector(0, 0);
 		canvas.addEventListener("click", () => {
 			if (this.playing) {
@@ -45,6 +49,11 @@ export default class GameState {
 	 * @param {Entity} entity
 	 */
 	addEntity(entity) {
-		this.entities.splice(this.entities.findIndex(e => e.layer > entity.layer), 0, entity);
+		const index = this.entities.findLastIndex(e => e.layer > entity.layer);
+		if (index < 0) {
+			this.entities.push(entity);
+		} else {
+			this.entities.splice(index, 0, entity);
+		}
 	}
 }

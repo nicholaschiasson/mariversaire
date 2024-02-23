@@ -1,8 +1,8 @@
 export default class GameData {
-	score;
+	leaderBoard;
 
 	constructor() {
-		this.score = 0;
+		this.leaderBoard = [];
 	}
 
 	/**
