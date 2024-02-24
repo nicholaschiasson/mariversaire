@@ -4,8 +4,11 @@ import Vector from "./vector.js";
 export default class Input {
 	mouse;
 
-	constructor() {
-		this.mouse = new MouseInput();
+	/**
+	 * @param {HTMLCanvasElement} canvas 
+	 */
+	constructor(canvas) {
+		this.mouse = new MouseInput(canvas);
 	}
 
 	/**
@@ -17,12 +20,15 @@ export default class Input {
 	}
 }
 
-class MouseInput {
+export class MouseInput {
 	buttons;
 	movement;
 	position;
 
-	constructor() {
+	/**
+	 * @param {HTMLCanvasElement} canvas 
+	 */
+	constructor(canvas) {
 		this.buttons = Array(5).fill().map(() => new MouseButton());
 		this.movement = new Vector(0, 0);
 		this.position = new Vector(0, 0);
@@ -36,8 +42,8 @@ class MouseInput {
 		addEventListener("mousemove", function(e) {
 			mouse.movement.x = e.movementX;
 			mouse.movement.y = e.movementY;
-			mouse.position.x = e.x;
-			mouse.position.y = e.y;
+			mouse.position.x = e.x - canvas.offsetLeft;
+			mouse.position.y = e.y - canvas.offsetTop;
 		});
 	}
 
@@ -54,7 +60,7 @@ class MouseInput {
 	}
 }
 
-class MouseButton {
+export class MouseButton {
 	#isDown;
 	#wasDown;
 
@@ -71,19 +77,19 @@ class MouseButton {
 		this.#isDown = false;
 	}
 
-	down() {
+	get down() {
 		return this.#wasDown && this.#isDown;
 	}
 
-	up() {
+	get up() {
 		return !this.#wasDown && !this.#isDown;
 	}
 
-	pressed() {
+	get pressed() {
 		return !this.#wasDown && this.#isDown;
 	}
 
-	released() {
+	get released() {
 		return this.#wasDown && !this.#isDown;
 	}
 

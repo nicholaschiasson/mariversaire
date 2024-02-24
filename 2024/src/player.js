@@ -10,6 +10,7 @@ const GRAVITY = 28;
 const JUMP_FORCE = 18;
 
 export default class Player extends Entity {
+	onGameOver;
 	velocity;
 
 	/**
@@ -24,7 +25,6 @@ export default class Player extends Entity {
 		const dimensions = new Vector(playerWidth, playerWidth);
 
 		super(gameState, position, dimensions);
-		this.layer = Infinity;
 		this.velocity = new Vector(0, 0);
 	}
 
@@ -38,28 +38,25 @@ export default class Player extends Entity {
 		if (document.pointerLockElement) {
 			this.velocity.x = mouseMovement.x / 2;
 		}
-		// if (document.pointerLockElement && mouseMovement.x !== 0) {
-		//   this.velocity.x = mouseMovement.x / 2;
-		// } else {
-		//   this.velocity.x -= this.velocity.x * deltaTime * 10;
-		// }
 
 		this.velocity.y += GRAVITY * deltaTime;
 
 		this.position.x += this.velocity.x;
 		this.position.y += this.velocity.y;
 
-		// calculate collisions
-		const bottom = this.position.y + this.dimensions.y;
-		const screenIntersection = bottom - gameState.canvas.height;
-		if (screenIntersection > 0) {
-			this.position.y -= screenIntersection;
-			this.velocity.y = -JUMP_FORCE;
-		}
-
 		this.position.x = (this.position.x + gameState.canvas.width) % gameState.canvas.width;
 
 		this.climb(gameState);
+
+		if (this.position.y > gameState.canvas.height) {
+			this.alive = false;
+			if (gameState.playing) {
+				gameState.playing = false;
+				if (this.onGameOver) {
+					this.onGameOver(gameState);
+				}
+			}
+		}
 	}
 
 	/**
@@ -69,7 +66,7 @@ export default class Player extends Entity {
 		const moveUpBoundary = gameState.canvas.height / 2 - this.position.y - this.dimensions.y / 2;
 		if (moveUpBoundary > 0) {
 			gameState.world.y += moveUpBoundary;
-			gameState.gameData.score += moveUpBoundary / 100;
+			gameState.score += moveUpBoundary / 100;
 		}
 	}
 

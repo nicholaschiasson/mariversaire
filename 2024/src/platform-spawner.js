@@ -4,6 +4,15 @@ import Platform from "./platform.js";
 import Player from "./player.js";
 import MovingPlatform from "./moving-platform.js";
 import Vector from "./vector.js";
+import VanishingPlatform from "./vanishing-platform.js";
+import BrokenPlatform from "./broken-platform.js";
+
+const PLATFORMS = [
+	Platform,
+	MovingPlatform,
+	VanishingPlatform,
+	BrokenPlatform,
+]
 
 export default class PlatformSpawner extends Entity {
 	intervalUpperBound;
@@ -44,7 +53,7 @@ export default class PlatformSpawner extends Entity {
 	 * @param {GameState} gameState
 	 */
 	spawn(gameState) {
-		gameState.addEntity(new MovingPlatform(gameState, this.player, this.position.y - this.platformVerticalBuffer));
+		gameState.addEntity(new PLATFORMS[Math.floor(Math.random() * PLATFORMS.length)](gameState, this.player, this.position.y - this.platformVerticalBuffer));
 		this.position.y -= this.platformVerticalBuffer;
 		this.intervalUpperBound = Math.min(this.maxInterval, this.intervalUpperBound + 1);
 		this.nextSpawn = Math.random() * this.intervalUpperBound;

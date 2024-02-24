@@ -70,7 +70,6 @@ function dispatchUpdate(gameState) {
  * @param {GameState} gameState
  */
 function dispatchDraw(gameState) {
-	gameState.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
 	draw(gameState);
 	requestAnimationFrame(function() {
 		dispatchDraw(gameState);

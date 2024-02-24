@@ -3,7 +3,7 @@ export default class Texture {
 	 * @param {string} url
 	 */
 	static FromUrl(url) {
-		const img = document.createElement("img");
+		const img = new Image();
 		img.src = url;
 		return img;
 	}
