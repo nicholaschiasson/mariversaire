@@ -49,7 +49,7 @@ export default class GameState {
 	 * @param {Entity} entity
 	 */
 	addEntity(entity) {
-		const index = this.entities.findLastIndex(e => e.layer > entity.layer);
+		const index = this.entities.findIndex(e => e.layer > entity.layer);
 		if (index < 0) {
 			this.entities.push(entity);
 		} else {

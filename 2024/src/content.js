@@ -4,6 +4,7 @@ import Platform from "./platform.js";
 import MovingPlatform from "./moving-platform.js";
 import VanishingPlatform from "./vanishing-platform.js";
 import BrokenPlatform from "./broken-platform.js";
+import Background from "./background.js";
 
 export default class Content {
 	#texture;
@@ -15,6 +16,7 @@ export default class Content {
 		this.#texture[MovingPlatform.name] = Texture.FromUrl("/rsrc/images/birthday-cake.png");
 		this.#texture[BrokenPlatform.name] = Texture.FromUrl("/rsrc/images/birthday-cake.png");
 		this.#texture[VanishingPlatform.name] = Texture.FromUrl("/rsrc/images/birthday-cake.png");
+		this.#texture[Background.name] = Texture.FromUrl("./rsrc/images/background.jpg");
 	}
 
 	/**

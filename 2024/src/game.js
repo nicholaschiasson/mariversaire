@@ -5,13 +5,16 @@ import PlatformSpawner from "./platform-spawner.js";
 import TextButton from "./text-button.js";
 import Vector from "./vector.js";
 import Fill from "./fill.js";
+import Background from "./background.js";
 
 let player;
+let background;
 
 /**
  * @param {GameState} gameState
  */
 export function initialize(gameState) {
+	background = new Background(gameState);
 	initializeStartMenu(gameState);
 }
 
@@ -36,6 +39,7 @@ export function update(gameState, deltaTime) {
  * @param {GameState} gameState
  */
 export function draw(gameState) {
+	// gameState.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
 	for (const entity of gameState.backgroundEntities) {
 		if (entity.draw) {
 			entity.draw(gameState);
@@ -60,6 +64,7 @@ function initializeStartMenu(gameState) {
 	gameState.playing = false;
 	gameState.backgroundEntities = [];
 	gameState.entities = [];
+	gameState.addEntity(background);
 	const playButtonWidth = gameState.canvas.width / 3;
 	const playButtonHeight = playButtonWidth / 2;
 	const buttonBuffer = playButtonHeight / 3;
@@ -83,7 +88,10 @@ function initializeStartMenu(gameState) {
 	optionsButton.onEnter = buttonOnEnter;
 	optionsButton.onLeave = buttonOnLeave;
 	optionsButton.onPress = buttonOnPress;
-	optionsButton.onRelease = function(gameState) { optionsButtonOnRelease.bind(optionsButton)(gameState, initializeStartMenu); };
+	optionsButton.onRelease = function(gameState) {
+		gameState.entities = [];
+		optionsButtonOnRelease.bind(optionsButton)(gameState, initializeStartMenu);
+	};
 	gameState.addEntity(optionsButton);
 }
 
@@ -97,8 +105,10 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		console.warn(e);
 	}
 	gameState.playing = false;
-	gameState.backgroundEntities = gameState.backgroundEntities || gameState.entities;
 	gameState.entities = [];
+	if (gameState.backgroundEntities.length < 1) {
+		gameState.addEntity(background);
+	}
 	const backButtonWidth = gameState.canvas.width / 3;
 	const backButtonHeight = backButtonWidth / 2;
 	const backButton = new TextButton(
@@ -127,6 +137,7 @@ function initializeGame(gameState) {
 	gameState.score = 0;
 	gameState.backgroundEntities = [];
 	gameState.entities = [];
+	gameState.addEntity(background);
 	player = new Player(gameState);
 	player.layer = 3;
 	player.onGameOver = initializeGameOver;
@@ -147,7 +158,7 @@ function initializeGameOver(gameState) {
 		console.warn(e);
 	}
 	gameState.playing = false;
-	gameState.backgroundEntities = gameState.backgroundEntities.length > 0 ? gameState.backgroundEntities : gameState.entities;
+	gameState.backgroundEntities = gameState.backgroundEntities.length ? gameState.backgroundEntities : gameState.entities;
 	gameState.entities = [];
 	player = undefined;
 	if (!gameState.backgroundEntities.find(entity => entity instanceof Fill)) {
