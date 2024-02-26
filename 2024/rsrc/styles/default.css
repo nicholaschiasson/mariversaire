@@ -1,6 +1,9 @@
 html,
 body {
   background-color: pink;
+  background-image: url("../images/pink-sunset.webp");
+  background-position: center;
+  background-size: cover;
   height: 100%;
   margin: 0;
   position: fixed;
