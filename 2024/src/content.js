@@ -5,6 +5,7 @@ import MovingPlatform from "./moving-platform.js";
 import VanishingPlatform from "./vanishing-platform.js";
 import BrokenPlatform from "./broken-platform.js";
 import Background from "./background.js";
+import Entity from "./entity.js";
 
 export default class Content {
 	#audio;
@@ -48,10 +49,11 @@ export default class Content {
 	}
 
 	/**
+	 * @param {Entity} entity
 	 * @returns {HTMLAudioElement}
 	 */
-	sound(type) {
-		return this.sound[type.name];
+	sound(entity) {
+		return this.#audio.sound[entity.constructor?.name];
 	}
 
 	/**

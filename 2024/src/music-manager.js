@@ -24,7 +24,7 @@ export default class MusicManager {
 		this.#enabled = enabled;
 		if (this.#current && !enabled) {
 			this.#current.pause();
-			this.#current.load();
+			this.#current.fastSeek(0);
 		}
 	}
 
@@ -40,7 +40,7 @@ export default class MusicManager {
 			try {
 				this.#current?.pause();
 				if (music.src !== this.#current?.src) {
-					music.load();
+					music.fastSeek(0);
 				}
 				this.#current = music;
 				this.#current.play();

@@ -59,6 +59,7 @@ export default class Platform extends Entity {
 			) {
 				this.player.collide(gameState, this, intersection);
 				this.collide(gameState, this.player, intersection);
+				gameState.sound.play(gameState, this);
 				break;
 			}
 		}

@@ -130,14 +130,14 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		new Vector(gameState.canvas.width / 2 - buttonWidth, gameState.canvas.height / 2 - buttonHeight),
 		new Vector(buttonWidth * 2, buttonHeight),
 		"Sounds",
-		gameState.sound
+		gameState.sound.enabled
 	);
 	soundCheckbox.onEnter = buttonOnEnter;
 	soundCheckbox.onLeave = buttonOnLeave;
 	soundCheckbox.onPress = buttonOnPress;
 	soundCheckbox.onRelease = function(gameState) {
 		buttonOnRelease.bind(this)(gameState);
-		gameState.sound = soundCheckbox.checked;
+		gameState.sound.enabled = soundCheckbox.checked;
 	};
 	gameState.addEntity(soundCheckbox);
 	const musicCheckbox = new Checkbox(
