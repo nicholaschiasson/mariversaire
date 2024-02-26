@@ -14,6 +14,16 @@
 - [x] Implement fallthrough platform, which will just break and allow the player to fall through it upon landing on it
 - [x] Implement content manager
 - [x] Implement tile incremental distance increase to a limit
+- [x] Make player collision with bottom of screen a "Game Over"
+- [x] Art assets
+	- [x] Platforms
+		- [x] Static
+		- [x] Moving
+		- [x] Vanishing
+		- [x] Breaking
+	- [x] Player
+- [x] Fix collision detection when crossing screen boundary
+- [x] Canvas boarder art
 - [x] Implement scene manager
 	- [x] Start scene
 		- [x] Play button
@@ -26,7 +36,6 @@
 		- [ ] Display leaderboard
 		- [x] Try Again button
 		- [x] Options button
-- [x] Make player collision with bottom of screen a "Game Over"
 - [ ] Implement tile spawning patterns
 - [x] Manage score
 	- [x] Reset between games
@@ -42,9 +51,21 @@
 	- [ ] Jump on their head to kill them and bounce
 	- [ ] Basic one, sitting in place
 	- [ ] Floating side to side one
-- [ ] Art assets
 - [ ] Sound assets
+	- [ ] Player mews on new high score
+	- [ ] Static and moving platform bounce
+	- [ ] Vanishing platform whoosh
+	- [ ] Breaking platform crack
+	- [ ] Music
+		- [ ] Mitski - My Love Mine All Mine
+		- [ ] Bilmuri - Vascular Demi-Goth
+		- [ ] Eels - I Need Some Sleep
+		- [ ] The Cranberries - Dreams
+		- [ ] Bilmuri - Keepinitbeefy
+		- [ ] The Weeknd - Popular
+		- [ ] Justin Hurwitz - Mia & Sebastian's Theme
+		- [ ] Newjeans - ETA
 - [ ] Support mobile
 - [ ] Network leaderboard
-- [ ] Fix collision detection when crossing screen boundary
-- [ ] Canvas boarder art
+- [ ] Title
+	- [ ] Grimpe aux griffes! Claw your way to something

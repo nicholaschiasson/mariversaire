@@ -46,18 +46,21 @@ export default class Platform extends Entity {
 		}
 
 		// check for player collision
-		const playerBottom = this.player.position.y + this.player.dimensions.y;
-		const playerRight = this.player.position.x + this.player.dimensions.x;
-		const intersection = playerBottom - this.position.y;
-		if (
-			this.player.velocity.y > 0
-			&& intersection > 0
-			&& this.position.y > playerBottom - this.player.velocity.y
-			&& this.position.x < playerRight
-			&& (this.position.x + this.dimensions.x) > this.player.position.x
-		) {
-			this.player.collide(gameState, this, intersection);
-			this.collide(gameState, this.player, intersection);
+		for (let playerX = this.player.position.x; playerX >= -this.player.dimensions.x; playerX -= gameState.canvas.width) {
+			const playerBottom = this.player.position.y + this.player.dimensions.y;
+			const playerRight = playerX + this.player.dimensions.x;
+			const intersection = playerBottom - this.position.y;
+			if (
+				this.player.velocity.y > 0
+				&& intersection > 0
+				&& this.position.y > playerBottom - this.player.velocity.y
+				&& this.position.x < playerRight
+				&& (this.position.x + this.dimensions.x) > playerX
+			) {
+				this.player.collide(gameState, this, intersection);
+				this.collide(gameState, this.player, intersection);
+				break;
+			}
 		}
 	}
 
