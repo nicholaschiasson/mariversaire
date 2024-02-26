@@ -6,6 +6,8 @@ import TextButton from "./text-button.js";
 import Vector from "./vector.js";
 import Fill from "./fill.js";
 import Background from "./background.js";
+import Checkbox from "./checkbox.js";
+import Label from "./label.js";
 
 let player;
 let background;
@@ -123,12 +125,50 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 	backButton.onPress = buttonOnPress;
 	backButton.onRelease = backButtonOnRelease(backButton, previousStateCallback);
 	gameState.addEntity(backButton);
+	const soundCheckbox = new Checkbox(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth, gameState.canvas.height / 2 - buttonHeight),
+		new Vector(buttonWidth * 2, buttonHeight),
+		"Sound",
+		gameState.sound
+	);
+	soundCheckbox.onEnter = buttonOnEnter;
+	soundCheckbox.onLeave = buttonOnLeave;
+	soundCheckbox.onPress = buttonOnPress;
+	soundCheckbox.onRelease = function(gameState) {
+		buttonOnRelease.bind(this)(gameState);
+		gameState.sound = soundCheckbox.checked;
+	};
+	gameState.addEntity(soundCheckbox);
+	const musicCheckbox = new Checkbox(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth, soundCheckbox.position.y + buttonHeight + buttonBuffer),
+		new Vector(buttonWidth * 2, buttonHeight),
+		"Music",
+		gameState.music
+	);
+	musicCheckbox.onEnter = buttonOnEnter;
+	musicCheckbox.onLeave = buttonOnLeave;
+	musicCheckbox.onPress = buttonOnPress;
+	musicCheckbox.onRelease = function(gameState) {
+		buttonOnRelease.bind(this)(gameState);
+		gameState.music = musicCheckbox.checked;
+	};
+	gameState.addEntity(musicCheckbox);
+	const titleLabel = new Label(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth * 2, buttonHeight / 2),
+		new Vector(buttonWidth * 4, buttonHeight * 3),
+		"Options"
+	);
+	gameState.addEntity(titleLabel);
 }
 
 /**
  * @param {GameState} gameState 
  */
 function initializeGame(gameState) {
+	console.log(gameState)
 	try {
 		gameState.canvas.requestPointerLock();
 	} catch (e) {
@@ -192,6 +232,13 @@ function initializeGameOver(gameState) {
 	playButton.onPress = buttonOnPress;
 	playButton.onRelease = playButtonOnRelease;
 	gameState.addEntity(playButton);
+	const titleLabel = new Label(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth * 2, buttonHeight / 2),
+		new Vector(buttonWidth * 4, buttonHeight * 3),
+		"High Scores"
+	);
+	gameState.addEntity(titleLabel);
 }
 
 /**
