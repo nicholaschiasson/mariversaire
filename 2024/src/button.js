@@ -4,10 +4,13 @@ import { MouseButton } from "./input.js";
 import Vector from "./vector.js";
 
 export default class Button extends Entity {
-	onEnter;
-	onLeave;
-	onPress;
-	onRelease;
+	// NOTE: These cannot be declared here, otherwise getters and setters for
+	// these properties in derived classes won't work. Thanks, prototypal
+	// inheritance...
+	// onEnter;
+	// onLeave;
+	// onPress;
+	// onRelease;
 	over;
 	pressing;
 

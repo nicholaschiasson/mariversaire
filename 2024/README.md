@@ -28,29 +28,20 @@
 	- [x] Start scene
 		- [x] Play button
 		- [x] Options button
-	- [ ] Options scene
-		- [ ] Toggle sounds button
-		- [ ] Toggle music button
+	- [x] Options scene
+		- [x] Toggle sounds button
+		- [x] Toggle music button
 	- [x] Game scene
 	- [x] Game Over scene
 		- [ ] Display leaderboard
 		- [x] Try Again button
 		- [x] Options button
-- [ ] Implement tile spawning patterns
+- [ ] Implement epic win condition
+- [ ] Preload some high scores
 - [x] Manage score
 	- [x] Reset between games
 	- [ ] Save leaderboards
 	- [ ] Load leaderboards
-- [ ] Implement death animations
-- [ ] Implement items
-	- [ ] Spring, high bounce
-	- [ ] Spring shoes, three big bounces
-	- [ ] Helicopter hat, fly for a few seconds
-- [ ] Implement enemies
-	- [ ] One touch and game over
-	- [ ] Jump on their head to kill them and bounce
-	- [ ] Basic one, sitting in place
-	- [ ] Floating side to side one
 - [ ] Sound assets
 	- [ ] Player mews on new high score
 	- [ ] Static and moving platform bounce
@@ -65,7 +56,17 @@
 		- [ ] The Weeknd - Popular
 		- [ ] Justin Hurwitz - Mia & Sebastian's Theme
 		- [ ] Newjeans - ETA
-- [ ] Support mobile
-- [ ] Network leaderboard
 - [ ] Title
 	- [ ] Grimpe aux griffes! Claw your way to something
+- [ ] Implement tile spawning patterns
+- [ ] Implement death animations
+- [ ] Implement items
+	- [ ] Spring, high bounce
+	- [ ] Spring shoes, three big bounces
+	- [ ] Helicopter hat, fly for a few seconds
+- [ ] Implement enemies
+	- [ ] One touch and game over
+	- [ ] Jump on their head to kill them and bounce
+	- [ ] Basic one, sitting in place
+	- [ ] Floating side to side one
+- [ ] Support mobile

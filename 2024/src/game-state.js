@@ -12,9 +12,11 @@ export default class GameState {
 	entities;
 	gameData;
 	input;
+	music;
 	playing;
 	previousTime;
 	score;
+	sound;
 	world;
 
 	/**
@@ -30,9 +32,11 @@ export default class GameState {
 		this.entities = [];
 		this.gameData = gameData;
 		this.input = new Input(this.canvas);
+		this.music = true;
 		this.playing = false;
 		this.previousTime = performance.now();
 		this.score = 0;
+		this.sound = true;
 		this.world = new Vector(0, 0);
 		canvas.addEventListener("click", () => {
 			if (this.playing) {
