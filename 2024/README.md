@@ -44,22 +44,23 @@
 	- [ ] Load leaderboards
 - [ ] Sound assets
 	- [ ] Player mews on new high score
-	- [ ] Static and moving platform bounce
+	- [x] Static and moving platform bounce
 	- [ ] Vanishing platform whoosh
 	- [ ] Breaking platform crack
-	- [ ] Music
-		- [ ] Mitski - My Love Mine All Mine
-		- [ ] Bilmuri - Vascular Demi-Goth
-		- [ ] Eels - I Need Some Sleep
-		- [ ] The Cranberries - Dreams
-		- [ ] Bilmuri - Keepinitbeefy
-		- [ ] The Weeknd - Popular
-		- [ ] Justin Hurwitz - Mia & Sebastian's Theme
-		- [ ] Newjeans - ETA
+	- [x] Music
+		- [x] Mitski - My Love Mine All Mine
+		- [x] Bilmuri - Vascular Demi-Goth
+		- [x] Eels - I Need Some Sleep
+		- [x] The Cranberries - Dreams
+		- [x] Bilmuri - Keepinitbeefy
+		- [x] The Weeknd - Popular
+		- [x] Justin Hurwitz - Mia & Sebastian's Theme
+		- [x] Newjeans - ETA
 - [ ] Title
 	- [ ] Grimpe aux griffes! Claw your way to something
 - [ ] Implement tile spawning patterns
 - [ ] Implement death animations
+- [ ] Make scaling and speeds relative based on canvas size
 - [ ] Implement items
 	- [ ] Spring, high bounce
 	- [ ] Spring shoes, three big bounces
@@ -69,4 +70,5 @@
 	- [ ] Jump on their head to kill them and bounce
 	- [ ] Basic one, sitting in place
 	- [ ] Floating side to side one
+- [ ] Add gun to shoot enemies
 - [ ] Support mobile

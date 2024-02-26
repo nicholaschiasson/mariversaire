@@ -2,6 +2,7 @@ import Content from "./content.js";
 import Entity from "./entity.js";
 import GameData from "./game-data.js";
 import Input from "./input.js";
+import MusicManager from "./music-manager.js";
 import Vector from "./vector.js";
 
 export default class GameState {
@@ -32,7 +33,7 @@ export default class GameState {
 		this.entities = [];
 		this.gameData = gameData;
 		this.input = new Input(this.canvas);
-		this.music = true;
+		this.music = new MusicManager(true);
 		this.playing = false;
 		this.previousTime = performance.now();
 		this.score = 0;
