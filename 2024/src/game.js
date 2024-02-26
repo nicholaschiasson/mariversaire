@@ -65,24 +65,13 @@ function initializeStartMenu(gameState) {
 	gameState.backgroundEntities = [];
 	gameState.entities = [];
 	gameState.addEntity(background);
-	const playButtonWidth = gameState.canvas.width / 3;
-	const playButtonHeight = playButtonWidth / 2;
-	const buttonBuffer = playButtonHeight / 3;
-	const playButton = new TextButton(
-		gameState,
-		new Vector(gameState.canvas.width / 2 - playButtonWidth / 2, gameState.canvas.height / 2),
-		new Vector(playButtonWidth, playButtonHeight),
-		"Play" // 🔇 🔊
-	);
-	playButton.onEnter = buttonOnEnter;
-	playButton.onLeave = buttonOnLeave;
-	playButton.onPress = buttonOnPress;
-	playButton.onRelease = playButtonOnRelease;
-	gameState.addEntity(playButton);
+	const buttonWidth = gameState.canvas.width / 3;
+	const buttonHeight = buttonWidth / 2;
+	const buttonBuffer = buttonHeight / 3;
 	const optionsButton = new TextButton(
 		gameState,
-		new Vector(gameState.canvas.width / 2 - playButtonWidth / 2, gameState.canvas.height / 2 + playButtonHeight + buttonBuffer),
-		new Vector(playButtonWidth, playButtonHeight),
+		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
+		new Vector(buttonWidth, buttonHeight),
 		"Options" // 🔇 🔊
 	);
 	optionsButton.onEnter = buttonOnEnter;
@@ -93,6 +82,17 @@ function initializeStartMenu(gameState) {
 		optionsButtonOnRelease.bind(optionsButton)(gameState, initializeStartMenu);
 	};
 	gameState.addEntity(optionsButton);
+	const playButton = new TextButton(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, optionsButton.position.y - buttonHeight - buttonBuffer),
+		new Vector(buttonWidth, buttonHeight),
+		"Play" // 🔇 🔊
+	);
+	playButton.onEnter = buttonOnEnter;
+	playButton.onLeave = buttonOnLeave;
+	playButton.onPress = buttonOnPress;
+	playButton.onRelease = playButtonOnRelease;
+	gameState.addEntity(playButton);
 }
 
 /**
@@ -109,12 +109,13 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 	if (gameState.backgroundEntities.length < 1) {
 		gameState.addEntity(background);
 	}
-	const backButtonWidth = gameState.canvas.width / 3;
-	const backButtonHeight = backButtonWidth / 2;
+	const buttonWidth = gameState.canvas.width / 3;
+	const buttonHeight = buttonWidth / 2;
+	const buttonBuffer = buttonHeight / 3;
 	const backButton = new TextButton(
 		gameState,
-		new Vector(gameState.canvas.width / 2 - backButtonWidth / 2, gameState.canvas.height / 2 + backButtonHeight),
-		new Vector(backButtonWidth, backButtonHeight),
+		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
+		new Vector(buttonWidth, buttonHeight),
 		"Back" // 🔇 🔊
 	);
 	backButton.onEnter = buttonOnEnter;
@@ -166,24 +167,13 @@ function initializeGameOver(gameState) {
 		dimFill.layer = 5;
 		gameState.backgroundEntities.push(dimFill);
 	}
-	const playButtonWidth = gameState.canvas.width / 3;
-	const playButtonHeight = playButtonWidth / 2;
-	const buttonBuffer = playButtonHeight / 3;
-	const playButton = new TextButton(
-		gameState,
-		new Vector(gameState.canvas.width / 2 - playButtonWidth / 2, gameState.canvas.height / 7 * 5),
-		new Vector(playButtonWidth, playButtonHeight),
-		"Again?"
-	);
-	playButton.onEnter = buttonOnEnter;
-	playButton.onLeave = buttonOnLeave;
-	playButton.onPress = buttonOnPress;
-	playButton.onRelease = playButtonOnRelease;
-	gameState.addEntity(playButton);
+	const buttonWidth = gameState.canvas.width / 3;
+	const buttonHeight = buttonWidth / 2;
+	const buttonBuffer = buttonHeight / 3;
 	const optionsButton = new TextButton(
 		gameState,
-		new Vector(gameState.canvas.width / 2 - playButtonWidth / 2, gameState.canvas.height / 7 * 5 + playButtonHeight + buttonBuffer),
-		new Vector(playButtonWidth, playButtonHeight),
+		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
+		new Vector(buttonWidth, buttonHeight),
 		"Options" // 🔇 🔊
 	);
 	optionsButton.onEnter = buttonOnEnter;
@@ -191,6 +181,17 @@ function initializeGameOver(gameState) {
 	optionsButton.onPress = buttonOnPress;
 	optionsButton.onRelease = function(gameState) { optionsButtonOnRelease.bind(optionsButton)(gameState, initializeGameOver); };
 	gameState.addEntity(optionsButton);
+	const playButton = new TextButton(
+		gameState,
+		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, optionsButton.position.y - buttonHeight - buttonBuffer),
+		new Vector(buttonWidth, buttonHeight),
+		"Again?"
+	);
+	playButton.onEnter = buttonOnEnter;
+	playButton.onLeave = buttonOnLeave;
+	playButton.onPress = buttonOnPress;
+	playButton.onRelease = playButtonOnRelease;
+	gameState.addEntity(playButton);
 }
 
 /**

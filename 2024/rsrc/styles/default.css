@@ -1,5 +1,6 @@
 html,
 body {
+  background-color: pink;
   height: 100%;
   margin: 0;
   position: fixed;
@@ -8,10 +9,16 @@ body {
 }
 
 canvas {
-  background-color: cornflowerblue;
   --viewport-height: 100vh;
+  --canvas-width: calc(var(--viewport-height) / calc(16/10));
   height: var(--viewport-height);
-  width: calc(var(--viewport-height) / calc(16/10));
+  width: var(--canvas-width);
+  background-color: cornflowerblue;
+  border-image-outset: 451px;
+  border-image-repeat: stretch;
+  border-image-slice: 28% 23.5% 23%;
+  border-image-source: url("../images/border.png");
+  border-image-width: 451px;
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {

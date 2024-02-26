@@ -17,14 +17,15 @@ export default class Player extends Entity {
 	 * @param {GameState} gameState
 	 */
 	constructor(gameState) {
-		const playerWidth = gameState.canvas.width / 6;
+		const playerWidth = gameState.canvas.width / 7;
 		const position = new Vector(
 			gameState.canvas.width / 2 - playerWidth / 2,
 			gameState.canvas.height / 2 - playerWidth / 2,
 		);
-		const dimensions = new Vector(playerWidth, playerWidth);
+		const dimensions = new Vector(playerWidth, 0);
 
 		super(gameState, position, dimensions);
+		this.dimensions.y = this.texture.height * (playerWidth / this.texture.width);
 		this.velocity = new Vector(0, 0);
 	}
 
