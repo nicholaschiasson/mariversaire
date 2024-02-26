@@ -3,6 +3,7 @@ import Entity from "./entity.js";
 import GameData from "./game-data.js";
 import Input from "./input.js";
 import MusicManager from "./music-manager.js";
+import SoundManager from "./sound-manager.js";
 import Vector from "./vector.js";
 
 export default class GameState {
@@ -37,7 +38,7 @@ export default class GameState {
 		this.playing = false;
 		this.previousTime = performance.now();
 		this.score = 0;
-		this.sound = true;
+		this.sound = new SoundManager(true);
 		this.world = new Vector(0, 0);
 		canvas.addEventListener("click", () => {
 			if (this.playing) {
