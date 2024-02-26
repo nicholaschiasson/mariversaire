@@ -74,7 +74,7 @@ function initializeStartMenu(gameState) {
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
 		new Vector(buttonWidth, buttonHeight),
-		"Options" // 🔇 🔊
+		"Options"
 	);
 	optionsButton.onEnter = buttonOnEnter;
 	optionsButton.onLeave = buttonOnLeave;
@@ -88,7 +88,7 @@ function initializeStartMenu(gameState) {
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, optionsButton.position.y - buttonHeight - buttonBuffer),
 		new Vector(buttonWidth, buttonHeight),
-		"Play" // 🔇 🔊
+		"Play"
 	);
 	playButton.onEnter = buttonOnEnter;
 	playButton.onLeave = buttonOnLeave;
@@ -118,7 +118,7 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
 		new Vector(buttonWidth, buttonHeight),
-		"Back" // 🔇 🔊
+		"Back"
 	);
 	backButton.onEnter = buttonOnEnter;
 	backButton.onLeave = buttonOnLeave;
@@ -129,7 +129,7 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth, gameState.canvas.height / 2 - buttonHeight),
 		new Vector(buttonWidth * 2, buttonHeight),
-		"Sound",
+		"Sounds",
 		gameState.sound
 	);
 	soundCheckbox.onEnter = buttonOnEnter;
@@ -145,20 +145,20 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		new Vector(gameState.canvas.width / 2 - buttonWidth, soundCheckbox.position.y + buttonHeight + buttonBuffer),
 		new Vector(buttonWidth * 2, buttonHeight),
 		"Music",
-		gameState.music
+		gameState.music.enabled
 	);
 	musicCheckbox.onEnter = buttonOnEnter;
 	musicCheckbox.onLeave = buttonOnLeave;
 	musicCheckbox.onPress = buttonOnPress;
 	musicCheckbox.onRelease = function(gameState) {
 		buttonOnRelease.bind(this)(gameState);
-		gameState.music = musicCheckbox.checked;
+		gameState.music.enabled = musicCheckbox.checked;
 	};
 	gameState.addEntity(musicCheckbox);
 	const titleLabel = new Label(
 		gameState,
-		new Vector(gameState.canvas.width / 2 - buttonWidth * 2, buttonHeight / 2),
-		new Vector(buttonWidth * 4, buttonHeight * 3),
+		new Vector(gameState.canvas.width / 2 - buttonWidth * 1.25, buttonHeight),
+		new Vector(buttonWidth * 2.5, buttonHeight * 2),
 		"Options"
 	);
 	gameState.addEntity(titleLabel);
@@ -168,7 +168,6 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
  * @param {GameState} gameState 
  */
 function initializeGame(gameState) {
-	console.log(gameState)
 	try {
 		gameState.canvas.requestPointerLock();
 	} catch (e) {
@@ -187,6 +186,10 @@ function initializeGame(gameState) {
 	const score = new ScoreDisplay(gameState);
 	score.layer = 3;
 	gameState.addEntity(score);
+	if (!gameState.music.playing) {
+		const track = gameState.music.current ? -1 : 0;
+		gameState.music.play(gameState.content.music(track));
+	}
 }
 
 /**
@@ -214,7 +217,7 @@ function initializeGameOver(gameState) {
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth / 2, gameState.canvas.height - buttonHeight - buttonBuffer),
 		new Vector(buttonWidth, buttonHeight),
-		"Options" // 🔇 🔊
+		"Options"
 	);
 	optionsButton.onEnter = buttonOnEnter;
 	optionsButton.onLeave = buttonOnLeave;
@@ -234,8 +237,8 @@ function initializeGameOver(gameState) {
 	gameState.addEntity(playButton);
 	const titleLabel = new Label(
 		gameState,
-		new Vector(gameState.canvas.width / 2 - buttonWidth * 2, buttonHeight / 2),
-		new Vector(buttonWidth * 4, buttonHeight * 3),
+		new Vector(gameState.canvas.width / 2 - buttonWidth * 1.375, buttonHeight),
+		new Vector(buttonWidth * 2.75, buttonHeight * 2),
 		"High Scores"
 	);
 	gameState.addEntity(titleLabel);

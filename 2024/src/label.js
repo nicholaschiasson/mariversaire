@@ -13,12 +13,11 @@ export default class Label extends Entity {
 	 * @param {Vector} position 
 	 * @param {Vector} dimensions 
 	 * @param {string} text 
-	 * @param {boolean} [checked=false]
 	 */
 	constructor(gameState, position, dimensions, text) {
 		super(gameState, position, dimensions);
 		this.borderWidth = 2.5;
-		this.margin = 10;
+		this.margin = 0;
 		this.text = text;
 		this.#fontSize = 1;
 		let textMetrics;
@@ -27,7 +26,7 @@ export default class Label extends Entity {
 			gameState.context.font = this.#font;
 			textMetrics = gameState.context.measureText(text);
 		} while (
-			textMetrics.actualBoundingBoxLeft + textMetrics.actualBoundingBoxRight + this.margin * 2 < dimensions.x - dimensions.y
+			textMetrics.actualBoundingBoxLeft + textMetrics.actualBoundingBoxRight + this.margin * 2 < dimensions.x
 				&& textMetrics.fontBoundingBoxAscent + textMetrics.fontBoundingBoxDescent + this.margin * 2 < dimensions.y
 		)
 		this.#fontSize--;
