@@ -17,7 +17,7 @@ export default class Entity {
 	 */
 	constructor(gameState, position, dimensions) {
 		this.position = position;
-		this.texture = gameState.content.texture(this.constructor);
+		this.texture = gameState.content.texture(this);
 		this.dimensions = dimensions;
 		this.alive = true;
 		this.fixed = false;
