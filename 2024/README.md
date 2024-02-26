@@ -36,12 +36,6 @@
 		- [ ] Display leaderboard
 		- [x] Try Again button
 		- [x] Options button
-- [ ] Implement epic win condition
-- [ ] Preload some high scores
-- [x] Manage score
-	- [x] Reset between games
-	- [ ] Save leaderboards
-	- [ ] Load leaderboards
 - [ ] Sound assets
 	- [ ] Player mews on new high score
 	- [x] Static and moving platform bounce
@@ -56,6 +50,12 @@
 		- [x] The Weeknd - Popular
 		- [x] Justin Hurwitz - Mia & Sebastian's Theme
 		- [x] Newjeans - ETA
+- [ ] Implement epic win condition
+- [ ] Preload some high scores
+- [x] Manage score
+	- [x] Reset between games
+	- [ ] Save leaderboards
+	- [ ] Load leaderboards
 - [ ] Title
 	- [ ] Grimpe aux griffes! Claw your way to something
 - [ ] Implement tile spawning patterns
@@ -71,4 +71,6 @@
 	- [ ] Basic one, sitting in place
 	- [ ] Floating side to side one
 - [ ] Add gun to shoot enemies
+- [ ] Make canvas border width (and outset) relative to viewport size
+- [ ] Optimize asset sizes
 - [ ] Support mobile
