@@ -57,9 +57,10 @@ export default class Content {
 	}
 
 	/**
+	 * @param {Entity} entity
 	 * @returns {HTMLImageElement}
 	 */
-	texture(type) {
-		return this.#texture[type.name];
+	texture(entity) {
+		return this.#texture[entity.constructor?.name];
 	}
 }
