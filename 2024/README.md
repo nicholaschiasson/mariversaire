@@ -33,7 +33,7 @@
 		- [x] Toggle music button
 	- [x] Game scene
 	- [x] Game Over scene
-		- [ ] Display leaderboard
+		- [x] Display leaderboard
 		- [x] Try Again button
 		- [x] Options button
 - [ ] Sound assets
@@ -54,8 +54,8 @@
 - [ ] Preload some high scores
 - [x] Manage score
 	- [x] Reset between games
-	- [ ] Save leaderboards
-	- [ ] Load leaderboards
+	- [x] Save leaderboards
+	- [x] Load leaderboards
 - [x] Title
 	- [x] Grimpe aux griffes!
 	- [x] Beta Bounce!
@@ -78,3 +78,4 @@
 - [ ] Make canvas border width (and outset) relative to viewport size
 - [ ] Optimize asset sizes
 - [ ] Support mobile
+- [ ] Wait for things to load

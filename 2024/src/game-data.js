@@ -1,7 +1,12 @@
 export default class GameData {
+	#key;
 	leaderBoard;
 
-	constructor() {
+	/**
+	 * @param {string} key 
+	 */
+	constructor(key) {
+		this.#key = key;
 		this.leaderBoard = [];
 	}
 
@@ -9,19 +14,22 @@ export default class GameData {
 	 * @param {string} key
 	 * @returns {GameData}
 	 */
-	static Load(key) {
-		const data = JSON.parse(localStorage.getItem(key));
+	static load(key) {
+		let data = JSON.parse(localStorage.getItem(key));
 		if (data) {
-			Object.setPrototypeOf(data, GameData);
+			data = Object.assign(new GameData(key), data);
 		}
 		return data;
 	}
 
+	save() {
+		localStorage.setItem(this.#key, JSON.stringify(this));
+	}
+
 	/**
-	 * @param {string} key
-	 * @param {GameData} data
+	 * @param {string} key 
 	 */
-	static Save(key, data) {
-		localStorage.setItem(key, JSON.stringify(data));
+	set key(key) {
+		this.#key = key;
 	}
 }
