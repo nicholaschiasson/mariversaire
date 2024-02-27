@@ -34,6 +34,15 @@ export default class Content {
 		this.#texture[MovingPlatform.name] = Texture.FromUrl("./rsrc/images/hold-02.png");
 		this.#texture[VanishingPlatform.name] = Texture.FromUrl("./rsrc/images/hold-03.png");
 		this.#texture[BrokenPlatform.name] = Texture.FromUrl("./rsrc/images/hold-04.png");
+		this.#texture._ = {
+			title: [
+				Texture.FromUrl("./rsrc/images/title-01.png"),
+				Texture.FromUrl("./rsrc/images/title-02.png"),
+				Texture.FromUrl("./rsrc/images/title-03.png"),
+				Texture.FromUrl("./rsrc/images/title-04.png"),
+				Texture.FromUrl("./rsrc/images/title-05.png")
+			]
+		};
 	}
 
 	/**
@@ -53,7 +62,7 @@ export default class Content {
 	 * @returns {HTMLAudioElement}
 	 */
 	sound(entity) {
-		return this.#audio.sound[entity.constructor?.name];
+		return this.#audio.sound[entity?.constructor?.name];
 	}
 
 	/**
@@ -61,6 +70,6 @@ export default class Content {
 	 * @returns {HTMLImageElement}
 	 */
 	texture(entity) {
-		return this.#texture[entity.constructor?.name];
+		return this.#texture[entity?.constructor?.name ?? "_"];
 	}
 }

@@ -8,6 +8,7 @@ import Fill from "./fill.js";
 import Background from "./background.js";
 import Checkbox from "./checkbox.js";
 import Label from "./label.js";
+import Entity from "./entity.js";
 
 let player;
 let background;
@@ -95,6 +96,13 @@ function initializeStartMenu(gameState) {
 	playButton.onPress = buttonOnPress;
 	playButton.onRelease = playButtonOnRelease;
 	gameState.addEntity(playButton);
+	const titleIndex = Math.floor(Math.random() * gameState.content.texture().title.length);
+	const titleTexture = gameState.content.texture().title[titleIndex];
+	const title = new Entity(gameState, new Vector(buttonBuffer / 2, buttonHeight), new Vector(gameState.canvas.width - buttonBuffer));
+	title.fixed = true;
+	title.layer = Infinity;
+	title.texture = titleTexture;
+	gameState.addEntity(title);
 }
 
 /**

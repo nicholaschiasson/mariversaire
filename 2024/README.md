@@ -56,8 +56,12 @@
 	- [x] Reset between games
 	- [ ] Save leaderboards
 	- [ ] Load leaderboards
-- [ ] Title
-	- [ ] Grimpe aux griffes! Claw your way to something
+- [x] Title
+	- [x] Grimpe aux griffes!
+	- [x] Beta Bounce!
+	- [x] Klimb Kitty!
+	- [x] Campus Cat!
+	- [x] Miauliversaire!
 - [ ] Implement tile spawning patterns
 - [ ] Implement death animations
 - [ ] Make scaling and speeds relative based on canvas size

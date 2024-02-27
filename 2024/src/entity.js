@@ -29,15 +29,17 @@ export default class Entity {
 	 */
 	draw(gameState) {
 		if (this.position && this.texture && this.dimensions) {
-			gameState.context.drawImage(this.texture, this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
-			const screenIntersection = this.position.x + this.dimensions.x - gameState.canvas.width;
+			const width = this.dimensions.x ?? this.texture.width;
+			const height = this.dimensions.y ?? (this.dimensions.x / this.texture.width) * this.texture.height;
+			gameState.context.drawImage(this.texture, this.position.x, this.position.y, width, height);
+			const screenIntersection = this.position.x + width - gameState.canvas.width;
 			if (screenIntersection > 0) {
 				gameState.context.drawImage(
 					this.texture,
-					screenIntersection - this.dimensions.x,
+					screenIntersection - width,
 					this.position.y,
-					this.dimensions.x,
-					this.dimensions.y,
+					width,
+					height,
 				);
 			}
 		}
