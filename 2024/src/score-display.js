@@ -26,7 +26,7 @@ export default class ScoreDisplay extends Entity {
 		gameState.context.font = "bold 8vh \"Courier\", sans-serif";
 		gameState.context.textAlign = "center";
 		gameState.context.textBaseline = "middle";
-		const score = Math.floor(gameState.score);
+		const score = Math.floor(gameState.score.score);
 		const textMetrics = gameState.context.measureText(score);
 		this.maxTextMetrics.left = Math.max(this.maxTextMetrics.left, textMetrics.actualBoundingBoxLeft);
 		this.maxTextMetrics.right = Math.max(this.maxTextMetrics.right, textMetrics.actualBoundingBoxRight);

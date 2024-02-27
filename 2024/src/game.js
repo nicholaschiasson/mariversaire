@@ -9,6 +9,7 @@ import Background from "./background.js";
 import Checkbox from "./checkbox.js";
 import Label from "./label.js";
 import Entity from "./entity.js";
+import Score from "./score.js";
 
 let player;
 let background;
@@ -182,7 +183,7 @@ function initializeGame(gameState) {
 		console.warn(e);
 	}
 	gameState.playing = true;
-	gameState.score = 0;
+	gameState.score.score = 0;
 	gameState.backgroundEntities = [];
 	gameState.entities = [];
 	gameState.addEntity(background);
@@ -209,6 +210,18 @@ function initializeGameOver(gameState) {
 	} catch (e) {
 		console.warn(e);
 	}
+	while (!gameState.score.player || !/^[A-Z]{3}$/.test(gameState.score.player)) {
+		gameState.score.player = prompt("Please enter your initials (must be three letters).").substring(0, 3).toUpperCase();
+	}
+	const scoreIndex = gameState.gameData.leaderBoard.findIndex(s => gameState.score.score >= s.score);
+	const newScore = new Score(gameState.score.player, Math.floor(gameState.score.score));
+	if (scoreIndex < 0) {
+		gameState.gameData.leaderBoard.push(newScore);
+	} else {
+		gameState.gameData.leaderBoard.splice(scoreIndex, 0, newScore);
+	}
+	gameState.gameData.leaderBoard.splice(100);
+	gameState.gameData.save();
 	gameState.playing = false;
 	gameState.backgroundEntities = gameState.backgroundEntities.length ? gameState.backgroundEntities : gameState.entities;
 	gameState.entities = [];
@@ -250,6 +263,31 @@ function initializeGameOver(gameState) {
 		"High Scores"
 	);
 	gameState.addEntity(titleLabel);
+	gameState.gameData.leaderBoard.slice(0, 7).forEach((s, i) => {
+		const rank = new Label(
+			gameState,
+			new Vector(buttonBuffer, buttonHeight * 2.5 + buttonHeight / 2 * i + buttonBuffer),
+			new Vector(gameState.canvas.width - buttonBuffer * 2, buttonHeight / 2),
+			`#${i + 1}`
+		);
+		rank.textAlign = "left";
+		gameState.addEntity(rank);
+		const player = new Label(
+			gameState,
+			new Vector(buttonBuffer, buttonHeight * 2.5 + buttonHeight / 2 * i + buttonBuffer),
+			new Vector(gameState.canvas.width - buttonBuffer * 2, buttonHeight / 2),
+			s.player
+		);
+		gameState.addEntity(player);
+		const score = new Label(
+			gameState,
+			new Vector(buttonBuffer, buttonHeight * 2.5 + buttonHeight / 2 * i + buttonBuffer),
+			new Vector(gameState.canvas.width - buttonBuffer * 2, buttonHeight / 2),
+			s.score
+		);
+		score.textAlign = "right";
+		gameState.addEntity(score);
+	});
 }
 
 /**

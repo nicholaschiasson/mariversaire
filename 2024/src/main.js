@@ -19,7 +19,7 @@ function resizeGameCanvas(canvas) {
 function dispatchInitialize() {
 	const gameCanvas = document.getElementById("game-canvas");
 	const gameContext = gameCanvas.getContext("2d");
-	const gameState = new GameState(gameCanvas, gameContext, GameData.Load(LS_DATA_KEY) ?? new GameData());
+	const gameState = new GameState(gameCanvas, gameContext, GameData.load(LS_DATA_KEY) ?? new GameData(LS_DATA_KEY));
 
 	try {
 		screen.orientation.lock("natural")
