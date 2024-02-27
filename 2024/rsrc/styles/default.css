@@ -14,14 +14,15 @@ body {
 canvas {
   --viewport-height: 100vh;
   --canvas-width: calc(var(--viewport-height) / calc(16/10));
+  --border-width: calc(var(--viewport-height) / 2.468);
   height: var(--viewport-height);
   width: var(--canvas-width);
   background-color: cornflowerblue;
-  border-image-outset: 451px;
+  border-image-outset: var(--border-width);
   border-image-repeat: stretch;
-  border-image-slice: 28% 23.5% 23%;
+  border-image-slice: 0 50%;
   border-image-source: url("../images/border.png");
-  border-image-width: 451px;
+  border-image-width: var(--border-width);
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
