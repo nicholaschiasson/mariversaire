@@ -2,35 +2,48 @@
 
 This is a static website to celebrate Marianne's birthday year after year.
 
-Starting 2024 we're taking things to the next level with webassembly. The
-previous years will remain as they are, but the ability to build and serve
-wasm apps will be added thanks to the addition of a somewhat complex and
-probably rather poorly designed build system.
+Last year, I updated this readme and claimed that starting in 2024 this site
+would use Rust and WebAssembly. In the end, I backpedaled on that, choosing
+vanilla JavaScript yet again.
 
-Where before the entire repo was treated as the deployable static site package,
-moving forward, it will be necessary to build and package things together,
-since the repository will consist of some rust code. With that said, to serve
-the site, a simple `miniserve .` will no longer work perfectly.
+With that said, I simplified the build procedure a little bit, but in the
+future, adding wasm-based apps should still be possible.
+
+Everything is operated still using justfile. You no longer need that
+actually installed on your system though.
+
+Thanks to nix package manager, I managed to remove all dependencies.
 
 ## Prerequisites
 
 Let's go over what you'll need...
 
-- [rust]
-- [just]
-- [nu]
-- [trunk]
-- A static file server. [miniserve] still works fine.
+- [nix]
+- [nix flakes]
+
+That's really it.
 
 ## Local Development
 
-The workflow has changed a bit now. We still need to establish a better way to
-watch files for updates, but as it stands this is the flow.
+Before doing anything, you need to build the development shell:
+
+```
+nix develop
+```
+
+That will expose all the tooling you need. From there, you can use justfile
+to operate the repo.
 
 Build:
 
 ```
 just build
+```
+
+Watch for changes:
+
+```
+just watch
 ```
 
 Clean:
@@ -39,19 +52,11 @@ Clean:
 just clean
 ```
 
-Build and serve:
+Build and serve, watching for changes and hot reloading:
 
 ```
 just serve
 ```
 
-Note you can pass `--release` to the build or serve jobs and they will build
-all of the rust projects with the flag.
-
-Also note that you can clean and build while the server is running, just fine.
-
-[rust]: https://www.rust-lang.org
-[just]: https://just.systems
-[nu]: https://nushell.sh
-[trunk]: https://trunkrs.dev
-[miniserve]: https://github.com/svenstaro/miniserve
+[nix]: https://nixos.org/download.html
+[nix flakes]: https://nixos.wiki/wiki/Flakes#Enable_flakes
