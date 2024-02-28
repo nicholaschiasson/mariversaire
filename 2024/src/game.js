@@ -11,7 +11,6 @@ import Label from "./label.js";
 import Entity from "./entity.js";
 import Score from "./score.js";
 
-let player;
 let background;
 
 /**
@@ -204,11 +203,11 @@ function initializeGame(gameState) {
 	gameState.backgroundEntities = [];
 	gameState.entities = [];
 	gameState.addEntity(background);
-	player = new Player(gameState);
+	const player = new Player(gameState);
 	player.layer = 3;
 	player.onGameOver = initializeGameOver;
 	gameState.addEntity(player);
-	gameState.addEntity(new PlatformSpawner(gameState, player));
+	gameState.addEntity(new PlatformSpawner(gameState));
 	const score = new ScoreDisplay(gameState);
 	score.layer = 3;
 	gameState.addEntity(score);
@@ -253,7 +252,6 @@ function initializeGameOver(gameState) {
 	gameState.playing = false;
 	gameState.backgroundEntities = gameState.backgroundEntities.length ? gameState.backgroundEntities : gameState.entities;
 	gameState.entities = [];
-	player = undefined;
 	if (!gameState.backgroundEntities.find(entity => entity instanceof Fill)) {
 		const dimFill = new Fill(gameState, "#00000088");
 		dimFill.layer = 5;
