@@ -14,10 +14,14 @@ export default class SoundManager {
 	/**
 	 * @param {GameState} gameState 
 	 * @param {Entity} entity
+	 * @param {string} name 
 	 */
-	play(gameState, entity) {
+	play(gameState, entity, name) {
 		if (this.enabled) {
-			const sound = gameState.content.sound(entity);
+			let sound = gameState.content.sound(entity);
+			if (sound && name) {
+				sound = sound[name];
+			}
 			if (sound) {
 				sound.fastSeek(0);
 				sound.play();

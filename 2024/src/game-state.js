@@ -19,6 +19,7 @@ export default class GameState {
 	playing;
 	previousTime;
 	score;
+	shoesOn;
 	sound;
 	world;
 
@@ -39,6 +40,7 @@ export default class GameState {
 		this.playing = false;
 		this.previousTime = performance.now();
 		this.score = new Score(undefined, 0);
+		this.shoesOn = false;
 		this.sound = new SoundManager(true);
 		this.world = new Vector(0, 0);
 		canvas.addEventListener("click", () => {

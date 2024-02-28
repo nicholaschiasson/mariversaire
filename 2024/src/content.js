@@ -25,8 +25,15 @@ export default class Content {
 			],
 			sound: {}
 		};
+		this.#audio.sound[Player.name] = new Audio("./rsrc/audio/sounds/miaou.mp3");
 		this.#audio.sound[Platform.name] = new Audio("./rsrc/audio/sounds/boing.mp3");
 		this.#audio.sound[MovingPlatform.name] = new Audio("./rsrc/audio/sounds/boing.mp3");
+		this.#audio.sound[VanishingPlatform.name] = new Audio("./rsrc/audio/sounds/pop.mp3");
+		this.#audio.sound[BrokenPlatform.name] = new Audio("./rsrc/audio/sounds/crack.mp3");
+		this.#audio.sound[undefined] = {
+			reward: new Audio("./rsrc/audio/sounds/reward.mp3"),
+			whoosh: new Audio("./rsrc/audio/sounds/whoosh.mp3")
+		};
 		this.#texture = {};
 		this.#texture[Background.name] = Texture.FromUrl("./rsrc/images/background.jpg");
 		this.#texture[Player.name] = Texture.FromUrl("./rsrc/images/player.png");
@@ -34,7 +41,8 @@ export default class Content {
 		this.#texture[MovingPlatform.name] = Texture.FromUrl("./rsrc/images/hold-02.png");
 		this.#texture[VanishingPlatform.name] = Texture.FromUrl("./rsrc/images/hold-03.png");
 		this.#texture[BrokenPlatform.name] = Texture.FromUrl("./rsrc/images/hold-04.png");
-		this.#texture._ = {
+		this.#texture[undefined] = {
+			playerWithShoes: Texture.FromUrl("./rsrc/images/player-with-shoes.png"),
 			title: [
 				Texture.FromUrl("./rsrc/images/title-01.png"),
 				Texture.FromUrl("./rsrc/images/title-02.png"),
@@ -70,6 +78,6 @@ export default class Content {
 	 * @returns {HTMLImageElement}
 	 */
 	texture(entity) {
-		return this.#texture[entity?.constructor?.name ?? "_"];
+		return this.#texture[entity?.constructor?.name];
 	}
 }

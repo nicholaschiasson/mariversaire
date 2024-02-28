@@ -1,13 +1,22 @@
+import Score from "./score.js";
+
 export default class GameData {
 	#key;
 	leaderBoard;
+	rewarded;
 
 	/**
 	 * @param {string} key 
 	 */
 	constructor(key) {
 		this.#key = key;
-		this.leaderBoard = [];
+		this.leaderBoard = [
+			new Score("NIC", 100),
+			new Score("JFK", 50),
+			new Score("BOB", 20),
+			new Score("AAA", 10)
+		];
+		this.rewarded = false;
 	}
 
 	/**

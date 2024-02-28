@@ -10,6 +10,7 @@ const GRAVITY = 28;
 const JUMP_FORCE = 18;
 
 export default class Player extends Entity {
+	boost;
 	onGameOver;
 	velocity;
 
@@ -26,7 +27,13 @@ export default class Player extends Entity {
 
 		super(gameState, position, dimensions);
 		this.dimensions.y = this.texture.height * (playerWidth / this.texture.width);
+		this.boost = 1;
 		this.velocity = new Vector(0, 0);
+
+		if (gameState.shoesOn) {
+			this.boost = 5;
+			this.texture = gameState.content.texture().playerWithShoes;
+		}
 	}
 
 	/**
@@ -54,6 +61,7 @@ export default class Player extends Entity {
 			if (gameState.playing) {
 				gameState.playing = false;
 				if (this.onGameOver) {
+					gameState.sound.play(gameState, this);
 					this.onGameOver(gameState);
 				}
 			}
@@ -82,8 +90,11 @@ export default class Player extends Entity {
 			case MovingPlatform:
 			case VanishingPlatform:
 				this.position.y -= intersection;
-				this.velocity.y = -JUMP_FORCE;
+				this.velocity.y = -JUMP_FORCE * this.boost;
 				this.climb(gameState);
+				if (gameState.shoesOn) {
+					gameState.sound.play(gameState, undefined, "whoosh");
+				}
 				break;
 			case BrokenPlatform:
 				break;
