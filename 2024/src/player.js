@@ -6,8 +6,8 @@ import VanishingPlatform from "./vanishing-platform.js";
 import BrokenPlatform from "./broken-platform.js";
 import Vector from "./vector.js";
 
-const GRAVITY = 28;
-const JUMP_FORCE = 18;
+const GRAVITY = 1555;
+const JUMP_FORCE = 1000;
 
 export default class Player extends Entity {
 	boost;
@@ -49,8 +49,10 @@ export default class Player extends Entity {
 
 		this.velocity.y += GRAVITY * deltaTime;
 
+		const yVelocity = this.velocity.y * deltaTime;
+
 		this.position.x += this.velocity.x;
-		this.position.y += this.velocity.y;
+		this.position.y += yVelocity;
 
 		this.position.x = (this.position.x + gameState.canvas.width) % gameState.canvas.width;
 
@@ -76,9 +78,9 @@ export default class Player extends Entity {
 						const playerRight = playerX + this.dimensions.x;
 						const intersection = playerBottom - entity.position.y;
 						if (
-							this.velocity.y > 0
-							&& intersection > 0
-							&& entity.position.y > playerBottom - this.velocity.y
+							yVelocity > 0
+							&& intersection >= 0
+							&& entity.position.y > playerBottom - yVelocity
 							&& entity.position.x < playerRight
 							&& (entity.position.x + entity.dimensions.x) > playerX
 						) {
