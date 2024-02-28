@@ -36,11 +36,11 @@
 		- [x] Display leaderboard
 		- [x] Try Again button
 		- [x] Options button
-- [ ] Sound assets
-	- [ ] Player mews on new high score
+- [x] Sound assets
+	- [x] Player mews death
 	- [x] Static and moving platform bounce
-	- [ ] Vanishing platform whoosh
-	- [ ] Breaking platform crack
+	- [x] Vanishing platform whoosh
+	- [x] Breaking platform crack
 	- [x] Music
 		- [x] Mitski - My Love Mine All Mine
 		- [x] Bilmuri - Vascular Demi-Goth
@@ -50,8 +50,8 @@
 		- [x] The Weeknd - Popular
 		- [x] Justin Hurwitz - Mia & Sebastian's Theme
 		- [x] Newjeans - ETA
-- [ ] Implement epic win condition
-- [ ] Preload some high scores
+- [x] Implement epic win condition
+- [x] Preload some high scores
 - [x] Manage score
 	- [x] Reset between games
 	- [x] Save leaderboards
@@ -62,13 +62,14 @@
 	- [x] Klimb Kitty!
 	- [x] Campus Cat!
 	- [x] Miauliversaire!
-- [ ] Implement tile spawning patterns
-- [ ] Implement death animations
-- [ ] Make scaling and speeds relative based on canvas size
 - [ ] Implement items
 	- [ ] Spring, high bounce
 	- [ ] Spring shoes, three big bounces
 	- [ ] Helicopter hat, fly for a few seconds
+- [ ] Implement tile spawning patterns
+- [ ] Implement death animations
+- [ ] Fix movement speed, should be relative to delta time
+- [ ] Make scaling and speeds relative based on canvas size
 - [ ] Implement enemies
 	- [ ] One touch and game over
 	- [ ] Jump on their head to kill them and bounce

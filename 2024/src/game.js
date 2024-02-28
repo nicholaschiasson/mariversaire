@@ -164,6 +164,23 @@ function initializeOptionsMenu(gameState, previousStateCallback) {
 		gameState.music.enabled = musicCheckbox.checked;
 	};
 	gameState.addEntity(musicCheckbox);
+	if (gameState.gameData.rewarded) {
+		const shoesOnCheckBox = new Checkbox(
+			gameState,
+			new Vector(gameState.canvas.width / 2 - buttonWidth, soundCheckbox.position.y + (buttonHeight + buttonBuffer) * 2),
+			new Vector(buttonWidth * 2, buttonHeight),
+			"Shoes On",
+			gameState.shoesOn
+		);
+		shoesOnCheckBox.onEnter = buttonOnEnter;
+		shoesOnCheckBox.onLeave = buttonOnLeave;
+		shoesOnCheckBox.onPress = buttonOnPress;
+		shoesOnCheckBox.onRelease = function(gameState) {
+			buttonOnRelease.bind(this)(gameState);
+			gameState.shoesOn = shoesOnCheckBox.checked;
+		};
+		gameState.addEntity(shoesOnCheckBox);
+	}
 	const titleLabel = new Label(
 		gameState,
 		new Vector(gameState.canvas.width / 2 - buttonWidth * 1.25, buttonHeight),
@@ -211,17 +228,28 @@ function initializeGameOver(gameState) {
 		console.warn(e);
 	}
 	while (!gameState.score.player || !/^[A-Z]{3}$/.test(gameState.score.player)) {
-		gameState.score.player = prompt("Please enter your initials (must be three letters).").substring(0, 3).toUpperCase();
+		try {
+			gameState.score.player = prompt("Please enter your name or initials.").substring(0, 3).toUpperCase();
+		} catch (e) {}
 	}
-	const scoreIndex = gameState.gameData.leaderBoard.findIndex(s => gameState.score.score >= s.score);
 	const newScore = new Score(gameState.score.player, Math.floor(gameState.score.score));
-	if (scoreIndex < 0) {
-		gameState.gameData.leaderBoard.push(newScore);
-	} else {
-		gameState.gameData.leaderBoard.splice(scoreIndex, 0, newScore);
+	if (!gameState.gameData.leaderBoard.find(s => s.player === newScore.player && s.score === newScore.score)) {
+		const scoreIndex = gameState.gameData.leaderBoard.findIndex(s => newScore.score >= s.score);
+		// NOTE: Special check to reward the birthday girl!
+		if (!gameState.gameData.rewarded && scoreIndex === 0 && newScore.player === "MAR") {
+			gameState.gameData.rewarded = true;
+			gameState.shoesOn = true
+			gameState.sound.play(gameState, undefined, "reward");
+			open("./🧗.html", "_blank");
+		}
+		if (scoreIndex < 0) {
+			gameState.gameData.leaderBoard.push(newScore);
+		} else {
+			gameState.gameData.leaderBoard.splice(scoreIndex, 0, newScore);
+		}
+		gameState.gameData.leaderBoard.splice(100);
+		gameState.gameData.save();
 	}
-	gameState.gameData.leaderBoard.splice(100);
-	gameState.gameData.save();
 	gameState.playing = false;
 	gameState.backgroundEntities = gameState.backgroundEntities.length ? gameState.backgroundEntities : gameState.entities;
 	gameState.entities = [];
