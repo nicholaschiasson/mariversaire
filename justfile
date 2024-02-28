@@ -1,30 +1,36 @@
-set shell := ["nu", "-c"]
-
 default: build
 
-build *ARGS: (children ARGS)
-	mkdir build
-	nu build.nu {{ARGS}}
-	try {(ls */build | where type == dir).name | path dirname | each {|d| cp -rv $"($d)/build" $"build/($d)"}}
+outdir := "build"
 
-children *ARGS:
-	try {(ls */justfile).name | path dirname | each {|d| just $"($d)/build" {{ARGS}}}}
+[unix]
+build *ARGS: b (c "2022" "build" ARGS) (c "2023" "build" ARGS) (c "2024" "build" ARGS) && (o "2022") (o "2023") (o "2024")
+	rsync -uv *.html {{outdir}}/
+	rsync -ruv rsrc {{outdir}}/
+	rsync -ruv src {{outdir}}/
+	rsync -uv CNAME {{outdir}}/
 
-clean:
-	rm -rf build
-	try {(ls */justfile).name | path dirname | each {|d| just $"($d)/clean"}}
+[unix]
+clean: (c "2022" "clean") (c "2023" "clean") (c "2024" "clean")
+	rm -fr {{outdir}}
 
-serve *ARGS: (build ARGS)
-	miniserve build --index index.html
+serve *ARGS: b
+	miniserve {{outdir}} --index=index.html &
+	just watch {{ARGS}}
 
-new CHILD:
-	mkdir {{CHILD}}
-	"{{CHILD}}" \
-		| path split \
-		| reduce -f [] {|it, acc| $acc | append ([($acc | last), $it] | into string | path join)} \
-		| each {|d| \
-			ln -sf ../justfile $"($d)/justfile"; \
-			if not ($"($d)/build.nu" | path exists) { \
-				"#/usr/bin/env nu\n\ndef main [--release, command = build] {}" | save -f $"($d)/build.nu" \
-			}; \
-		}
+watch *ARGS:
+    watchexec -e html,css,js just build
+
+[private]
+[unix]
+b:
+	mkdir -p build
+
+[private]
+c DIR RECIPE *ARGS:
+	just {{DIR}}/{{RECIPE}} {{ARGS}}
+
+[private]
+[unix]
+o DIR:
+	rsync -ruv {{DIR}}/{{outdir}}/ {{outdir}}/{{DIR}}
+
