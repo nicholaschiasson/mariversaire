@@ -66,6 +66,31 @@ export default class Player extends Entity {
 				}
 			}
 		}
+
+		// check for collisions
+		for (const entity of gameState.entities) {
+			switch (true) {
+				case entity instanceof Platform: {
+					for (let playerX = this.position.x; playerX >= -this.dimensions.x; playerX -= gameState.canvas.width) {
+						const playerBottom = this.position.y + this.dimensions.y;
+						const playerRight = playerX + this.dimensions.x;
+						const intersection = playerBottom - entity.position.y;
+						if (
+							this.velocity.y > 0
+							&& intersection > 0
+							&& entity.position.y > playerBottom - this.velocity.y
+							&& entity.position.x < playerRight
+							&& (entity.position.x + entity.dimensions.x) > playerX
+						) {
+							this.collide(gameState, entity, intersection);
+							entity.collide(gameState, this, intersection);
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	/**
