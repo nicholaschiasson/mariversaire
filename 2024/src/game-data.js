@@ -11,7 +11,8 @@ export default class GameData {
 	constructor(key) {
 		this.#key = key;
 		this.leaderBoard = [
-			new Score("NIC", 100),
+			// new Score("NIC", 100),
+			new Score("NIC", 88),
 			new Score("JFK", 50),
 			new Score("BOB", 20),
 			new Score("AAA", 10)
