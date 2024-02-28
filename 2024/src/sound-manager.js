@@ -23,7 +23,7 @@ export default class SoundManager {
 				sound = sound[name];
 			}
 			if (sound) {
-				sound.fastSeek(0);
+				sound.currentTime = 0;
 				sound.play();
 			}
 		}
