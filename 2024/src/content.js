@@ -51,6 +51,19 @@ export default class Content {
 				Texture.FromUrl("./rsrc/images/title-05.png")
 			]
 		};
+		addEventListener("click", this.#requestPlaybackPermission);
+	}
+
+	#requestPlaybackPermission = async () =>  {
+		const sound = this.#audio.sound[undefined].whoosh;
+		try {
+			await sound.play();
+		} catch (e) {
+			console.warn(e);
+		}
+		sound.pause();
+		sound.currentTime = 0;
+		removeEventListener("click", this.#requestPlaybackPermission);
 	}
 
 	/**
