@@ -27,11 +27,12 @@ export default class GameState {
 	 * @param {HTMLCanvasElement} canvas
 	 * @param {CanvasRenderingContext2D} context
 	 * @param {GameData} gameData
+	 * @param {Content} content
 	 */
-	constructor(canvas, context, gameData) {
+	constructor(canvas, context, gameData, content) {
 		this.backgroundEntities = [];
 		this.canvas = canvas;
-		this.content = new Content();
+		this.content = content;
 		this.context = context;
 		this.entities = [];
 		this.gameData = gameData;
