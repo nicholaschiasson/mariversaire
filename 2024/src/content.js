@@ -14,14 +14,14 @@ export default class Content {
 	constructor() {
 		this.#audio = {
 			music: [
-	      new Audio("./rsrc/audio/music/Mitski - My Love Mine All Mine.mp3"),
-	      new Audio("./rsrc/audio/music/NewJeans - ETA.mp3"),
-	      new Audio("./rsrc/audio/music/The Cranberries - Dreams.mp3"),
-	      new Audio("./rsrc/audio/music/The Weeknd, Madonna, Playboi Carti - Popular.mp3"),
+				new Audio("./rsrc/audio/music/Mitski - My Love Mine All Mine.mp3"),
+				new Audio("./rsrc/audio/music/NewJeans - ETA.mp3"),
+				new Audio("./rsrc/audio/music/The Cranberries - Dreams.mp3"),
+				new Audio("./rsrc/audio/music/The Weeknd, Madonna, Playboi Carti - Popular.mp3"),
 				new Audio("./rsrc/audio/music/Bilmuri - KEEPINITBEEFY.mp3"),
-	      new Audio("./rsrc/audio/music/Bilmuri - VASCULAR DEMI GOTH.mp3"),
-	      new Audio("./rsrc/audio/music/Eels - I Need Some Sleep.mp3"),
-	      new Audio("./rsrc/audio/music/Justin Hurwitz - Mia & Sebastians Theme.mp3")
+				new Audio("./rsrc/audio/music/Bilmuri - VASCULAR DEMI GOTH.mp3"),
+				new Audio("./rsrc/audio/music/Eels - I Need Some Sleep.mp3"),
+				new Audio("./rsrc/audio/music/Justin Hurwitz - Mia & Sebastians Theme.mp3")
 			],
 			sound: {}
 		};
@@ -54,7 +54,7 @@ export default class Content {
 		addEventListener("click", this.#requestPlaybackPermission);
 	}
 
-	#requestPlaybackPermission = async () =>  {
+	#requestPlaybackPermission = async () => {
 		const sound = this.#audio.sound[undefined].whoosh;
 		try {
 			await sound.play();
@@ -64,6 +64,43 @@ export default class Content {
 		sound.pause();
 		sound.currentTime = 0;
 		removeEventListener("click", this.#requestPlaybackPermission);
+	};
+
+	async load() {
+		const promises = [];
+		const media = [];
+		const content = [];
+		let elts = Object.values(this.#audio).concat(Object.values(this.#texture));
+
+		for (let elt = elts.shift(); elt !== undefined; elt = elts.shift()) {
+			if (elt instanceof HTMLMediaElement) {
+				media.push(elt);
+				continue;
+			}
+			if (elt instanceof HTMLElement) {
+				content.push(elt);
+				continue;
+			}
+			elts = elts.concat(Object.values(elt));
+		}
+
+		for (let m of media) {
+			promises.push(
+				new Promise((res) =>
+					m.addEventListener("canplaythrough", () => res()),
+				),
+			);
+		}
+
+		for (let c of content) {
+			promises.push(
+				new Promise((res) =>
+					c.addEventListener("load", () => res()),
+				),
+			);
+		}
+
+		await Promise.all(promises);
 	}
 
 	/**
@@ -72,7 +109,7 @@ export default class Content {
 	 */
 	music(index = -1) {
 		if (index < 0) {
-			return this.#audio.music[Math.floor(Math.random() * this.#audio.music.length)]
+			return this.#audio.music[Math.floor(Math.random() * this.#audio.music.length)];
 		} else {
 			return this.#audio.music[index];
 		}

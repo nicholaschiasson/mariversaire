@@ -1,3 +1,4 @@
+import Content from "./content.js";
 import GameData from "./game-data.js";
 import GameState from "./game-state.js";
 import { draw, initialize, update } from "./game.js";
@@ -5,7 +6,7 @@ import { draw, initialize, update } from "./game.js";
 const LS_DATA_KEY = `${location.pathname}`;
 const UPDATE_DELAY = 1000 / 60; // 60 times per second
 
-addEventListener("load", dispatchInitialize);
+addEventListener("load", dispatchLoadContent);
 
 /**
  * @param {HTMLCanvasElement} canvas
@@ -16,16 +17,30 @@ function resizeGameCanvas(canvas) {
 	canvas.setAttribute("width", canvasComputedStyle.width);
 }
 
-function dispatchInitialize() {
+async function dispatchLoadContent() {
+	const content = new Content();
+	await content.load();
+	dispatchInitialize(content);
+}
+
+/**
+ * @param {Content} content
+ */
+function dispatchInitialize(content) {
 	const gameCanvas = document.getElementById("game-canvas");
+	gameCanvas.setAttribute("assets", "ready");
 	const gameContext = gameCanvas.getContext("2d");
-	const gameState = new GameState(gameCanvas, gameContext, GameData.load(LS_DATA_KEY) ?? new GameData(LS_DATA_KEY));
+	const gameState = new GameState(
+		gameCanvas,
+		gameContext,
+		GameData.load(LS_DATA_KEY) ?? new GameData(LS_DATA_KEY),
+		content,
+	);
 
 	try {
-		screen.orientation.lock("natural")
-			.catch(e => {
-				console.warn(e);
-			});
+		screen.orientation.lock("natural").catch((e) => {
+			console.warn(e);
+		});
 	} catch (e) {
 		console.warn(e);
 	}
@@ -36,7 +51,7 @@ function dispatchInitialize() {
 	// addEventListener("resize", function() { resizeGameCanvas(gameCanvas); });
 	initialize(gameState);
 	setTimeout(dispatchUpdate, UPDATE_DELAY, gameState);
-	requestAnimationFrame(function() {
+	requestAnimationFrame(function () {
 		dispatchDraw(gameState);
 	});
 }
@@ -71,7 +86,7 @@ function dispatchUpdate(gameState) {
  */
 function dispatchDraw(gameState) {
 	draw(gameState);
-	requestAnimationFrame(function() {
+	requestAnimationFrame(function () {
 		dispatchDraw(gameState);
 	});
 }

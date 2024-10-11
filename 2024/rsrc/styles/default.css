@@ -11,9 +11,34 @@ body {
   width: 100%;
 }
 
+#loading {
+  display: none;
+  margin: auto;
+}
+
+body:has(canvas[assets="loading"]) #loading {
+  animation: spin 2s linear infinite;
+  border: 1em solid gainsboro;
+  border-top: 1em solid dodgerblue;
+  border-radius: 50%;
+  display: block;
+  height: 20vw;
+  width: 20vw;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 canvas {
   --viewport-height: 100vh;
-  --canvas-width: calc(var(--viewport-height) / calc(16/10));
+  --canvas-width: calc(var(--viewport-height) / calc(16 / 10));
   --border-width: calc(var(--viewport-height) / 2.468);
   height: var(--viewport-height);
   width: var(--canvas-width);
@@ -30,4 +55,8 @@ canvas {
     height: 100vh;
     width: 100vh;
   }
+}
+
+canvas[assets="loading"] {
+  display: none;
 }
